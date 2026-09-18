@@ -1,0 +1,344 @@
+#subscription Cost Cohort Analysis
+# Cleaning rules
+drop_duplicates: true
+dropna_threshold: 0.5   # Drop row if more than 50% values are missing
+
+fillna:
+  canceled_date: "Not Canceled"          # If canceled_date is missing, means active subscription
+  subscription_interval: "Unknown"       # Just in case interval is missing
+  was_subscription_paid: "Unknown"       # Fill missing payment info with 'Unknown'
+
+date_columns:
+  - created_date
+  - canceled_date
+
+# Validation rules
+validation_rules:
+  - column: customer_id
+    unique: true                         # Each customer_id must be unique
+
+  - column: subscription_cost
+    min: 0
+    max: 1000                            # Cost should be a reasonable positive number
+
+  - column: subscription_interval
+    allowed_values: ["month", "year", "Unknown"]   # Only these intervals allowed
+
+  - column: was_subscription_paid
+    allowed_values: ["Yes", "No", "Unknown"]       # Ensure consistent labels
+
+date_columns:
+  - name: created_date
+    format: "%Y-%m-%d"
+
+  - name: canceled_date
+    format: "%Y-%m-%d"
+
+# config.yaml for Sample Book 1
+
+# dataset:
+#   name: "Sales Orders"
+#   source: "orders.xlsx"
+#   sheet_name: "Sheet1"
+
+# columns:
+#   OrderDate:
+#     type: date
+#     format: ["%d-%m-%Y", "%m/%d/%Y"]   # Accepts both formats
+#     required: true
+
+#   Region:
+#     type: string
+#     allowed_values: ["East", "West", "Central"]
+#     required: true
+
+#   Rep:
+#     type: string
+#     required: true
+
+#   Item:
+#     type: string
+#     allowed_values: ["Pencil", "Pen", "Binder"]
+#     required: true
+
+#   Units:
+#     type: integer
+#     min: 1
+#     max: 1000
+#     required: true
+
+#   UnitCost:
+#     type: float
+#     min: 0
+#     required: true
+
+#   Total:
+#     type: float
+#     formula: "Units * UnitCost"
+#     tolerance: 0.01    # small rounding tolerance
+
+# validation_rules:
+#   - check: "no_missing_values"
+#   - check: "no_duplicates"
+#   - check: "total_matches_units_times_unitcost"
+
+# cleaning_rules:
+#   - action: "strip_whitespace"
+#   - action: "standardize_date_format"
+#     format: "%d-%m-%Y"
+#   - action: "capitalize_strings"
+
+# anomaly_detection:
+#   method: "zscore"
+#   threshold: 3.0
+#   target_columns: ["Units", "UnitCost", "Total"]
+
+# reporting:
+#   generate_html: true
+#   generate_pdf: true
+#   include_charts: true
+#   charts:
+#     - type: "bar"
+#       x: "Region"
+#       y: "Total"
+#     - type: "line"
+#       x: "OrderDate"
+#       y: "Total"
+
+# Supermarket Sales Data
+# 📊 Config file for Sales Dataset
+# dataset:
+#   name: "sales_orders"
+#   primary_key: "Order No"
+
+# columns:
+#   Order No:
+#     type: int
+#     unique: true
+#     required: true
+
+#   Order Date:
+#     type: date
+#     format: "%d-%m-%Y"
+#     required: true
+#     checks:
+#       - not_null
+#       - valid_date
+
+#   Customer Name:
+#     type: string
+#     required: true
+#     checks:
+#       - not_null
+#       - regex: "^[A-Za-z ]+$"   # Only letters & spaces
+
+#   Ship Date:
+#     type: date
+#     format: "%d-%m-%Y"
+#     required: true
+#     checks:
+#       - not_null
+#       - valid_date
+#       - after: "Order Date"     # Must be after order date
+
+#   Retail Price (USD):
+#     type: float
+#     required: true
+#     checks:
+#       - min: 0.01
+#       - not_null
+
+#   Order Quantity:
+#     type: int
+#     required: true
+#     checks:
+#       - min: 1
+#       - max: 1000
+
+#   Tax (USD):
+#     type: float
+#     required: true
+#     checks:
+#       - min: 0.0
+
+#   Total (USD):
+#     type: float
+#     required: true
+#     checks:
+#       - expression: "Total (USD) ≈ (Retail Price (USD) * Order Quantity) + Tax (USD)"  
+#         tolerance: 0.01   # small margin for floating point errors
+
+# validations:
+#   duplicates:
+#     check: true
+#     based_on: ["Order No"]
+
+#   missing_values:
+#     action: "flag"   # options: drop / impute / flag
+
+# anomalies:
+#   numeric_columns: ["Retail Price (USD)", "Order Quantity", "Tax (USD)", "Total (USD)"]
+#   method: "zscore"
+#   threshold: 3.0
+
+
+# Project Management Data
+# 📊 Config file for Project Management Dataset
+# dataset:
+#   name: "project_tasks"
+#   primary_key: ["Project Name", "Task Name"]   # Composite key (unique per project-task)
+
+# columns:
+#   Project Name:
+#     type: string
+#     required: true
+#     checks:
+#       - not_null
+
+#   Task Name:
+#     type: string
+#     required: true
+#     checks:
+#       - not_null
+
+#   Assigned to:
+#     type: string
+#     required: true
+#     checks:
+#       - not_null
+#       - regex: "^[A-Za-z ]+$"   # Only letters & spaces
+
+#   Start Date:
+#     type: date
+#     format: "%d-%m-%Y"
+#     required: true
+#     checks:
+#       - not_null
+#       - valid_date
+
+#   Days Required:
+#     type: int
+#     required: true
+#     checks:
+#       - min: 1
+#       - max: 365
+
+#   End Date:
+#     type: date
+#     format: "%d-%m-%Y"
+#     required: true
+#     checks:
+#       - not_null
+#       - valid_date
+#       - after: "Start Date"   # End must be after Start
+
+#   Progress:
+#     type: percent
+#     format: "%"
+#     required: true
+#     checks:
+#       - min: 0
+#       - max: 100
+
+# validations:
+#   duplicates:
+#     check: true
+#     based_on: ["Project Name", "Task Name"]
+
+#   missing_values:
+#     action: "flag"   # flag missing values
+
+#   consistency_checks:
+#     - expression: "End Date ≈ Start Date + Days Required"
+#       tolerance_days: 1   # allow small mismatch of ±1 day
+
+# anomalies:
+#   numeric_columns: ["Days Required", "Progress"]
+#   method: "zscore"
+#   threshold: 3.0
+
+# Inventory Records Data
+
+# 📦 Config file for Inventory Dataset
+dataset:
+  name: "inventory_management"
+  primary_key: ["Product ID"]
+
+columns:
+  Product ID:
+    type: string
+    required: true
+    checks:
+      - not_null
+      - regex: "^P[0-9]{3}$"   # Format like P101, P102...
+
+  Product Name:
+    type: string
+    required: true
+    checks:
+      - not_null
+
+  Opening Stock:
+    type: int
+    required: true
+    checks:
+      - min: 0
+      - max: 1000
+
+  Purchase/Stock in:
+    type: int
+    required: true
+    checks:
+      - min: 0
+      - max: 1000
+
+  Number of Units Sold:
+    type: int
+    required: true
+    checks:
+      - min: 0
+      - max: 1000
+
+  Hand-In-Stock:
+    type: int
+    required: true
+    checks:
+      - min: 0
+      - expression: "Opening Stock + Purchase/Stock in - Number of Units Sold = Hand-In-Stock"
+
+  Cost Price Per Unit (USD):
+    type: float
+    required: true
+    checks:
+      - min: 1
+      - max: 10000
+
+  Cost Price Total (USD):
+    type: float
+    required: true
+    checks:
+      - expression: "Hand-In-Stock * Cost Price Per Unit (USD) = Cost Price Total (USD)"
+
+validations:
+  duplicates:
+    check: true
+    based_on: ["Product ID"]
+
+  missing_values:
+    action: "flag"   # flag missing or incomplete data
+
+  consistency_checks:
+    - expression: "Hand-In-Stock = Opening Stock + Purchase/Stock in - Number of Units Sold"
+    - expression: "Cost Price Total (USD) = Hand-In-Stock * Cost Price Per Unit (USD)"
+
+anomalies:
+  numeric_columns: ["Opening Stock", "Purchase/Stock in", "Number of Units Sold", "Hand-In-Stock", "Cost Price Per Unit (USD)", "Cost Price Total (USD)"]
+  method: "zscore"
+  threshold: 3.0
+
+
+
+
+
+
+

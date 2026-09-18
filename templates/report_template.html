@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Excel Data Cleaner Bot Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #121212;   /* Dark background */
+            color: #e0e0e0;        /* Light text */
+        }
+        h1, h2, h3 {
+            color: #ffffff;         /* Headings in white */
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #1e1e1e;   /* Dark section background */
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        }
+        img {
+            max-width: 600px;
+            display: block;
+            margin: 15px auto;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 5px;
+            background: #222;       /* Dark image background */
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #aaa;
+            border-top: 1px solid #333;
+        }
+        .insight {
+            background: #2a2a2a;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Excel Data Cleaner Bot Report</h1>
+
+    <div class="section">
+        <h2>Summary</h2>
+        <ul>
+        {% for key, value in summary.items() %}
+            <li><strong>{{ key }}:</strong> {{ value }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Validation Results</h2>
+        {% if validation %}
+            <ul>
+            {% for col, issues in validation.items() %}
+                <li><strong>{{ col }}:</strong> {{ issues | join(', ') }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>✅ No validation issues found</p>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2>Anomalies</h2>
+        {% if anomalies %}
+            <pre>{{ anomalies }}</pre>
+        {% else %}
+            <p>✅ No anomalies detected</p>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2>🔮 Predictive Insights</h2>
+        {% if insights %}
+            {% for key, value in insights.items() %}
+                <h3>{{ key.replace('_',' ').title() }}</h3>
+                {% if value.formula %}
+                    <p><b>Formula:</b> {{ value.formula }}</p>
+                    <p><i>{{ value.interpretation }}</i></p>
+                {% elif value.summary %}
+                    <p><b>Summary:</b> {{ value.summary }}</p>
+                    <p><i>{{ value.interpretation }}</i></p>
+                    {% if value.image %}
+                        <img src="data:image/png;base64,{{ value.image }}" alt="{{ key }}">
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>No predictive insights available.</p>
+        {% endif %}
+    </div>
+    
+    
+
+    <div class="section">
+        <h2>Visualizations</h2>
+        {% for name, img in figures.items() %}
+            <h3>{{ name.replace('_',' ').title() }}</h3>
+            <img src="data:image/png;base64,{{ img }}" alt="{{ name }}">
+        {% endfor %}
+    </div>
+
+    <div class="footer">
+        <p><em>Report generated on {{ footer.generated_on }}</em></p>
+        <p>{{ footer.branding }}</p>
+    </div>
+</body>
+</html>

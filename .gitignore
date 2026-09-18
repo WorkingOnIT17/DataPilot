@@ -1,0 +1,52 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+*.egg-info/
+*.egg
+dist/
+build/
+
+# Virtual Environments
+.venv/
+venv/
+env/
+myenv/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Jupyter / Streamlit temporary caches
+.ipynb_checkpoints/
+.streamlit/
+
+# Temporary Outputs & Generated Reports
+outputs/
+figures/
+temp/
+tmp/
+*.tmp
+*.log
+
+# Generated PDF & HTML report artifacts in root
+report.html
+report.pdf
+DataPilot_Report.html
+DataPilot_Report.pdf
+
+# Note: sample_data/ and data/ are tracked for testing and demo execution

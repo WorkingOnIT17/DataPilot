@@ -1,0 +1,403 @@
+Order_ID,Order_Date,Customer_ID,Segment,Region,Category,Product_Name,Unit_Price,Quantity,Discount,Sales,Profit
+ORD-2024-0001,2024-01-21,CUST-199,Corporate,North America,Technology,Ergonomic Mouse,345.02,1,,293.27,26.94
+ORD-2024-0002,2024-10-20,CUST-188,Small Business,North America,Technology,"Ultra HD Monitor 27""",150.97,2,0.05,286.85,99.22
+ORD-2024-0003,2024-07-06,CUST-154,Consumer,Europe,Technology,"Ultra HD Monitor 27""",607.95,3,0.0,1823.86,514.5
+ORD-2024-0004,2024-01-21,CUST-108,Corporate,North America,Furniture,Ergonomic Mesh Chair,465.35,5,0.05,2210.41,168.43
+ORD-2024-0005,2024-09-20,CUST-101,Consumer,Asia Pacific,Technology,Wireless Noise-Canceling Headphones,192.99,1,0.05,183.34,60.54
+ORD-2024-0006,2024-07-09,CUST-194,Consumer,Europe,Office Supplies,Desk Organizer Tray,154.77,1,0.15,131.55,32.87
+ORD-2024-0007,2024-10-22,CUST-223,Consumer,North America,Furniture,Modern Lounge Sofa,741.17,2,0.05,1408.23,303.16
+ORD-2024-0008,2024-11-22,CUST-180,Consumer,Latin America,Technology,Ergonomic Mouse,679.25,1,0.0,679.25,184.13
+ORD-2024-0009,2024-08-18,CUST-132,Consumer,Asia Pacific,Office Supplies,Premium Gel Pens (Pack of 12),124.17,4,0.0,496.69,237.79
+ORD-2024-0010,2024-12-25,CUST-230,Corporate,North America,Technology,4K Web Camera,493.4,1,0.2,394.72,49.85
+ORD-2024-0011,2024-10-09,CUST-162,Consumer,North America,Furniture,Solid Wood Bookcase,515.91,1,0.0,515.91,101.61
+ORD-2024-0012,2024-08-09,CUST-112,Corporate,North America,Furniture,Ergonomic Mesh Chair,247.53,2,0.0,495.06,113.27
+ORD-2024-0013,2024-06-18,CUST-143,Small Business,Asia Pacific,Technology,"Ultra HD Monitor 27""",1160.15,4,0.1,4176.54,993.15
+ORD-2024-0014,2024-12-13,CUST-220,Small Business,Europe,Office Supplies,Desk Organizer Tray,77.01,1,0.05,73.16,32.86
+ORD-2024-0015,2024-05-16,CUST-158,Consumer,North America,Furniture,Ergonomic Mesh Chair,489.38,1,0.0,489.38,119.72
+ORD-2024-0016,2024-02-21,CUST-180,Consumer,Europe,Technology,Smart Laptop Pro,458.6,3,0.0,1375.79,447.59
+ORD-2024-0017,2024-08-11,CUST-167,Consumer,Europe,Technology,Wireless Noise-Canceling Headphones,1285.33,1,0.0,1285.33,312.49
+ORD-2024-0018,2024-11-20,CUST-196,Small Business,North America,Technology,"Ultra HD Monitor 27""",940.38,2,0.0,1880.76,590.63
+ORD-2024-0019,2024-05-27,CUST-247,Consumer,North America,Technology,"Ultra HD Monitor 27""",557.45,3,0.1,1505.12,233.54
+ORD-2024-0020,2024-02-08,CUST-141,Consumer,Middle East,Office Supplies,Heavy Duty Binder,169.88,1,0.0,169.88,48.31
+ORD-2024-0021,2024-02-29,CUST-108,Small Business,North America,Technology,Mechanical Keyboard,476.04,8,0.05,3617.88,1254.17
+ORD-2024-0022,2024-05-31,CUST-203,Small Business,Asia Pacific,Technology,"Ultra HD Monitor 27""",655.64,4,0.15,2229.16,550.21
+ORD-2024-0023,2024-06-01,CUST-167,Small Business,Europe,Office Supplies,Premium Gel Pens (Pack of 12),20.81,2,0.05,39.54,10.0
+ORD-2024-0024,2024-05-14,CUST-218,Consumer,North America,Technology,Ergonomic Mouse,1051.17,2,0.05,1997.23,431.93
+ORD-2024-0025,2024-09-20,CUST-160,Consumer,Middle East,Technology,4K Web Camera,938.92,2,0.05,1783.96,550.34
+ORD-2024-0026,2024-01-17,CUST-223,Corporate,North America,Office Supplies,Heavy Duty Binder,179.13,1,0.15,152.26,38.96
+ORD-2024-0027,2024-04-08,CUST-166,Small Business,Europe,Technology,Ergonomic Mouse,1375.41,1,0.0,1375.41,293.74
+ORD-2024-0028,2024-11-18,CUST-226,Small Business,Europe,Technology,Smart Laptop Pro,862.58,2,0.2,1380.12,30.18
+ORD-2024-0029,2024-10-25,CUST-149,Small Business,North America,Office Supplies,Standing Desk Converter,133.43,1,0.0,133.43,51.8
+ORD-2024-0030,2024-02-05,CUST-214,Consumer,North America,Furniture,Filing Cabinet 3-Drawer,708.81,3,0.1,1913.78,291.31
+ORD-2024-0031,2024-12-07,CUST-157,Consumer,Europe,Technology,Mechanical Keyboard,560.19,10,0.1,5041.72,716.53
+ORD-2024-0032,2024-04-10,CUST-105,Consumer,North America,Technology,Mechanical Keyboard,802.8,1,0.05,762.66,231.69
+ORD-2024-0033,2024-11-03,CUST-219,Corporate,Europe,Technology,Mechanical Keyboard,315.93,3,,947.8,354.97
+ORD-2024-0034,2024-04-26,CUST-221,Consumer,Asia Pacific,Technology,Mechanical Keyboard,251.09,3,,753.27,208.73
+ORD-2024-0035,2024-03-29,CUST-168,Consumer,North America,Technology,Wireless Noise-Canceling Headphones,975.25,8,0.1,7021.77,1173.32
+ORD-2024-0036,2024-03-26,CUST-243,Consumer,North America,Office Supplies,Premium Gel Pens (Pack of 12),22.3,1,0.0,22.3,6.22
+ORD-2024-0037,2024-08-09,CUST-237,Consumer,Europe,Technology,Ergonomic Mouse,962.22,5,0.15,4089.43,282.18
+ORD-2024-0038,2024-01-04,CUST-183,Corporate,Europe,Office Supplies,Standing Desk Converter,118.54,5,0.15,503.78,199.13
+ORD-2024-0039,2024-06-27,CUST-142,Consumer,Europe,Office Supplies,Standing Desk Converter,151.3,4,0.05,574.95,215.75
+ORD-2024-0040,2024-09-09,CUST-189,Consumer,North America,Technology,Ergonomic Mouse,268.05,1,0.0,268.05,86.56
+ORD-2024-0041,2024-04-23,CUST-237,Consumer,North America,Technology,"Ultra HD Monitor 27""",936.18,3,0.1,2527.69,724.45
+ORD-2024-0042,2024-04-05,CUST-112,Consumer,Middle East,Office Supplies,Premium Gel Pens (Pack of 12),74.53,4,0.0,298.11,143.89
+ORD-2024-0043,2024-03-02,CUST-199,Small Business,North America,Office Supplies,Premium Gel Pens (Pack of 12),99.45,1,0.0,99.45,34.55
+ORD-2024-0044,2024-10-10,CUST-216,Consumer,Latin America,Technology,Smart Laptop Pro,1337.58,2,0.05,2541.39,859.01
+ORD-2024-0045,2024-02-22,CUST-241,Corporate,North America,Technology,Mechanical Keyboard,1139.47,1,0.0,1139.47,389.85
+ORD-2024-0046,2024-11-26,CUST-106,Corporate,Asia Pacific,Office Supplies,Laser Printer Paper 500s,38.73,3,0.05,110.38,27.39
+ORD-2024-0047,2024-07-12,CUST-164,Small Business,Europe,Office Supplies,Standing Desk Converter,33.02,10,0.0,330.16,89.54
+ORD-2024-0048,2024-05-11,CUST-190,Small Business,Middle East,Furniture,Ergonomic Mesh Chair,395.15,2,0.0,790.31,195.58
+ORD-2024-0049,2024-05-20,CUST-226,Consumer,North America,Technology,"Ultra HD Monitor 27""",656.5,3,0.1,1772.56,399.55
+ORD-2024-0050,2024-07-09,CUST-157,Consumer,Asia Pacific,Office Supplies,Executive Desk Chair,96.43,2,0.0,192.87,52.21
+ORD-2024-0051,2024-07-31,CUST-245,Small Business,North America,Technology,Ergonomic Mouse,1391.21,2,0.2,2225.93,36.96
+ORD-2024-0052,2024-02-23,CUST-115,Consumer,Asia Pacific,Technology,Smart Laptop Pro,880.39,1,0.0,880.39,318.88
+ORD-2024-0053,2024-05-01,CUST-200,Consumer,North America,Furniture,Conference Table,281.68,1,0.05,267.6,43.23
+ORD-2024-0054,2024-07-30,CUST-233,Corporate,Asia Pacific,Furniture,Adjustable Height Desk,571.95,1,0.0,571.95,96.53
+ORD-2024-0055,2024-11-07,CUST-217,Consumer,Asia Pacific,Furniture,Filing Cabinet 3-Drawer,763.66,1,0.0,763.66,167.46
+ORD-2024-0056,2024-08-04,CUST-198,Corporate,Europe,Furniture,Ergonomic Mesh Chair,828.94,4,0.0,3315.76,900.5
+ORD-2024-0057,2024-07-15,CUST-182,Small Business,North America,Technology,Ergonomic Mouse,1399.65,2,0.1,2519.36,782.11
+ORD-2024-0058,2024-06-21,CUST-191,Consumer,North America,Technology,4K Web Camera,907.72,3,0.05,2586.99,520.54
+ORD-2024-0059,2024-09-15,CUST-156,Consumer,Europe,Technology,Wireless Noise-Canceling Headphones,800.2,2,0.05,1520.39,485.55
+ORD-2024-0060,2024-04-12,CUST-129,Corporate,Asia Pacific,Office Supplies,Laser Printer Paper 500s,41.82,1,0.05,39.73,8.52
+ORD-2024-0061,2024-06-14,CUST-180,Consumer,Middle East,Office Supplies,Premium Gel Pens (Pack of 12),92.15,1,0.05,87.54,39.4
+ORD-2024-0062,2024-09-29,CUST-225,Small Business,Europe,Furniture,Conference Table,330.77,10,0.0,3307.71,670.29
+ORD-2024-0063,2024-07-01,CUST-231,Consumer,North America,Office Supplies,Premium Gel Pens (Pack of 12),113.56,3,0.0,340.69,119.27
+ORD-2024-0064,2024-06-08,CUST-191,Corporate,Latin America,Technology,"Ultra HD Monitor 27""",365.4,1,0.0,365.4,85.73
+ORD-2024-0065,2024-08-20,CUST-172,Consumer,North America,Technology,4K Web Camera,594.99,1,0.0,594.99,214.77
+ORD-2024-0066,2024-04-16,CUST-212,Corporate,Asia Pacific,Technology,Smart Laptop Pro,1301.09,1,0.1,1170.98,144.41
+ORD-2024-0067,2024-08-01,CUST-113,Consumer,North America,Office Supplies,Heavy Duty Binder,57.78,2,0.1,104.0,39.29
+ORD-2024-0068,2024-08-25,CUST-214,Small Business,Asia Pacific,Technology,"Ultra HD Monitor 27""",1087.02,4,0.0,4348.08,893.47
+ORD-2024-0069,2024-02-08,CUST-244,Consumer,Asia Pacific,Technology,Smart Laptop Pro,552.6,1,0.0,552.6,131.55
+ORD-2024-0070,2024-04-18,CUST-212,Corporate,Asia Pacific,Technology,Smart Laptop Pro,749.48,3,0.05,2136.01,573.7
+ORD-2024-0071,2024-10-08,CUST-220,Consumer,North America,Office Supplies,Standing Desk Converter,117.21,2,0.0,234.42,72.93
+ORD-2024-0072,2024-04-21,CUST-154,Consumer,North America,Technology,4K Web Camera,350.85,1,0.0,350.85,81.95
+ORD-2024-0073,2024-02-05,CUST-178,Consumer,Europe,Furniture,Adjustable Height Desk,848.08,2,0.15,1441.74,222.86
+ORD-2024-0074,2024-03-02,CUST-143,Corporate,Europe,Furniture,Ergonomic Mesh Chair,800.56,2,0.0,1601.13,352.6
+ORD-2024-0075,2024-08-12,CUST-137,Consumer,North America,Technology,Wireless Noise-Canceling Headphones,1070.31,3,0.1,2889.84,627.33
+ORD-2024-0076,2024-09-15,CUST-229,Consumer,Middle East,Office Supplies,Premium Gel Pens (Pack of 12),28.29,1,0.0,28.29,9.45
+ORD-2024-0077,2024-11-24,CUST-193,Consumer,North America,Technology,Wireless Noise-Canceling Headphones,1100.28,2,0.0,2200.57,676.05
+ORD-2024-0078,2024-11-29,CUST-100,Small Business,Latin America,Technology,Ergonomic Mouse,1316.17,1,0.0,1316.17,498.0
+ORD-2024-0079,2024-09-23,CUST-104,Corporate,North America,Office Supplies,Desk Organizer Tray,147.24,1,0.0,147.24,44.23
+ORD-2024-0080,2024-08-24,CUST-131,Consumer,Europe,Technology,4K Web Camera,885.38,2,0.1,1593.69,394.77
+ORD-2024-0081,2024-06-01,CUST-203,Consumer,Europe,Office Supplies,Desk Organizer Tray,76.86,2,0.0,153.72,53.47
+ORD-2024-0082,2024-06-27,CUST-137,Consumer,Europe,Office Supplies,Premium Gel Pens (Pack of 12),73.58,3,0.05,209.71,51.83
+ORD-2024-0083,2024-09-10,CUST-217,Corporate,North America,Furniture,Filing Cabinet 3-Drawer,293.18,2,0.1,527.72,87.09
+ORD-2024-0084,2024-01-15,CUST-229,Corporate,Europe,Furniture,Conference Table,708.11,1,0.1,637.3,33.27
+ORD-2024-0085,2024-10-25,CUST-233,Corporate,Asia Pacific,Technology,"Ultra HD Monitor 27""",898.79,8,0.0,7190.29,2508.14
+ORD-2024-0086,2024-05-20,CUST-199,Consumer,Middle East,Office Supplies,Standing Desk Converter,42.26,1,0.1,38.03,7.4
+ORD-2024-0087,2024-04-15,CUST-139,Corporate,Middle East,Furniture,Filing Cabinet 3-Drawer,689.87,1,0.0,689.87,129.28
+ORD-2024-0088,2024-12-11,CUST-154,Consumer,Europe,Furniture,Adjustable Height Desk,737.23,5,0.15,3133.22,-27.87
+ORD-2024-0089,2024-07-20,CUST-124,Corporate,Europe,Technology,Ergonomic Mouse,1153.57,1,0.0,1153.57,231.68
+ORD-2024-0090,2024-12-12,CUST-124,Consumer,North America,Furniture,Modern Lounge Sofa,466.55,2,0.0,933.11,149.7
+ORD-2024-0091,2024-10-11,CUST-180,Consumer,North America,Office Supplies,Desk Organizer Tray,112.89,1,0.05,107.25,40.43
+ORD-2024-0092,2024-03-03,CUST-222,Small Business,Europe,Furniture,Ergonomic Mesh Chair,847.81,2,0.0,1695.62,356.75
+ORD-2024-0093,2024-10-12,CUST-212,Consumer,North America,Furniture,Modern Lounge Sofa,735.6,1,0.1,662.04,92.5
+ORD-2024-0094,2024-09-20,CUST-209,Consumer,Asia Pacific,Office Supplies,Desk Organizer Tray,157.89,1,0.0,157.89,76.82
+ORD-2024-0095,2024-06-26,CUST-171,Consumer,North America,Office Supplies,Executive Desk Chair,158.72,2,0.0,317.44,111.74
+ORD-2024-0096,2024-09-20,CUST-243,Corporate,North America,Technology,Ergonomic Mouse,274.3,3,0.15,699.47,77.16
+ORD-2024-0097,2024-11-06,CUST-246,Consumer,North America,Technology,Ergonomic Mouse,1270.42,1,0.0,1270.42,257.06
+ORD-2024-0098,2024-01-02,CUST-218,Consumer,Europe,Technology,"Ultra HD Monitor 27""",1288.28,1,0.1,1159.45,273.7
+ORD-2024-0099,2024-08-13,CUST-180,Corporate,North America,Technology,Ergonomic Mouse,1226.34,8,0.1,8829.61,1368.7
+ORD-2024-0100,2024-07-27,CUST-124,Corporate,Latin America,Furniture,Adjustable Height Desk,489.34,3,0.05,1394.63,238.18
+ORD-2024-0101,2024-06-02,CUST-245,Consumer,Asia Pacific,Technology,4K Web Camera,807.11,1,0.0,807.11,186.36
+ORD-2024-0102,2024-01-17,CUST-185,Consumer,Europe,Office Supplies,Standing Desk Converter,84.84,3,0.0,254.52,95.28
+ORD-2024-0103,2024-04-07,CUST-221,Corporate,North America,Technology,Smart Laptop Pro,900.65,1,0.15,765.55,152.84
+ORD-2024-0104,2024-11-02,CUST-110,Corporate,North America,Office Supplies,Standing Desk Converter,34.45,1,0.1,31.01,11.81
+ORD-2024-0105,2024-11-05,CUST-132,,Asia Pacific,Technology,Smart Laptop Pro,745.06,5,0.1,3352.79,817.56
+ORD-2024-0106,2024-12-02,CUST-172,Small Business,North America,Technology,Mechanical Keyboard,770.46,1,0.1,693.41,159.81
+ORD-2024-0107,2024-04-13,CUST-201,Corporate,Europe,Technology,Smart Laptop Pro,693.53,4,0.1,2496.73,400.46
+ORD-2024-0108,2024-10-31,CUST-161,Small Business,North America,Office Supplies,Premium Gel Pens (Pack of 12),41.89,2,0.0,83.78,40.85
+ORD-2024-0109,2024-08-02,CUST-111,Small Business,Asia Pacific,Furniture,Adjustable Height Desk,656.87,10,0.15,5583.41,556.38
+ORD-2024-0110,2024-10-14,CUST-234,Corporate,North America,Technology,Wireless Noise-Canceling Headphones,1031.97,1,0.05,980.37,326.66
+ORD-2024-0111,2024-11-23,CUST-245,Consumer,Asia Pacific,Technology,Ergonomic Mouse,1363.82,2,0.15,2318.5,599.99
+ORD-2024-0112,2024-04-17,CUST-207,Consumer,Asia Pacific,Office Supplies,Executive Desk Chair,39.29,3,0.0,117.87,31.74
+ORD-2024-0113,2024-07-28,CUST-133,Corporate,Europe,Office Supplies,Executive Desk Chair,103.23,4,0.0,412.91,147.29
+ORD-2024-0114,2024-08-14,CUST-161,,Europe,Technology,Ergonomic Mouse,237.54,1,0.0,237.54,47.91
+ORD-2024-0115,2024-09-22,CUST-102,Consumer,Europe,Office Supplies,Executive Desk Chair,34.67,2,0.1,62.41,16.24
+ORD-2024-0116,2024-10-19,CUST-148,Corporate,Latin America,Office Supplies,Desk Organizer Tray,26.73,10,0.0,267.35,68.03
+ORD-2024-0117,2024-03-01,CUST-187,Small Business,North America,Technology,Mechanical Keyboard,473.73,10,0.15,4026.69,738.73
+ORD-2024-0118,2024-09-16,CUST-209,Corporate,Middle East,Office Supplies,Laser Printer Paper 500s,57.07,2,0.05,108.42,49.72
+ORD-2024-0119,2024-09-15,CUST-108,Consumer,Europe,Technology,Wireless Noise-Canceling Headphones,1182.76,2,0.0,2365.51,814.06
+ORD-2024-0120,2024-06-26,CUST-112,Consumer,Europe,Furniture,Solid Wood Bookcase,493.83,4,0.0,1975.32,591.29
+ORD-2024-0121,2024-04-07,CUST-175,Corporate,Europe,Technology,Smart Laptop Pro,721.79,1,0.0,721.79,195.18
+ORD-2024-0122,2024-05-03,CUST-136,Consumer,Europe,Technology,Smart Laptop Pro,615.86,3,0.0,1847.58,455.9
+ORD-2024-0123,2024-04-23,CUST-155,Small Business,Latin America,Technology,Ergonomic Mouse,768.93,2,0.1,1384.08,286.82
+ORD-2024-0124,2024-08-03,CUST-112,Corporate,Latin America,Office Supplies,Premium Gel Pens (Pack of 12),147.59,4,0.15,501.8,156.22
+ORD-2024-0125,2024-06-03,CUST-130,Consumer,Middle East,Furniture,Ergonomic Mesh Chair,676.9,4,0.15,2301.47,-3.93
+ORD-2024-0126,2024-02-08,CUST-138,Consumer,Latin America,Furniture,Solid Wood Bookcase,262.53,4,0.05,997.62,228.12
+ORD-2024-0127,2024-01-17,CUST-169,Small Business,Asia Pacific,Technology,Ergonomic Mouse,294.8,1,0.1,265.32,49.47
+ORD-2024-0128,2024-02-29,CUST-167,Small Business,Europe,Technology,Wireless Noise-Canceling Headphones,374.37,3,0.0,1123.11,376.99
+ORD-2024-0129,2024-07-11,CUST-128,Corporate,Asia Pacific,Technology,Smart Laptop Pro,222.4,4,0.2,711.68,11.96
+ORD-2024-0130,2024-01-07,CUST-157,Corporate,North America,Office Supplies,Premium Gel Pens (Pack of 12),30.5,1,0.1,27.45,10.84
+ORD-2024-0131,2024-04-08,CUST-215,Small Business,North America,Technology,Wireless Noise-Canceling Headphones,714.23,3,0.05,2035.56,384.51
+ORD-2024-0132,2024-07-13,CUST-200,Consumer,North America,Furniture,Modern Lounge Sofa,815.6,2,0.15,1386.53,-4.58
+ORD-2024-0133,2024-09-13,CUST-124,Consumer,Asia Pacific,Office Supplies,Desk Organizer Tray,71.32,3,0.0,213.96,92.24
+ORD-2024-0134,2024-03-12,CUST-126,Consumer,Latin America,Office Supplies,Standing Desk Converter,45.48,1,0.0,45.48,13.69
+ORD-2024-0135,2024-06-29,CUST-116,Corporate,North America,Furniture,Conference Table,788.29,1,0.0,788.29,231.88
+ORD-2024-0136,2024-11-14,CUST-163,Consumer,Europe,Office Supplies,Heavy Duty Binder,124.24,2,0.0,248.49,82.37
+ORD-2024-0137,2024-04-04,CUST-235,Consumer,North America,Office Supplies,Laser Printer Paper 500s,135.5,3,0.2,325.21,87.1
+ORD-2024-0138,2024-02-15,CUST-196,Consumer,North America,Office Supplies,Premium Gel Pens (Pack of 12),42.8,2,0.1,77.04,23.52
+ORD-2024-0139,2024-03-17,CUST-221,Consumer,Latin America,Office Supplies,Executive Desk Chair,32.57,1,0.05,30.94,9.74
+ORD-2024-0140,2024-12-25,CUST-202,Corporate,North America,Furniture,Solid Wood Bookcase,595.5,1,0.15,506.18,57.87
+ORD-2024-0141,2024-06-26,CUST-183,Small Business,Asia Pacific,Office Supplies,Executive Desk Chair,120.05,2,0.0,240.1,107.05
+ORD-2024-0142,2024-01-03,CUST-111,Consumer,Latin America,Office Supplies,Desk Organizer Tray,26.52,2,0.1,47.74,10.13
+ORD-2024-0143,2024-05-26,CUST-131,Corporate,Europe,Technology,Ergonomic Mouse,1369.83,1,0.1,1232.85,220.05
+ORD-2024-0144,2024-02-06,CUST-134,Corporate,North America,Office Supplies,Standing Desk Converter,179.41,3,0.0,538.24,265.73
+ORD-2024-0145,2024-11-27,CUST-136,Consumer,North America,Technology,4K Web Camera,367.74,2,0.1,661.93,200.74
+ORD-2024-0146,2024-02-19,CUST-165,Corporate,Asia Pacific,Technology,Mechanical Keyboard,1233.79,2,0.1,2220.82,503.78
+ORD-2024-0147,2024-07-04,CUST-242,Consumer,Europe,Office Supplies,Heavy Duty Binder,165.98,2,0.05,315.36,83.87
+ORD-2024-0148,2024-03-27,CUST-140,Small Business,Asia Pacific,Technology,Wireless Noise-Canceling Headphones,940.68,2,0.0,1881.35,502.53
+ORD-2024-0149,2024-08-18,CUST-127,Corporate,Europe,Technology,Mechanical Keyboard,599.04,1,0.0,599.04,183.74
+ORD-2024-0150,2024-06-12,CUST-113,Corporate,North America,Technology,Ergonomic Mouse,1362.28,1,0.0,1362.28,383.73
+ORD-2024-0151,2024-09-13,CUST-217,Small Business,North America,Technology,Ergonomic Mouse,711.79,5,0.0,3558.96,1088.4
+ORD-2024-0152,2024-07-22,CUST-233,Consumer,Asia Pacific,Technology,Smart Laptop Pro,743.29,4,0.05,2824.49,897.74
+ORD-2024-0153,2024-10-19,CUST-158,Small Business,North America,Technology,Ergonomic Mouse,1320.76,1,0.0,1320.76,273.51
+ORD-2024-0154,2024-10-02,CUST-149,Corporate,Europe,Technology,Smart Laptop Pro,1383.29,1,0.2,1106.63,240.31
+ORD-2024-0155,2024-12-05,CUST-223,Corporate,Europe,Furniture,Adjustable Height Desk,238.02,1,0.15,202.32,-1.45
+ORD-2024-0156,2024-06-05,CUST-154,Corporate,North America,Office Supplies,Standing Desk Converter,91.0,1,0.05,86.45,37.95
+ORD-2024-0157,2024-05-24,CUST-188,Consumer,Asia Pacific,Furniture,Adjustable Height Desk,731.61,3,0.0,2194.84,604.96
+ORD-2024-0158,2024-05-21,CUST-162,Small Business,Asia Pacific,Office Supplies,Executive Desk Chair,83.02,1,0.05,78.87,30.12
+ORD-2024-0159,2024-09-01,CUST-231,Corporate,Middle East,Furniture,Ergonomic Mesh Chair,546.91,4,0.0,2187.65,553.3
+ORD-2024-0160,2024-10-05,CUST-188,Small Business,Middle East,Office Supplies,Desk Organizer Tray,89.69,1,0.05,85.21,36.28
+ORD-2024-0161,2024-11-11,CUST-201,Consumer,Europe,Technology,Smart Laptop Pro,835.62,2,0.0,1671.25,513.69
+ORD-2024-0162,2024-09-21,CUST-216,Corporate,North America,Technology,"Ultra HD Monitor 27""",624.73,2,0.0,1249.46,444.06
+ORD-2024-0163,2024-10-19,CUST-145,Consumer,Europe,Furniture,Ergonomic Mesh Chair,322.25,1,0.05,306.14,50.21
+ORD-2024-0164,2024-04-16,CUST-150,Small Business,Europe,Office Supplies,Premium Gel Pens (Pack of 12),21.21,4,0.0,84.84,34.94
+ORD-2024-0165,2024-11-29,CUST-134,Consumer,Europe,Technology,Ergonomic Mouse,757.34,1,0.0,757.34,186.47
+ORD-2024-0166,2024-03-17,CUST-173,Corporate,Asia Pacific,Office Supplies,Standing Desk Converter,86.17,1,0.05,81.86,19.86
+ORD-2024-0167,2024-02-05,CUST-205,Consumer,Europe,Furniture,Ergonomic Mesh Chair,447.17,4,0.0,1788.68,242.66
+ORD-2024-0168,2024-08-01,CUST-220,Small Business,Asia Pacific,Technology,Ergonomic Mouse,891.92,2,0.0,1783.85,611.64
+ORD-2024-0169,2024-02-19,CUST-246,Corporate,North America,Furniture,Ergonomic Mesh Chair,662.37,3,0.1,1788.4,344.19
+ORD-2024-0170,2024-02-18,CUST-136,Consumer,Europe,Office Supplies,Executive Desk Chair,137.9,1,0.0,137.9,64.22
+ORD-2024-0171,2024-03-18,CUST-106,Corporate,North America,Office Supplies,Heavy Duty Binder,121.12,1,0.0,121.12,32.05
+ORD-2024-0172,2024-08-28,CUST-201,Consumer,Europe,Office Supplies,Premium Gel Pens (Pack of 12),22.53,4,0.05,85.62,25.71
+ORD-2024-0173,2024-12-18,CUST-112,Consumer,North America,Office Supplies,Laser Printer Paper 500s,115.32,1,0.0,115.32,40.4
+ORD-2024-0174,2024-06-08,CUST-224,Consumer,Asia Pacific,Office Supplies,Standing Desk Converter,106.4,3,,303.25,134.08
+ORD-2024-0175,2024-09-14,CUST-249,Small Business,Asia Pacific,Office Supplies,Desk Organizer Tray,78.07,2,0.0,156.14,77.89
+ORD-2024-0176,2024-10-29,CUST-243,Corporate,Middle East,Office Supplies,Heavy Duty Binder,52.15,1,0.0,52.15,20.02
+ORD-2024-0177,2024-01-30,CUST-203,Consumer,Middle East,Technology,Mechanical Keyboard,443.3,1,0.2,354.64,31.86
+ORD-2024-0178,2024-08-18,CUST-241,Corporate,Latin America,Furniture,Ergonomic Mesh Chair,755.28,2,0.0,1510.56,346.72
+ORD-2024-0179,2024-09-14,CUST-154,Consumer,North America,Technology,Wireless Noise-Canceling Headphones,1321.2,1,0.0,1321.2,395.94
+ORD-2024-0180,2024-04-10,CUST-134,Small Business,Europe,Technology,4K Web Camera,638.8,1,0.05,606.86,153.44
+ORD-2024-0181,2024-12-01,CUST-190,Small Business,Latin America,Office Supplies,Standing Desk Converter,53.92,1,0.0,53.92,24.52
+ORD-2024-0182,2024-09-22,CUST-113,Corporate,Middle East,Office Supplies,Standing Desk Converter,151.6,4,0.15,515.43,80.73
+ORD-2024-0183,2024-01-25,CUST-178,Consumer,Latin America,Technology,4K Web Camera,982.88,2,0.05,1867.48,337.95
+ORD-2024-0184,2024-04-01,CUST-233,Consumer,Asia Pacific,Furniture,Conference Table,368.27,2,0.0,736.54,155.49
+ORD-2024-0185,2024-10-13,CUST-110,Corporate,Asia Pacific,Technology,"Ultra HD Monitor 27""",226.69,2,0.0,453.37,154.39
+ORD-2024-0186,2024-05-28,CUST-196,Consumer,Europe,Furniture,Ergonomic Mesh Chair,234.97,1,0.05,223.22,29.27
+ORD-2024-0187,2024-08-08,CUST-215,Consumer,North America,Office Supplies,Executive Desk Chair,119.82,2,0.0,239.65,91.49
+ORD-2024-0188,2024-01-14,CUST-161,,Europe,Office Supplies,Laser Printer Paper 500s,48.3,8,0.0,386.42,134.0
+ORD-2024-0189,2024-11-09,CUST-181,Corporate,Asia Pacific,Office Supplies,Desk Organizer Tray,50.35,1,0.1,45.32,15.35
+ORD-2024-0190,2024-07-09,CUST-133,Consumer,Europe,Technology,Mechanical Keyboard,774.17,1,0.0,774.17,191.9
+ORD-2024-0191,2024-08-08,CUST-204,Small Business,Asia Pacific,Technology,Mechanical Keyboard,643.1,3,0.15,1639.9,256.02
+ORD-2024-0192,2024-02-17,CUST-120,Small Business,Middle East,Technology,Smart Laptop Pro,468.34,1,0.15,398.09,94.3
+ORD-2024-0193,2024-03-19,CUST-186,Consumer,Europe,Furniture,Solid Wood Bookcase,772.57,4,0.0,3090.29,621.49
+ORD-2024-0194,2024-04-18,CUST-157,Corporate,North America,Office Supplies,Laser Printer Paper 500s,148.34,1,0.05,140.92,33.57
+ORD-2024-0195,2024-01-28,CUST-107,Corporate,North America,Office Supplies,Heavy Duty Binder,76.77,2,0.1,138.2,38.86
+ORD-2024-0196,2024-12-02,CUST-148,Corporate,North America,Technology,4K Web Camera,519.31,2,,1038.61,351.53
+ORD-2024-0197,2024-04-28,CUST-101,Corporate,Asia Pacific,Technology,Mechanical Keyboard,202.44,3,0.0,607.32,227.34
+ORD-2024-0198,2024-10-14,CUST-158,Corporate,Middle East,Office Supplies,Laser Printer Paper 500s,125.04,1,0.15,106.28,16.5
+ORD-2024-0199,2024-07-31,CUST-221,Small Business,Asia Pacific,Office Supplies,Standing Desk Converter,128.16,1,0.2,102.53,22.3
+ORD-2024-0200,2024-05-28,CUST-234,Corporate,North America,Furniture,Ergonomic Mesh Chair,678.53,4,0.1,2442.71,279.28
+ORD-2024-0201,2024-12-10,CUST-126,Corporate,North America,Technology,"Ultra HD Monitor 27""",1321.74,1,0.0,1321.74,274.62
+ORD-2024-0202,2024-10-04,CUST-118,Consumer,North America,Furniture,Adjustable Height Desk,529.57,2,0.0,1059.13,239.64
+ORD-2024-0203,2024-05-07,CUST-207,Corporate,Latin America,Technology,4K Web Camera,692.25,2,0.1,1246.05,178.53
+ORD-2024-0204,2024-11-15,CUST-165,Consumer,North America,Office Supplies,Executive Desk Chair,148.01,2,0.1,266.42,59.5
+ORD-2024-0205,2024-08-21,CUST-220,Corporate,Europe,Technology,Ergonomic Mouse,1101.24,3,0.0,3303.72,681.74
+ORD-2024-0206,2024-07-29,CUST-123,Consumer,Latin America,Office Supplies,Premium Gel Pens (Pack of 12),179.41,2,0.1,322.95,86.87
+ORD-2024-0207,2024-12-24,CUST-119,Consumer,Europe,Technology,Wireless Noise-Canceling Headphones,154.02,1,0.1,138.62,32.58
+ORD-2024-0208,2024-08-16,CUST-181,Corporate,Europe,Office Supplies,Heavy Duty Binder,112.8,2,0.05,214.31,76.78
+ORD-2024-0209,2024-07-29,CUST-199,Consumer,Latin America,Office Supplies,Heavy Duty Binder,29.37,3,0.1,79.29,20.58
+ORD-2024-0210,2024-07-01,CUST-146,Consumer,North America,Office Supplies,Laser Printer Paper 500s,57.74,1,0.1,51.97,14.03
+ORD-2024-0211,2024-07-16,CUST-177,Consumer,North America,Furniture,Conference Table,595.32,1,0.0,595.32,155.63
+ORD-2024-0212,2024-03-01,CUST-217,Consumer,Middle East,Office Supplies,Executive Desk Chair,176.74,3,0.05,503.72,127.96
+ORD-2024-0213,2024-02-04,CUST-148,Corporate,Middle East,Technology,Smart Laptop Pro,687.07,4,0.0,2748.28,981.39
+ORD-2024-0214,2024-05-05,CUST-169,Corporate,Asia Pacific,Office Supplies,Laser Printer Paper 500s,136.47,2,0.1,245.65,74.82
+ORD-2024-0215,2024-01-31,CUST-205,Consumer,Asia Pacific,Technology,4K Web Camera,1303.28,1,0.0,1303.28,371.4
+ORD-2024-0216,2024-09-26,CUST-169,Consumer,North America,Technology,Mechanical Keyboard,461.93,3,0.0,1385.8,345.0
+ORD-2024-0217,2024-12-03,CUST-106,Consumer,Latin America,Technology,Ergonomic Mouse,1283.05,2,0.0,2566.09,577.53
+ORD-2024-0218,2024-05-22,CUST-241,Corporate,Asia Pacific,Technology,Wireless Noise-Canceling Headphones,1252.67,4,0.1,4509.61,855.93
+ORD-2024-0219,2024-03-27,CUST-227,Consumer,Middle East,Office Supplies,Standing Desk Converter,51.7,2,0.2,82.71,19.78
+ORD-2024-0220,2024-07-14,CUST-160,Consumer,North America,Furniture,Filing Cabinet 3-Drawer,442.59,3,0.05,1261.39,114.18
+ORD-2024-0221,2024-03-26,CUST-173,Consumer,Asia Pacific,Technology,Mechanical Keyboard,836.05,1,0.1,752.44,175.83
+ORD-2024-0222,2024-11-25,CUST-187,Consumer,Asia Pacific,Technology,Wireless Noise-Canceling Headphones,727.87,3,0.05,2074.43,489.39
+ORD-2024-0223,2024-07-10,CUST-226,Consumer,Latin America,Furniture,Modern Lounge Sofa,705.79,1,0.15,599.92,42.0
+ORD-2024-0224,2024-07-31,CUST-157,Consumer,Europe,Furniture,Conference Table,611.74,1,0.15,519.98,-0.55
+ORD-2024-0225,2024-09-10,CUST-122,Consumer,North America,Furniture,Ergonomic Mesh Chair,390.56,1,0.1,351.5,27.66
+ORD-2024-0226,2024-09-23,CUST-184,Consumer,North America,Furniture,Solid Wood Bookcase,292.64,1,0.1,263.38,33.42
+ORD-2024-0227,2024-04-13,CUST-179,Small Business,Europe,Technology,Smart Laptop Pro,800.24,2,0.0,1600.48,449.04
+ORD-2024-0228,2024-08-07,CUST-206,Consumer,Latin America,Furniture,Adjustable Height Desk,291.41,4,0.05,1107.36,120.25
+ORD-2024-0229,2024-02-01,CUST-208,Consumer,Asia Pacific,Technology,4K Web Camera,297.05,1,0.2,237.64,39.55
+ORD-2024-0230,2024-04-11,CUST-230,Consumer,Asia Pacific,Furniture,Filing Cabinet 3-Drawer,835.85,1,0.05,794.06,157.23
+ORD-2024-0231,2024-05-12,CUST-233,Consumer,Latin America,Office Supplies,Executive Desk Chair,175.75,1,0.15,149.39,32.38
+ORD-2024-0232,2024-07-31,CUST-120,Small Business,Middle East,Office Supplies,Heavy Duty Binder,60.69,4,0.05,230.63,98.28
+ORD-2024-0233,2024-06-28,CUST-122,Consumer,North America,Technology,Wireless Noise-Canceling Headphones,1281.7,1,0.05,1217.62,362.91
+ORD-2024-0234,2024-12-15,CUST-165,Small Business,Asia Pacific,Office Supplies,Desk Organizer Tray,176.66,1,0.05,167.83,63.34
+ORD-2024-0235,2024-05-27,CUST-103,Consumer,Asia Pacific,Technology,Mechanical Keyboard,433.97,1,0.05,412.27,130.48
+ORD-2024-0236,2024-11-08,CUST-138,Consumer,Europe,Furniture,Modern Lounge Sofa,362.76,5,0.15,1541.74,158.84
+ORD-2024-0237,2024-08-12,CUST-145,Consumer,Asia Pacific,Furniture,Conference Table,761.96,1,0.0,761.96,91.46
+ORD-2024-0238,2024-05-26,CUST-187,Consumer,Europe,Office Supplies,Heavy Duty Binder,176.29,2,0.0,352.58,97.9
+ORD-2024-0239,2024-03-23,CUST-170,Small Business,North America,Technology,4K Web Camera,1365.97,3,0.1,3688.12,1019.1
+ORD-2024-0240,2024-10-01,CUST-129,Small Business,North America,Office Supplies,Executive Desk Chair,159.64,3,0.05,454.97,109.26
+ORD-2024-0241,2024-07-21,CUST-167,Consumer,Europe,Technology,Smart Laptop Pro,242.8,3,0.05,691.98,138.94
+ORD-2024-0242,2024-04-29,CUST-111,Corporate,Asia Pacific,Furniture,Solid Wood Bookcase,279.73,1,0.1,251.76,9.57
+ORD-2024-0243,2024-11-20,CUST-236,Corporate,Latin America,Office Supplies,Desk Organizer Tray,60.37,2,0.1,108.67,24.76
+ORD-2024-0244,2024-01-08,CUST-146,Small Business,North America,Office Supplies,Executive Desk Chair,102.79,1,0.0,102.79,36.76
+ORD-2024-0245,2024-08-19,CUST-154,Consumer,Latin America,Technology,"Ultra HD Monitor 27""",1335.14,3,0.05,3805.14,921.82
+ORD-2024-0246,2024-03-07,CUST-100,Corporate,North America,Office Supplies,Heavy Duty Binder,124.36,2,0.1,223.84,96.41
+ORD-2024-0247,2024-03-01,CUST-192,Consumer,North America,Technology,4K Web Camera,740.62,1,0.0,740.62,154.21
+ORD-2024-0248,2024-08-24,CUST-212,Corporate,North America,Office Supplies,Premium Gel Pens (Pack of 12),95.89,2,0.15,163.0,47.5
+ORD-2024-0249,2024-10-21,CUST-225,Consumer,Latin America,Technology,"Ultra HD Monitor 27""",1153.23,2,0.0,2306.46,698.79
+ORD-2024-0250,2024-10-03,CUST-110,Small Business,North America,Technology,Ergonomic Mouse,581.53,4,0.0,2326.12,677.68
+ORD-2024-0251,2024-01-01,CUST-208,Consumer,North America,Technology,"Ultra HD Monitor 27""",637.34,4,0.05,2421.89,717.32
+ORD-2024-0252,2024-09-06,CUST-183,Small Business,Latin America,Office Supplies,Executive Desk Chair,135.42,1,0.1,121.88,49.53
+ORD-2024-0253,2024-03-22,CUST-175,Small Business,Asia Pacific,Office Supplies,Standing Desk Converter,34.77,2,0.15,59.1,17.32
+ORD-2024-0254,2024-04-14,CUST-150,Corporate,Middle East,Technology,Smart Laptop Pro,958.06,2,0.05,1820.32,593.7
+ORD-2024-0255,2024-06-03,CUST-101,Consumer,North America,Furniture,Ergonomic Mesh Chair,668.69,4,0.2,2139.8,41.19
+ORD-2024-0256,2024-11-06,CUST-122,Consumer,Europe,Technology,4K Web Camera,871.5,1,0.05,827.92,137.58
+ORD-2024-0257,2024-05-25,CUST-129,Corporate,Latin America,Furniture,Modern Lounge Sofa,432.73,2,0.15,735.64,-13.87
+ORD-2024-0258,2024-06-20,CUST-156,Consumer,Europe,Office Supplies,Standing Desk Converter,166.66,1,0.05,158.33,51.29
+ORD-2024-0259,2024-06-04,CUST-247,Consumer,Asia Pacific,Technology,Mechanical Keyboard,688.16,4,0.0,2752.65,621.18
+ORD-2024-0260,2024-05-05,CUST-215,Corporate,Asia Pacific,Technology,Wireless Noise-Canceling Headphones,894.99,4,0.05,3400.94,602.24
+ORD-2024-0261,2024-11-20,CUST-206,Corporate,Europe,Office Supplies,Desk Organizer Tray,56.56,2,0.0,113.12,55.92
+ORD-2024-0262,2024-05-04,CUST-223,Consumer,Europe,Technology,Wireless Noise-Canceling Headphones,723.15,5,0.0,3615.77,911.41
+ORD-2024-0263,2024-10-11,CUST-121,Small Business,Asia Pacific,Technology,4K Web Camera,510.51,1,0.0,510.51,190.42
+ORD-2024-0264,2024-12-07,CUST-208,Corporate,Europe,Office Supplies,Laser Printer Paper 500s,59.51,1,0.1,53.56,21.4
+ORD-2024-0265,2024-01-21,CUST-123,Corporate,Europe,Technology,Smart Laptop Pro,1358.02,1,0.05,1290.12,340.03
+ORD-2024-0266,2024-09-29,CUST-118,Consumer,Asia Pacific,Furniture,Filing Cabinet 3-Drawer,664.2,1,0.1,597.78,49.21
+ORD-2024-0267,2024-04-10,CUST-110,Small Business,North America,Technology,Ergonomic Mouse,828.78,8,0.15,5635.71,603.32
+ORD-2024-0268,2024-01-05,CUST-116,Corporate,North America,Technology,Mechanical Keyboard,1142.76,4,0.15,3885.39,455.45
+ORD-2024-0269,2024-12-17,CUST-242,Consumer,Middle East,Furniture,Solid Wood Bookcase,494.35,2,0.05,939.26,123.03
+ORD-2024-0270,2024-08-06,CUST-208,Corporate,Europe,Office Supplies,Executive Desk Chair,85.21,3,0.05,242.86,104.02
+ORD-2024-0271,2024-12-02,CUST-168,Consumer,North America,Office Supplies,Executive Desk Chair,155.52,1,0.15,132.19,50.27
+ORD-2024-0272,2024-04-23,CUST-141,Corporate,North America,Office Supplies,Desk Organizer Tray,96.29,3,0.05,274.44,107.45
+ORD-2024-0273,2024-05-31,CUST-213,Small Business,Europe,Office Supplies,Laser Printer Paper 500s,137.29,3,0.2,329.49,75.02
+ORD-2024-0274,2024-03-07,CUST-235,Consumer,North America,Office Supplies,Executive Desk Chair,138.06,3,0.0,414.18,189.92
+ORD-2024-0275,2024-07-12,CUST-103,Small Business,Asia Pacific,Furniture,Ergonomic Mesh Chair,223.08,3,0.0,669.25,128.39
+ORD-2024-0276,2024-07-06,CUST-201,Corporate,North America,Office Supplies,Desk Organizer Tray,112.33,1,0.0,112.33,47.68
+ORD-2024-0277,2024-05-23,CUST-133,Corporate,Europe,Technology,Smart Laptop Pro,747.82,3,0.05,2131.3,395.16
+ORD-2024-0278,2024-04-27,CUST-112,Consumer,North America,Technology,4K Web Camera,551.87,1,0.05,524.28,130.11
+ORD-2024-0279,2024-01-31,CUST-153,Corporate,Europe,Office Supplies,Laser Printer Paper 500s,162.19,2,0.05,308.15,105.67
+ORD-2024-0280,2024-02-22,CUST-107,Corporate,North America,Technology,Wireless Noise-Canceling Headphones,1154.95,2,0.0,2309.9,691.7
+ORD-2024-0281,2024-05-06,CUST-192,Small Business,Latin America,Technology,4K Web Camera,217.92,1,0.0,217.92,72.95
+ORD-2024-0282,2024-11-01,CUST-238,Consumer,Asia Pacific,Technology,4K Web Camera,733.71,5,0.0,3668.55,958.47
+ORD-2024-0283,2024-04-09,CUST-155,Small Business,North America,Furniture,Adjustable Height Desk,785.04,2,0.0,1570.08,454.91
+ORD-2024-0284,2024-11-11,CUST-248,Consumer,North America,Furniture,Filing Cabinet 3-Drawer,592.9,1,0.0,592.9,146.27
+ORD-2024-0285,2024-09-29,CUST-239,Corporate,Middle East,Furniture,Filing Cabinet 3-Drawer,623.28,1,0.0,623.28,180.7
+ORD-2024-0286,2024-01-28,CUST-204,Small Business,Europe,Furniture,Ergonomic Mesh Chair,756.07,1,0.05,718.27,117.7
+ORD-2024-0287,2024-04-09,CUST-199,Corporate,North America,Technology,Smart Laptop Pro,1212.94,3,0.0,3638.81,866.62
+ORD-2024-0288,2024-09-20,CUST-248,Consumer,North America,Office Supplies,Laser Printer Paper 500s,124.26,1,0.05,118.05,47.8
+ORD-2024-0289,2024-09-08,CUST-152,Small Business,North America,Office Supplies,Desk Organizer Tray,26.88,4,0.1,96.77,34.06
+ORD-2024-0290,2024-04-11,CUST-230,Consumer,Asia Pacific,Technology,Ergonomic Mouse,571.68,1,0.0,571.68,116.32
+ORD-2024-0291,2024-01-29,CUST-183,Consumer,Middle East,Office Supplies,Executive Desk Chair,94.26,2,0.05,179.08,83.1
+ORD-2024-0292,2024-10-09,CUST-233,Small Business,Europe,Office Supplies,Executive Desk Chair,112.06,1,0.0,112.06,30.15
+ORD-2024-0293,2024-01-07,CUST-234,Corporate,North America,Office Supplies,Laser Printer Paper 500s,75.7,1,0.0,75.7,25.96
+ORD-2024-0294,2024-08-12,CUST-203,Small Business,North America,Furniture,Adjustable Height Desk,574.3,1,0.0,574.3,99.01
+ORD-2024-0295,2024-07-23,CUST-236,Corporate,Middle East,Technology,Smart Laptop Pro,1084.31,1,0.2,867.45,92.48
+ORD-2024-0296,2024-01-28,CUST-125,Small Business,Europe,Technology,Mechanical Keyboard,1121.16,3,0.05,3195.31,628.63
+ORD-2024-0297,2024-06-29,CUST-164,Consumer,Europe,Furniture,Adjustable Height Desk,519.09,1,0.05,493.14,121.03
+ORD-2024-0298,2024-02-26,CUST-104,Corporate,North America,Technology,Mechanical Keyboard,1262.68,1,0.0,1262.68,413.39
+ORD-2024-0299,2024-08-13,CUST-137,Consumer,Europe,Office Supplies,Executive Desk Chair,58.7,3,0.0,176.11,66.07
+ORD-2024-0300,2024-08-10,CUST-207,Corporate,Europe,Furniture,Modern Lounge Sofa,180.73,2,0.0,361.46,54.16
+ORD-2024-0301,2024-06-04,CUST-163,Small Business,Asia Pacific,Furniture,Adjustable Height Desk,611.38,2,0.0,1222.76,170.7
+ORD-2024-0302,2024-03-29,CUST-233,Consumer,Europe,Furniture,Modern Lounge Sofa,793.57,1,0.0,793.57,120.38
+ORD-2024-0303,2024-09-29,CUST-240,Consumer,Asia Pacific,Technology,"Ultra HD Monitor 27""",1350.17,8,0.1,9721.22,2093.98
+ORD-2024-0304,2024-11-16,CUST-192,Consumer,Asia Pacific,Furniture,Modern Lounge Sofa,470.76,8,0.1,3389.5,605.0
+ORD-2024-0305,2024-06-04,CUST-165,Corporate,Latin America,Office Supplies,Executive Desk Chair,56.59,1,0.0,56.59,23.12
+ORD-2024-0306,2024-12-14,CUST-133,Consumer,North America,Office Supplies,Premium Gel Pens (Pack of 12),96.94,1,0.0,96.94,40.29
+ORD-2024-0307,2024-04-26,CUST-116,Consumer,Asia Pacific,Furniture,Ergonomic Mesh Chair,172.83,2,0.0,345.67,45.07
+ORD-2024-0308,2024-03-22,CUST-215,Corporate,Europe,Furniture,Conference Table,609.64,1,0.15,518.19,8.09
+ORD-2024-0309,2024-07-11,CUST-238,Consumer,North America,Technology,"Ultra HD Monitor 27""",369.03,1,0.2,295.22,57.57
+ORD-2024-0310,2024-04-18,CUST-248,Corporate,Europe,Office Supplies,Laser Printer Paper 500s,76.49,5,0.15,325.07,123.72
+ORD-2024-0311,2024-04-18,CUST-167,Corporate,Latin America,Furniture,Solid Wood Bookcase,563.79,1,0.15,479.22,1.97
+ORD-2024-0312,2024-10-06,CUST-123,Consumer,Europe,Technology,"Ultra HD Monitor 27""",1183.43,3,0.1,3195.27,385.48
+ORD-2024-0313,2024-06-29,CUST-161,Consumer,Europe,Office Supplies,Premium Gel Pens (Pack of 12),65.2,1,0.0,65.2,23.23
+ORD-2024-0314,2024-12-22,CUST-102,Corporate,Europe,Office Supplies,Laser Printer Paper 500s,135.7,1,0.0,135.7,40.73
+ORD-2024-0315,2024-02-07,CUST-157,Small Business,Asia Pacific,Furniture,Modern Lounge Sofa,662.21,2,0.1,1191.97,179.21
+ORD-2024-0316,2024-07-24,CUST-115,Consumer,Latin America,Technology,4K Web Camera,306.7,10,0.0,3066.96,799.41
+ORD-2024-0317,2024-09-28,CUST-108,Consumer,Europe,Furniture,Filing Cabinet 3-Drawer,204.92,3,0.0,614.76,134.02
+ORD-2024-0318,2024-02-17,CUST-164,Consumer,Europe,Technology,Wireless Noise-Canceling Headphones,520.7,3,0.0,1562.1,513.3
+ORD-2024-0319,2024-03-28,CUST-221,Small Business,Europe,Office Supplies,Premium Gel Pens (Pack of 12),45.44,1,0.1,40.9,8.87
+ORD-2024-0320,2024-06-17,CUST-102,Consumer,North America,Office Supplies,Desk Organizer Tray,51.24,1,0.2,40.99,6.98
+ORD-2024-0321,2024-07-01,CUST-195,Corporate,Asia Pacific,Technology,Smart Laptop Pro,836.64,2,0.05,1589.61,344.96
+ORD-2024-0322,2024-03-18,CUST-158,Corporate,North America,Office Supplies,Standing Desk Converter,132.59,2,0.0,265.18,130.62
+ORD-2024-0323,2024-12-04,CUST-163,Small Business,Europe,Office Supplies,Desk Organizer Tray,88.74,2,0.0,177.47,58.07
+ORD-2024-0324,2024-03-29,CUST-214,Consumer,Europe,Office Supplies,Premium Gel Pens (Pack of 12),45.16,1,0.15,38.39,8.02
+ORD-2024-0325,2024-09-28,CUST-212,Corporate,Asia Pacific,Office Supplies,Desk Organizer Tray,177.1,1,0.0,177.1,72.08
+ORD-2024-0326,2024-04-06,CUST-132,Consumer,North America,Technology,Ergonomic Mouse,688.18,2,0.0,1376.35,492.78
+ORD-2024-0327,2024-02-16,CUST-113,Consumer,Asia Pacific,Technology,Smart Laptop Pro,626.8,3,0.1,1692.36,520.44
+ORD-2024-0328,2024-10-06,CUST-116,Small Business,Asia Pacific,Furniture,Modern Lounge Sofa,343.42,10,0.0,3434.23,679.17
+ORD-2024-0329,2024-03-22,CUST-230,Consumer,North America,Technology,Wireless Noise-Canceling Headphones,1030.69,1,0.0,1030.69,284.56
+ORD-2024-0330,2024-10-06,CUST-119,Corporate,Asia Pacific,Technology,Smart Laptop Pro,970.95,2,0.0,1941.89,726.92
+ORD-2024-0331,2024-11-17,CUST-109,Consumer,Asia Pacific,Technology,4K Web Camera,484.25,8,0.0,3874.02,785.34
+ORD-2024-0332,2024-09-14,CUST-178,Consumer,North America,Office Supplies,Desk Organizer Tray,158.58,1,0.0,158.58,77.18
+ORD-2024-0333,2024-10-04,CUST-144,Consumer,Latin America,Technology,"Ultra HD Monitor 27""",931.51,1,0.05,884.93,202.36
+ORD-2024-0334,2024-05-17,CUST-244,Small Business,Europe,Office Supplies,Executive Desk Chair,83.85,1,0.05,79.66,34.38
+ORD-2024-0335,2024-12-06,CUST-172,Consumer,Europe,Office Supplies,Premium Gel Pens (Pack of 12),166.33,1,0.0,166.33,59.63
+ORD-2024-0336,2024-02-10,CUST-210,Corporate,Europe,Office Supplies,Premium Gel Pens (Pack of 12),58.72,1,0.0,58.72,25.16
+ORD-2024-0337,2024-10-16,CUST-174,Consumer,North America,Office Supplies,Executive Desk Chair,30.0,3,0.05,85.51,28.33
+ORD-2024-0338,2024-02-07,CUST-230,Small Business,Middle East,Office Supplies,Desk Organizer Tray,81.33,1,0.1,73.2,22.24
+ORD-2024-0339,2024-09-20,CUST-188,Small Business,North America,Office Supplies,Executive Desk Chair,30.95,5,0.05,147.03,45.31
+ORD-2024-0340,2024-05-16,CUST-222,Small Business,Europe,Technology,Mechanical Keyboard,193.76,2,0.15,329.39,74.3
+ORD-2024-0341,2024-04-16,CUST-238,Corporate,Europe,Office Supplies,Standing Desk Converter,169.8,4,0.0,679.22,180.67
+ORD-2024-0342,2024-03-01,CUST-102,Corporate,North America,Office Supplies,Laser Printer Paper 500s,95.12,1,0.0,95.12,24.45
+ORD-2024-0343,2024-12-06,CUST-208,Small Business,Europe,Office Supplies,Standing Desk Converter,45.67,1,0.05,43.39,9.94
+ORD-2024-0344,2024-07-14,CUST-160,Consumer,North America,Furniture,Adjustable Height Desk,797.19,2,0.0,1594.39,318.55
+ORD-2024-0345,2024-10-28,CUST-205,Small Business,Latin America,Technology,Mechanical Keyboard,1292.24,1,,1292.24,480.08
+ORD-2024-0346,2024-01-06,CUST-186,Small Business,North America,Technology,Smart Laptop Pro,841.71,1,0.15,715.45,118.31
+ORD-2024-0347,2024-10-11,CUST-211,Consumer,Europe,Furniture,Adjustable Height Desk,471.43,3,0.0,1414.3,274.37
+ORD-2024-0348,2024-05-13,CUST-225,Small Business,Asia Pacific,Technology,Smart Laptop Pro,1136.79,2,0.0,2273.58,576.17
+ORD-2024-0349,2024-04-24,CUST-146,Consumer,Latin America,Technology,Wireless Noise-Canceling Headphones,427.95,2,0.0,855.9,251.17
+ORD-2024-0350,2024-05-31,CUST-118,Corporate,North America,Technology,"Ultra HD Monitor 27""",920.38,2,0.0,1840.75,552.66
+ORD-2024-0351,2024-05-20,CUST-163,Corporate,North America,Office Supplies,Standing Desk Converter,159.28,2,0.0,318.57,129.93
+ORD-2024-0352,2024-10-08,CUST-161,Consumer,Europe,Furniture,Solid Wood Bookcase,776.97,2,0.0,1553.94,243.62
+ORD-2024-0353,2024-01-29,CUST-172,Consumer,Asia Pacific,Furniture,Ergonomic Mesh Chair,589.9,1,0.0,589.9,143.91
+ORD-2024-0354,2024-04-27,CUST-114,Small Business,Europe,Office Supplies,Executive Desk Chair,146.65,1,0.15,124.65,31.21
+ORD-2024-0355,2024-05-25,CUST-203,Corporate,Europe,Office Supplies,Laser Printer Paper 500s,164.28,1,0.15,139.64,24.79
+ORD-2024-0356,2024-03-22,CUST-222,Small Business,Europe,Furniture,Conference Table,412.83,2,0.2,660.53,53.41
+ORD-2024-0357,2024-11-15,CUST-174,Consumer,North America,Technology,"Ultra HD Monitor 27""",910.51,1,0.0,910.51,297.91
+ORD-2024-0358,2024-03-02,CUST-147,Consumer,Middle East,Office Supplies,Premium Gel Pens (Pack of 12),154.77,2,0.0,309.54,106.27
+ORD-2024-0359,2024-11-13,CUST-143,Corporate,Europe,Technology,Smart Laptop Pro,1153.75,1,0.05,1096.06,280.64
+ORD-2024-0360,2024-08-02,CUST-161,Small Business,North America,Office Supplies,Heavy Duty Binder,116.87,3,0.15,298.01,73.03
+ORD-2024-0361,2024-01-16,CUST-193,Corporate,Europe,Technology,Wireless Noise-Canceling Headphones,402.82,1,0.0,402.82,103.32
+ORD-2024-0362,2024-03-21,CUST-161,Consumer,Europe,Furniture,Solid Wood Bookcase,559.27,2,0.0,1118.54,161.13
+ORD-2024-0363,2024-06-14,CUST-248,Consumer,Asia Pacific,Furniture,Modern Lounge Sofa,673.76,2,0.1,1212.78,81.54
+ORD-2024-0364,2024-03-14,CUST-169,Small Business,Asia Pacific,Office Supplies,Laser Printer Paper 500s,125.92,3,0.1,339.98,133.63
+ORD-2024-0365,2024-01-28,CUST-195,Consumer,Asia Pacific,Furniture,Solid Wood Bookcase,302.06,1,0.0,302.06,61.47
+ORD-2024-0366,2024-06-24,CUST-203,Small Business,Asia Pacific,Technology,Ergonomic Mouse,553.78,4,0.0,2215.14,801.05
+ORD-2024-0367,2024-06-30,CUST-130,Consumer,Latin America,Office Supplies,Standing Desk Converter,133.09,4,0.15,452.52,181.97
+ORD-2024-0368,2024-06-11,CUST-248,Small Business,Latin America,Furniture,Filing Cabinet 3-Drawer,549.81,1,0.2,439.85,-13.89
+ORD-2024-0369,2024-10-17,CUST-199,Consumer,North America,Furniture,Adjustable Height Desk,161.02,5,0.1,724.59,18.59
+ORD-2024-0370,2024-07-15,CUST-226,Small Business,North America,Technology,"Ultra HD Monitor 27""",1230.54,2,0.2,1968.86,260.01
+ORD-2024-0371,2024-10-02,CUST-127,Consumer,Asia Pacific,Office Supplies,Standing Desk Converter,111.12,1,0.0,111.12,51.9
+ORD-2024-0372,2024-02-19,CUST-131,Consumer,Europe,Office Supplies,Premium Gel Pens (Pack of 12),123.92,3,0.05,353.17,149.11
+ORD-2024-0373,2024-03-15,CUST-249,Small Business,Europe,Office Supplies,Standing Desk Converter,46.78,3,0.05,133.31,45.62
+ORD-2024-0374,2024-08-01,CUST-211,Consumer,Europe,Technology,Mechanical Keyboard,874.66,5,0.0,4373.29,1231.19
+ORD-2024-0375,2024-04-27,CUST-112,Small Business,Asia Pacific,Technology,"Ultra HD Monitor 27""",1007.13,2,0.2,1611.4,330.01
+ORD-2024-0376,2024-01-26,CUST-128,Corporate,Latin America,Technology,Ergonomic Mouse,1075.71,2,0.1,1936.27,251.9
+ORD-2024-0377,2024-05-23,CUST-187,Corporate,Middle East,Office Supplies,Desk Organizer Tray,130.51,2,0.2,208.82,52.0
+ORD-2024-0378,2024-08-21,CUST-216,Consumer,Middle East,Furniture,Ergonomic Mesh Chair,633.85,2,0.15,1077.54,99.57
+ORD-2024-0379,2024-09-24,CUST-110,Consumer,North America,Technology,Mechanical Keyboard,1171.22,5,0.0,5856.09,2069.88
+ORD-2024-0380,2024-02-19,CUST-230,Consumer,North America,Furniture,Conference Table,337.99,1,0.0,337.99,46.7
+ORD-2024-0381,2024-02-25,CUST-155,Consumer,Middle East,Furniture,Ergonomic Mesh Chair,258.9,2,0.0,517.8,81.45
+ORD-2024-0382,2024-02-05,CUST-226,Corporate,Europe,Technology,Mechanical Keyboard,413.13,1,0.0,413.13,142.79
+ORD-2024-0383,2024-10-28,CUST-198,Consumer,Europe,Furniture,Modern Lounge Sofa,712.66,2,0.05,1354.06,134.96
+ORD-2024-0384,2024-09-03,CUST-108,Consumer,Europe,Technology,Mechanical Keyboard,1380.29,3,0.0,4140.88,1123.12
+ORD-2024-0385,2024-04-15,CUST-236,Corporate,Europe,Technology,Smart Laptop Pro,542.34,4,0.2,1735.5,210.09
+ORD-2024-0386,2024-07-26,CUST-147,Consumer,North America,Furniture,Solid Wood Bookcase,609.24,3,0.05,1736.33,312.03
+ORD-2024-0387,2024-12-02,CUST-113,Corporate,Europe,Office Supplies,Heavy Duty Binder,150.86,3,0.05,429.94,148.23
+ORD-2024-0388,2024-11-28,CUST-230,Small Business,Middle East,Office Supplies,Heavy Duty Binder,125.87,2,0.0,251.73,71.82
+ORD-2024-0389,2024-07-18,CUST-237,Corporate,Middle East,Technology,Wireless Noise-Canceling Headphones,848.46,3,0.0,2545.37,679.13
+ORD-2024-0390,2024-12-14,CUST-183,Corporate,North America,Technology,"Ultra HD Monitor 27""",1144.91,3,0.0,3434.72,795.21
+ORD-2024-0391,2024-04-23,CUST-228,Corporate,Asia Pacific,Technology,4K Web Camera,216.89,1,0.0,216.89,58.08
+ORD-2024-0392,2024-08-06,CUST-112,Consumer,North America,Technology,Smart Laptop Pro,200.07,1,0.0,200.07,50.51
+ORD-2024-0393,2024-01-02,CUST-193,Corporate,Asia Pacific,Office Supplies,Executive Desk Chair,141.67,3,0.15,361.25,97.0
+ORD-2024-0394,2024-02-24,CUST-207,Consumer,North America,Office Supplies,Premium Gel Pens (Pack of 12),123.46,3,0.0,370.37,113.59
+ORD-2024-0395,2024-05-16,CUST-108,Small Business,North America,Office Supplies,Heavy Duty Binder,154.27,1,0.0,154.27,44.76
+ORD-2024-0396,2024-03-12,CUST-214,Consumer,Asia Pacific,Technology,Mechanical Keyboard,1302.96,2,0.0,2605.92,847.48
+ORD-2024-0397,2024-08-08,CUST-201,Consumer,Asia Pacific,Furniture,Adjustable Height Desk,749.55,5,0.0,3747.73,1013.06
+ORD-2024-0398,2024-08-14,CUST-203,Corporate,Europe,Technology,"Ultra HD Monitor 27""",673.23,1,0.0,673.23,170.09
+ORD-2024-0399,2024-07-02,CUST-167,Corporate,Europe,Furniture,Conference Table,372.28,5,0.15,1582.21,228.32
+ORD-2024-0400,2024-11-03,CUST-182,Small Business,North America,Technology,Smart Laptop Pro,997.64,1,0.0,997.64,297.04
+ORD-2024-0001,2024-01-21,CUST-199,Corporate,North America,Technology,Ergonomic Mouse,345.02,1,,293.27,26.94
+ORD-2024-0002,2024-10-20,CUST-188,Small Business,North America,Technology,"Ultra HD Monitor 27""",150.97,2,0.05,286.85,99.22

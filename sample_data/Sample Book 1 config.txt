@@ -1,0 +1,20 @@
+data:
+  file_path: "data.xlsx"
+  sheet_name: "Sheet1"
+
+columns:
+  Date:
+    type: datetime
+    format: "%Y-%m-%d"
+  Product:
+    type: categorical
+  Sales:
+    type: numeric
+    anomaly_detection:
+      method: zscore
+      threshold: 3.0
+  Profit:
+    type: numeric
+    anomaly_detection:
+      method: zscore
+      threshold: 
