@@ -134,11 +134,3 @@ python src/main.py
 This project is licensed under the **MIT License**.  
 See the [LICENSE](LICENSE.md) file for details.
 
-## 👤 Author
-
-**Raghav Tiwari**
-- B.Tech Computer Science Engineering
-- Software Engineering | Data Analytics | Machine Learning | Cloud
-
-
-
