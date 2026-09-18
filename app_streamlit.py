@@ -8,12 +8,12 @@ from src import cleaning, validation, anomalies, visualize, reporting, io_utils,
 from src.main import load_config
 from src.query_engine import DataPilotQueryEngine
 
-st.set_page_config(page_title="DataPilot - Data Analyst", page_icon="📊", layout="wide")
+st.set_page_config(page_title="DataPilot - Data Analyst", page_icon="")
 st.title("DataPilot – Ingestion, Preprocessing & Visualization Pipeline")
 st.write("Upload a **CSV** or **Excel** file to clean, validate, detect anomalies, analyze business metrics, and generate interactive visualizations.")
 
 # ---------------- Sidebar Controls ----------------
-st.sidebar.header("⚙️ Settings & Pipeline")
+st.sidebar.header("Settings & Pipeline")
 
 enable_insights = st.sidebar.checkbox("Enable Predictive Insights & ML", value=True)
 report_type = st.sidebar.radio("Report Type", ["HTML", "PDF", "Both"], index=0)
@@ -21,16 +21,16 @@ num_clusters = st.sidebar.slider("Number of Clusters (KMeans)", min_value=2, max
 
 # Data source choice
 st.sidebar.markdown("---")
-st.sidebar.subheader("📁 Data Source")
-input_choice = st.sidebar.radio("Input Method", ["📂 Upload File (CSV / Excel)", "🌟 Use Sample Dataset"], index=0)
+st.sidebar.subheader("Data Source")
+input_choice = st.sidebar.radio("Input Method", ["Upload File (CSV / Excel)", "Use Sample Dataset"], index=0)
 
 auto_detect_headers = st.sidebar.checkbox("Smart Header Auto-Detection", value=True, help="Automatically strips title banners, empty leading rows/columns, and detects true table headers.")
 
 uploaded_file = None
 sample_file_path = None
 
-if input_choice == "📂 Upload File (CSV / Excel)":
-    uploaded_file = st.sidebar.file_uploader("📂 Upload CSV or Excel file", type=["csv", "xlsx", "xls"])
+if input_choice == "Upload File (CSV / Excel)":
+    uploaded_file = st.sidebar.file_uploader("Upload CSV or Excel file", type=["csv", "xlsx", "xls"])
 else:
     # Discover samples in sample_data/
     sample_files = [f for f in os.listdir("sample_data") if f.endswith((".csv", ".xlsx", ".xls")) and not f.startswith("create")]
@@ -51,12 +51,12 @@ if uploaded_file or sample_file_path:
         with open(file_path, "wb") as f:
             f.write(uploaded_file.getbuffer())
         df = io_utils.load_file(file_path, auto_clean_header=auto_detect_headers)
-        st.success(f"✅ Uploaded & Ingested: **{file_name}** ({df.shape[0]} rows, {df.shape[1]} columns)")
+        st.success(f"Uploaded & Ingested: **{file_name}** ({df.shape[0]} rows, {df.shape[1]} columns)")
     else:
         file_name = os.path.basename(sample_file_path)
         file_path = sample_file_path
         df = io_utils.load_file(file_path, auto_clean_header=auto_detect_headers)
-        st.success(f"✅ Loaded Sample Dataset: **{file_name}** ({df.shape[0]} rows, {df.shape[1]} columns)")
+        st.success(f"Loaded Sample Dataset: **{file_name}** ({df.shape[0]} rows, {df.shape[1]} columns)")
 
     # Load config (fallback if config missing)
     config = {}
@@ -77,7 +77,7 @@ if uploaded_file or sample_file_path:
     prof_col3.metric("Missing Values", f"{df.isnull().sum().sum():,}")
     prof_col4.metric("Duplicate Rows", f"{df.duplicated().sum():,}")
 
-    with st.expander("📊 Column Types & Summary Statistics", expanded=False):
+    with st.expander("Column Types & Summary Statistics", expanded=False):
         st.dataframe(df.describe(include="all").transpose(), use_container_width=True)
 
     # --- 2. Data Cleaning ---
@@ -128,7 +128,7 @@ if uploaded_file or sample_file_path:
 
     # --- Processing Summary UI ---
     st.markdown("---")
-    st.subheader("📋 2. Processing & Cleaning Summary")
+    st.subheader("2. Processing & Cleaning Summary")
 
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -143,7 +143,7 @@ if uploaded_file or sample_file_path:
 
     # --- 3. Interactive Visualizations Section ---
     st.markdown("---")
-    st.subheader("📊 3. Interactive Visual Analytics")
+    st.subheader("3. Interactive Visual Analytics")
 
     if interactive_figs:
         # Row 1: Top Products / Items and Category Breakdown
@@ -177,7 +177,7 @@ if uploaded_file or sample_file_path:
     # --- 4. Predictive & Data-Driven Insights Section ---
     if enable_insights:
         st.markdown("---")
-        st.subheader("🔮 4. Data-Driven & Predictive Insights")
+        st.subheader("4. Data-Driven & Predictive Insights")
         if insights:
             ins_col1, ins_col2 = st.columns(2)
             with ins_col1:
@@ -201,20 +201,20 @@ if uploaded_file or sample_file_path:
 
     # --- 5. Natural Language Query Box ---
     st.markdown("---")
-    st.subheader("💬 5. Ask DataPilot (Natural Language Query)")
+    st.subheader("5. Ask DataPilot (Natural Language Query)")
     st.caption("Ask business questions about the dataset. The query is computed directly using DuckDB / Pandas.")
 
     # Quick prompt buttons
     q_col1, q_col2, q_col3 = st.columns(3)
     quick_q = ""
     with q_col1:
-        if st.button("🏆 Highest profit product?", use_container_width=True):
+        if st.button("Highest profit product?", use_container_width=True):
             quick_q = "Which product generated the highest profit?"
     with q_col2:
-        if st.button("💰 Total revenue?", use_container_width=True):
+        if st.button("Total revenue?", use_container_width=True):
             quick_q = "What is the total revenue?"
     with q_col3:
-        if st.button("📦 Sales by category?", use_container_width=True):
+        if st.button("Sales by category?", use_container_width=True):
             quick_q = "Sales by category"
 
     query_input = st.text_input(
@@ -238,27 +238,27 @@ if uploaded_file or sample_file_path:
 
     # --- 6. Outputs & Reports Section ---
     st.markdown("---")
-    st.subheader("✅ 6. Download Outputs & Report")
+    st.subheader("6. Download Outputs & Report")
 
     out_c1, out_c2, out_c3 = st.columns(3)
     with out_c1:
         with open(cleaned_path, "rb") as f:
-            st.download_button("⬇️ Download Cleaned Dataset (CSV)", data=f, file_name=cleaned_filename, mime="text/csv")
+            st.download_button("Download Cleaned Dataset (CSV)", data=f, file_name=cleaned_filename, mime="text/csv")
 
     with out_c2:
         if report_type in ["HTML", "Both"]:
             if os.path.exists(report_path):
                 with open(report_path, "rb") as f:
-                    st.download_button("⬇️ Download Report (HTML)", data=f, file_name="DataPilot_Report.html", mime="text/html")
+                    st.download_button("Download Report (HTML)", data=f, file_name="DataPilot_Report.html", mime="text/html")
 
     with out_c3:
         if report_type in ["PDF", "Both"]:
             pdf_path = report_path.replace(".html", ".pdf")
             if os.path.exists(pdf_path):
                 with open(pdf_path, "rb") as f:
-                    st.download_button("⬇️ Download Report (PDF)", data=f, file_name="DataPilot_Report.pdf", mime="application/pdf")
+                    st.download_button("Download Report (PDF)", data=f, file_name="DataPilot_Report.pdf", mime="application/pdf")
             else:
                 st.caption("PDF export requires wkhtmltopdf")
 
 else:
-    st.info("👈 Upload a CSV / Excel file or select a sample dataset in the sidebar to start analysis.")
+    st.info("Upload a CSV / Excel file or select a sample dataset in the sidebar to start analysis.")

@@ -1,8 +1,13 @@
 pandas
+numpy
 openpyxl
 matplotlib
 seaborn
+plotly
+duckdb
+scikit-learn
+scipy
 jinja2
+pdfkit
 streamlit
 PyYAML
-scipy

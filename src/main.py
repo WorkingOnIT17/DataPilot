@@ -1,7 +1,17 @@
+import sys
 import os
 import argparse
 import yaml
 import pandas as pd
+
+# Ensure stdout/stderr use utf-8 encoding for Windows terminals
+if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
+# Ensure project root is on sys.path for direct CLI execution
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from src import cleaning, validation, anomalies, visualize, reporting, predictive
 
 
