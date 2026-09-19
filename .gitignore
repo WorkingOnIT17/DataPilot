@@ -48,5 +48,10 @@ report.html
 report.pdf
 DataPilot_Report.html
 DataPilot_Report.pdf
+cleaned*.xlsx
+cleaned*.csv
 
 # Note: sample_data/ and data/ are tracked for testing and demo execution
+
+#output files
+*.png

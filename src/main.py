@@ -12,7 +12,7 @@ if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
 # Ensure project root is on sys.path for direct CLI execution
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from src import cleaning, validation, anomalies, visualize, reporting, predictive
+from src import cleaning, validation, anomalies, visualize, reporting, predictive, io_utils
 
 
 def load_config(config_path: str):
@@ -21,15 +21,19 @@ def load_config(config_path: str):
 
 
 def run_pipeline(input_file: str, output_dir: str, config_path: str):
+    # Ensure outputs are always routed into the outputs directory, never project root
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    if not output_dir or output_dir.strip() in [".", "", "./", ".\\"] or os.path.abspath(output_dir) == project_root:
+        output_dir = os.path.join(project_root, "outputs")
+
     os.makedirs(output_dir, exist_ok=True)
 
     # Load config
     config = load_config(config_path)
 
-    # Load data
-    df = pd.read_excel(input_file)
-    print(f"📥 Loading file: {input_file}")
-    print(f"✅ Loaded {df.shape[0]} rows and {df.shape[1]} columns")
+    df = io_utils.load_file(input_file, auto_clean_header=True)
+    print(f"[INFO] Loading file: {input_file}")
+    print(f"[OK] Loaded {df.shape[0]} rows and {df.shape[1]} columns")
 
     # --- Cleaning ---
     df_clean = cleaning.clean_data(df, config)
@@ -37,15 +41,15 @@ def run_pipeline(input_file: str, output_dir: str, config_path: str):
     df_clean.to_excel(cleaned_file, index=False)
 
     # --- Validation ---
-    validation_issues = validation.validate_data(df_clean, config.get("validation", []))
+    validation_issues = validation.validate_data(df_clean, config.get("validation_rules", []))
 
     # --- Anomalies ---
     anomalies_found = anomalies.detect_anomalies(df_clean)
 
     # --- Visualizations ---
-    figures = visualize.generate_visuals(df_clean, output_dir)  # ✅ Pass output_dir here
+    figures = visualize.generate_visuals(df_clean, output_dir)
 
-        # --- Predictive Insights ---
+    # --- Predictive Insights ---
     insights = predictive.run_predictive_models(df_clean)
 
     # --- Summary for Report ---
@@ -67,7 +71,7 @@ def run_pipeline(input_file: str, output_dir: str, config_path: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Excel Data Cleaner Bot")
+    parser = argparse.ArgumentParser(description="DataPilot - AI Data Analyst")
     parser.add_argument("--input", required=True, help="Path to input Excel file")
     parser.add_argument("--outdir", default="outputs", help="Output directory")
     parser.add_argument("--config", default="config/config.yaml", help="Path to config.yaml")

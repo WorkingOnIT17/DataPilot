@@ -2,21 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Excel Data Cleaner Bot Report</title>
+    <title>DataPilot - Executive Report</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
-            background: #121212;   /* Dark background */
-            color: #e0e0e0;        /* Light text */
+            background: #121212;
+            color: #e0e0e0;
         }
         h1, h2, h3 {
-            color: #ffffff;         /* Headings in white */
+            color: #ffffff;
         }
         .section {
             margin-bottom: 30px;
             padding: 20px;
-            background: #1e1e1e;   /* Dark section background */
+            background: #1e1e1e;
             border-radius: 10px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.5);
         }
@@ -27,7 +27,7 @@
             border: 1px solid #333;
             border-radius: 8px;
             padding: 5px;
-            background: #222;       /* Dark image background */
+            background: #222;
         }
         ul {
             list-style-type: none;
@@ -53,7 +53,7 @@
     </style>
 </head>
 <body>
-    <h1>Excel Data Cleaner Bot Report</h1>
+    <h1>DataPilot - Executive Report</h1>
 
     <div class="section">
         <h2>Summary</h2>
@@ -73,7 +73,7 @@
             {% endfor %}
             </ul>
         {% else %}
-            <p>✅ No validation issues found</p>
+            <p>No validation issues found.</p>
         {% endif %}
     </div>
 
@@ -82,32 +82,33 @@
         {% if anomalies %}
             <pre>{{ anomalies }}</pre>
         {% else %}
-            <p>✅ No anomalies detected</p>
+            <p>No anomalies detected.</p>
         {% endif %}
     </div>
 
     <div class="section">
-        <h2>🔮 Predictive Insights</h2>
+        <h2>Predictive Insights</h2>
         {% if insights %}
             {% for key, value in insights.items() %}
                 <h3>{{ key.replace('_',' ').title() }}</h3>
                 {% if value.formula %}
-                    <p><b>Formula:</b> {{ value.formula }}</p>
+                    <p><b>Formula:</b> <code>{{ value.formula }}</code></p>
+                    {% if value.r2 is defined %}
+                        <p><b>Fit Quality (R2):</b> {{ value.r2 }}</p>
+                    {% endif %}
                     <p><i>{{ value.interpretation }}</i></p>
                 {% elif value.summary %}
                     <p><b>Summary:</b> {{ value.summary }}</p>
                     <p><i>{{ value.interpretation }}</i></p>
-                    {% if value.image %}
-                        <img src="data:image/png;base64,{{ value.image }}" alt="{{ key }}">
-                    {% endif %}
+                {% endif %}
+                {% if value.image %}
+                    <img src="data:image/png;base64,{{ value.image }}" alt="{{ key }}">
                 {% endif %}
             {% endfor %}
         {% else %}
             <p>No predictive insights available.</p>
         {% endif %}
     </div>
-    
-    
 
     <div class="section">
         <h2>Visualizations</h2>

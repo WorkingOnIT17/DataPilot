@@ -19,12 +19,51 @@ def _fig_to_base64(fig) -> str:
     plt.close(fig)
     return img_b64
 
-def generate_visuals(df: pd.DataFrame, output_dir: str) -> dict:
+
+def _safe_filename(name: str) -> str:
+    """Sanitize a string for use in file paths."""
+    return "".join(c if c.isalnum() or c in ("_", "-") else "_" for c in str(name))
+
+
+# ---------------------------------------------------------------------------
+# Shared Plotly layout helper
+# ---------------------------------------------------------------------------
+
+_PLOTLY_LAYOUT_DEFAULTS = dict(
+    template="plotly_dark",
+    font=dict(family="Inter, sans-serif", size=13),
+    margin=dict(l=60, r=30, t=50, b=60),
+    paper_bgcolor="#0E1117",
+    plot_bgcolor="#0E1117",
+)
+
+
+def _apply_layout(fig, *, height: int = 400, title: str = ""):
+    """Apply consistent layout defaults to a Plotly figure."""
+    fig.update_layout(
+        **_PLOTLY_LAYOUT_DEFAULTS,
+        height=height,
+        title=dict(text=title, x=0.02, font=dict(size=16)),
+    )
+    return fig
+
+
+# ---------------------------------------------------------------------------
+# Static charts for HTML report (matplotlib / seaborn)
+# ---------------------------------------------------------------------------
+
+def generate_visuals(df: pd.DataFrame, output_dir: str = "outputs") -> dict:
     """
     Generate static matplotlib/seaborn charts for report generation.
     """
     print("[VISUALS] Generating visualizations for report...")
     figs = {}
+    
+    # Ensure outputs are routed into an output folder and never root
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    if not output_dir or output_dir.strip() in [".", "", "./", ".\\"] or os.path.abspath(output_dir) == project_root:
+        output_dir = os.path.join(project_root, "outputs")
+
     os.makedirs(output_dir, exist_ok=True)
 
     # Apply dark style
@@ -65,7 +104,7 @@ def generate_visuals(df: pd.DataFrame, output_dir: str) -> dict:
                     fig, ax = plt.subplots(figsize=(6, 4))
                     sns.histplot(valid_data, kde=True, bins=25, color="#1f77b4", ax=ax)
                     ax.set_title(f"Distribution of {col}", color='white')
-                    path = os.path.join(output_dir, f"dist_{col}.png")
+                    path = os.path.join(output_dir, f"dist_{_safe_filename(col)}.png")
                     fig.savefig(path, facecolor=fig.get_facecolor(), bbox_inches="tight")
                     figs[f"dist_{col}"] = _fig_to_base64(fig)
             except Exception as e:
@@ -82,29 +121,86 @@ def generate_visuals(df: pd.DataFrame, output_dir: str) -> dict:
                 val_counts.plot(kind="bar", color="#ff7f0e", ax=ax)
                 ax.set_title(f"Top 10 Frequency: {col}", color='white')
                 plt.xticks(rotation=45, ha="right")
-                path = os.path.join(output_dir, f"freq_{col}.png")
+                path = os.path.join(output_dir, f"freq_{_safe_filename(col)}.png")
                 fig.savefig(path, facecolor=fig.get_facecolor(), bbox_inches="tight")
                 figs[f"freq_{col}"] = _fig_to_base64(fig)
         except Exception as e:
             print(f"[VISUAL_WARN] Frequency plot error for {col}: {e}")
 
+    # 5. Regression model plot
+    reg_x, reg_y = None, None
+    if "Experience" in df.columns and "Salary" in df.columns:
+        reg_x, reg_y = "Experience", "Salary"
+    elif "Quantity" in df.columns and "Sales" in df.columns:
+        reg_x, reg_y = "Quantity", "Sales"
+    elif "Units" in df.columns and "Total" in df.columns:
+        reg_x, reg_y = "Units", "Total"
+    elif "Sales" in df.columns and "Profit" in df.columns:
+        reg_x, reg_y = "Sales", "Profit"
+    elif len(numeric_df.columns) >= 2:
+        try:
+            corr_mat = numeric_df.corr().abs()
+            corr_vals = corr_mat.to_numpy(copy=True)
+            np.fill_diagonal(corr_vals, 0)
+            corr_mat = pd.DataFrame(corr_vals, index=corr_mat.index, columns=corr_mat.columns)
+            if not corr_mat.empty and corr_mat.max().max() > 0.05:
+                col_max = corr_mat.stack().idxmax()
+                reg_x, reg_y = col_max[0], col_max[1]
+        except Exception as e:
+            print(f"[VISUAL_WARN] Correlation pair selection error: {e}")
+
+    if reg_x and reg_y:
+        try:
+            reg_valid = df[[reg_x, reg_y]].dropna()
+            if len(reg_valid) >= 3:
+                X_v = reg_valid[[reg_x]].values
+                y_v = reg_valid[reg_y].values
+                from sklearn.linear_model import LinearRegression
+                from sklearn.metrics import r2_score
+                lr_model = LinearRegression()
+                lr_model.fit(X_v, y_v)
+                y_fit = lr_model.predict(X_v)
+                r2_val = r2_score(y_v, y_fit)
+
+                fig, ax = plt.subplots(figsize=(7, 4))
+                ax.scatter(X_v, y_v, color="#4CC9F0", alpha=0.7, label="Observed Data")
+                sort_idx = np.argsort(X_v.flatten())
+                ax.plot(
+                    X_v.flatten()[sort_idx],
+                    y_fit[sort_idx],
+                    color="#F72585",
+                    linewidth=2.5,
+                    label=f"Fit (R2={r2_val:.3f})",
+                )
+                ax.set_title(f"Linear Regression: {reg_y} vs {reg_x}", color="white")
+                ax.set_xlabel(reg_x, color="white")
+                ax.set_ylabel(reg_y, color="white")
+                ax.legend(facecolor="#1e1e1e", edgecolor="#333333", labelcolor="white")
+                plt.tight_layout()
+                path = os.path.join(output_dir, "regression_model.png")
+                fig.savefig(path, facecolor=fig.get_facecolor(), bbox_inches="tight")
+                figs["regression_model"] = _fig_to_base64(fig)
+        except Exception as e:
+            print(f"[VISUAL_WARN] Static regression plot error: {e}")
+
     print(f"[VISUALS_OK] Generated {len(figs)} figures successfully")
     return figs
 
 
+# ---------------------------------------------------------------------------
+# Interactive Plotly charts for the Streamlit dashboard
+# ---------------------------------------------------------------------------
+
 def generate_interactive_visuals(df: pd.DataFrame) -> dict:
     """
-    Generate interactive Plotly charts for the Streamlit dashboard:
-    - Missing Values Overview
-    - Top Products / Items
-    - Category / Segment Breakdown
-    - Monthly / Time Trends
-    - Correlation Matrix
-    - Numeric Feature Distributions
+    Generate interactive Plotly charts for the Streamlit dashboard.
+    Returns a dict keyed by chart name -> Plotly figure.
     """
     plotly_figs = {}
 
+    # ------------------------------------------------------------------
     # 1. Missing Values Bar Chart (if any)
+    # ------------------------------------------------------------------
     missing_counts = df.isnull().sum()
     missing_cols = missing_counts[missing_counts > 0]
     if not missing_cols.empty:
@@ -120,22 +216,25 @@ def generate_interactive_visuals(df: pd.DataFrame) -> dict:
             y="Column",
             orientation="h",
             text="Missing_Pct",
-            title="Missing Values by Column (%)",
             color="Missing_Pct",
             color_continuous_scale="Reds"
         )
         fig_miss.update_traces(texttemplate="%{text:.1f}%", textposition="outside")
-        fig_miss.update_layout(template="plotly_white", margin=dict(l=10, r=10, t=40, b=10), height=320, coloraxis_showscale=False)
+        _apply_layout(fig_miss, height=max(280, len(miss_df) * 40), title="Missing Values by Column (%)")
+        fig_miss.update_layout(coloraxis_showscale=False)
         plotly_figs["missing_values"] = fig_miss
 
-    # Detect key business columns
+    # ------------------------------------------------------------------
+    # Column role detection (shared across charts)
+    # ------------------------------------------------------------------
     cols_lower = {str(c).lower().replace(" ", "_"): c for c in df.columns}
     numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
     cat_cols = df.select_dtypes(include=["object", "category"]).columns.tolist()
 
     # Find metric (Revenue / Total / Sales / Profit / Units)
     metric_col = None
-    for key in ["sales", "revenue", "total", "total_(usd)", "subscription_cost", "profit", "units", "quantity", "cost_price_total_(usd)"]:
+    for key in ["sales", "revenue", "total", "total_(usd)", "subscription_cost",
+                 "profit", "units", "quantity", "cost_price_total_(usd)"]:
         if key in cols_lower and cols_lower[key] in numeric_cols:
             metric_col = cols_lower[key]
             break
@@ -151,7 +250,8 @@ def generate_interactive_visuals(df: pd.DataFrame) -> dict:
 
     # Find category / region column
     cat_col = None
-    for key in ["category", "segment", "region", "rep", "subscription_interval", "department", "assigned_to"]:
+    for key in ["category", "segment", "region", "rep",
+                 "subscription_interval", "department", "assigned_to"]:
         if key in cols_lower:
             cat_col = cols_lower[key]
             break
@@ -165,86 +265,202 @@ def generate_interactive_visuals(df: pd.DataFrame) -> dict:
             date_col = c
             break
 
+    # ------------------------------------------------------------------
     # 2. Top Products / Items Chart
+    # ------------------------------------------------------------------
     if prod_col and metric_col:
-        top_items = df.groupby(prod_col, as_index=False)[metric_col].sum().sort_values(by=metric_col, ascending=False).head(10)
-        fig_top = px.bar(
-            top_items,
-            x=prod_col,
-            y=metric_col,
-            text=metric_col,
-            title=f"Top 10 {prod_col} by {metric_col}",
-            color=metric_col,
-            color_continuous_scale="Blues"
-        )
-        fig_top.update_traces(texttemplate="%{text:,.2s}", textposition="outside")
-        fig_top.update_layout(template="plotly_white", margin=dict(l=10, r=10, t=40, b=10), height=360, coloraxis_showscale=False)
-        plotly_figs["top_products"] = fig_top
+        try:
+            top_items = (
+                df.groupby(prod_col, as_index=False)[metric_col]
+                .sum()
+                .sort_values(by=metric_col, ascending=False)
+                .head(10)
+            )
+            fig_top = px.bar(
+                top_items,
+                x=prod_col,
+                y=metric_col,
+                text=metric_col,
+                color=metric_col,
+                color_continuous_scale="Blues"
+            )
+            fig_top.update_traces(texttemplate="%{text:,.2s}", textposition="outside")
+            _apply_layout(fig_top, height=420, title=f"Top 10 {prod_col} by {metric_col}")
+            fig_top.update_layout(
+                coloraxis_showscale=False,
+                xaxis_tickangle=-40,
+            )
+            plotly_figs["top_products"] = fig_top
+        except Exception as e:
+            print(f"[VISUAL_WARN] Top products chart error: {e}")
 
-    # 3. Category / Segment Breakdown (Pie / Donut)
+    # ------------------------------------------------------------------
+    # 3. Category / Segment Breakdown (Donut)
+    # ------------------------------------------------------------------
     if cat_col and metric_col:
-        cat_data = df.groupby(cat_col, as_index=False)[metric_col].sum().sort_values(by=metric_col, ascending=False)
-        fig_cat = px.pie(
-            cat_data,
-            names=cat_col,
-            values=metric_col,
-            hole=0.4,
-            title=f"{metric_col} Breakdown by {cat_col}",
-            color_discrete_sequence=px.colors.qualitative.Prism
-        )
-        fig_cat.update_traces(textposition="inside", textinfo="percent+label")
-        fig_cat.update_layout(template="plotly_white", margin=dict(l=10, r=10, t=40, b=10), height=360)
-        plotly_figs["category_breakdown"] = fig_cat
+        try:
+            cat_data = (
+                df.groupby(cat_col, as_index=False)[metric_col]
+                .sum()
+                .sort_values(by=metric_col, ascending=False)
+            )
+            fig_cat = px.pie(
+                cat_data,
+                names=cat_col,
+                values=metric_col,
+                hole=0.45,
+                color_discrete_sequence=px.colors.qualitative.Prism
+            )
+            fig_cat.update_traces(textposition="inside", textinfo="percent+label")
+            _apply_layout(fig_cat, height=420, title=f"{metric_col} by {cat_col}")
+            plotly_figs["category_breakdown"] = fig_cat
+        except Exception as e:
+            print(f"[VISUAL_WARN] Category breakdown chart error: {e}")
 
+    # ------------------------------------------------------------------
     # 4. Time Trends (if date column exists)
+    # ------------------------------------------------------------------
     if date_col and metric_col:
         try:
             temp_df = df.copy()
             temp_df[date_col] = pd.to_datetime(temp_df[date_col], errors="coerce")
             temp_df = temp_df.dropna(subset=[date_col])
-            if not temp_df.empty:
-                trend_df = temp_df.set_index(date_col).resample("M")[metric_col].sum().reset_index()
-                trend_df["Period"] = trend_df[date_col].dt.strftime("%Y-%m")
-                fig_trend = px.line(
-                    trend_df,
-                    x="Period",
-                    y=metric_col,
-                    markers=True,
-                    title=f"Monthly Trend: {metric_col}",
-                    line_shape="linear"
+            if len(temp_df) >= 2:
+                # Sort by date and aggregate monthly
+                temp_df = temp_df.sort_values(date_col)
+                trend_df = (
+                    temp_df
+                    .set_index(date_col)
+                    .resample("ME")[metric_col]
+                    .sum()
+                    .reset_index()
                 )
-                fig_trend.update_traces(line_color="#4361EE", line_width=3)
-                fig_trend.update_layout(template="plotly_white", margin=dict(l=10, r=10, t=40, b=10), height=360)
-                plotly_figs["monthly_trend"] = fig_trend
-        except Exception:
-            pass
+                if len(trend_df) >= 2:
+                    trend_df["Period"] = trend_df[date_col].dt.strftime("%Y-%m")
+                    fig_trend = px.line(
+                        trend_df,
+                        x="Period",
+                        y=metric_col,
+                        markers=True,
+                        line_shape="spline"
+                    )
+                    fig_trend.update_traces(
+                        line_color="#4CC9F0",
+                        line_width=3,
+                        marker=dict(size=8)
+                    )
+                    _apply_layout(fig_trend, height=400, title=f"Monthly Trend: {metric_col}")
+                    plotly_figs["monthly_trend"] = fig_trend
+        except Exception as e:
+            print(f"[VISUAL_WARN] Monthly trend chart error: {e}")
 
+    # ------------------------------------------------------------------
     # 5. Correlation Heatmap
+    # ------------------------------------------------------------------
     if len(numeric_cols) > 1:
-        corr_matrix = df[numeric_cols].corr().round(2)
-        fig_corr = px.imshow(
-            corr_matrix,
-            text_auto=True,
-            aspect="auto",
-            color_continuous_scale="RdBu_r",
-            zmin=-1,
-            zmax=1,
-            title="Correlation Matrix"
-        )
-        fig_corr.update_layout(template="plotly_white", margin=dict(l=10, r=10, t=40, b=10), height=380)
-        plotly_figs["correlation_matrix"] = fig_corr
+        try:
+            corr_matrix = df[numeric_cols].corr().round(2)
+            fig_corr = px.imshow(
+                corr_matrix,
+                text_auto=True,
+                aspect="auto",
+                color_continuous_scale="RdBu_r",
+                zmin=-1,
+                zmax=1,
+            )
+            _apply_layout(fig_corr, height=max(380, len(numeric_cols) * 50), title="Correlation Matrix")
+            plotly_figs["correlation_matrix"] = fig_corr
+        except Exception as e:
+            print(f"[VISUAL_WARN] Correlation matrix error: {e}")
 
-    # 6. Feature Distribution (First Numeric Column)
-    if numeric_cols:
-        dist_col = numeric_cols[0]
-        fig_dist = px.histogram(
-            df.dropna(subset=[dist_col]),
-            x=dist_col,
-            marginal="box",
-            title=f"Distribution of {dist_col}",
-            color_discrete_sequence=["#4895EF"]
-        )
-        fig_dist.update_layout(template="plotly_white", margin=dict(l=10, r=10, t=40, b=10), height=340)
-        plotly_figs["distribution"] = fig_dist
+    # ------------------------------------------------------------------
+    # 6. Feature Distributions (up to 3 numeric columns)
+    # ------------------------------------------------------------------
+    dist_cols = numeric_cols[:3]
+    for i, dist_col in enumerate(dist_cols):
+        try:
+            valid = df[dist_col].dropna()
+            if len(valid) >= 2:
+                colors = ["#4895EF", "#F72585", "#4CC9F0"]
+                fig_dist = px.histogram(
+                    df.dropna(subset=[dist_col]),
+                    x=dist_col,
+                    marginal="box",
+                    color_discrete_sequence=[colors[i % len(colors)]]
+                )
+                _apply_layout(fig_dist, height=380, title=f"Distribution: {dist_col}")
+                key = f"distribution_{i}" if i > 0 else "distribution"
+                plotly_figs[key] = fig_dist
+        except Exception as e:
+            print(f"[VISUAL_WARN] Distribution chart error for {dist_col}: {e}")
+
+    # ------------------------------------------------------------------
+    # 7. Linear Regression Model (Scatter + Fit Line)
+    # ------------------------------------------------------------------
+    reg_x, reg_y = None, None
+    if "Experience" in df.columns and "Salary" in df.columns:
+        reg_x, reg_y = "Experience", "Salary"
+    elif "Quantity" in df.columns and "Sales" in df.columns:
+        reg_x, reg_y = "Quantity", "Sales"
+    elif "Units" in df.columns and "Total" in df.columns:
+        reg_x, reg_y = "Units", "Total"
+    elif "Sales" in df.columns and "Profit" in df.columns:
+        reg_x, reg_y = "Sales", "Profit"
+    elif len(numeric_cols) >= 2:
+        try:
+            corr_mat = df[numeric_cols].corr().abs()
+            corr_vals = corr_mat.to_numpy(copy=True)
+            np.fill_diagonal(corr_vals, 0)
+            corr_mat = pd.DataFrame(corr_vals, index=corr_mat.index, columns=corr_mat.columns)
+            if not corr_mat.empty and corr_mat.max().max() > 0.05:
+                col_max = corr_mat.stack().idxmax()
+                reg_x, reg_y = col_max[0], col_max[1]
+        except Exception as e:
+            print(f"[VISUAL_WARN] Correlation pair selection error: {e}")
+
+    if reg_x and reg_y:
+        try:
+            reg_df = df[[reg_x, reg_y]].dropna()
+            if len(reg_df) >= 3:
+                X_arr = reg_df[[reg_x]].values
+                y_arr = reg_df[reg_y].values
+                from sklearn.linear_model import LinearRegression
+                from sklearn.metrics import r2_score
+                lr = LinearRegression()
+                lr.fit(X_arr, y_arr)
+                y_pred = lr.predict(X_arr)
+                r2 = float(r2_score(y_arr, y_pred))
+                coef = lr.coef_[0]
+                intercept = lr.intercept_
+
+                fig_reg = px.scatter(
+                    reg_df,
+                    x=reg_x,
+                    y=reg_y,
+                    opacity=0.7,
+                    color_discrete_sequence=["#4CC9F0"]
+                )
+                fig_reg.update_traces(name="Observed Data", showlegend=True)
+                sort_idx = np.argsort(X_arr.flatten())
+                fig_reg.add_trace(
+                    go.Scatter(
+                        x=X_arr.flatten()[sort_idx],
+                        y=y_pred[sort_idx],
+                        mode="lines",
+                        name=f"Fit: {reg_y} = {coef:.2f}*{reg_x} + {intercept:.2f}",
+                        line=dict(color="#F72585", width=3)
+                    )
+                )
+                _apply_layout(
+                    fig_reg,
+                    height=420,
+                    title=f"Linear Regression: {reg_y} vs {reg_x} (R2 = {r2:.3f})"
+                )
+                fig_reg.update_layout(
+                    legend=dict(yanchor="top", y=0.98, xanchor="left", x=0.02)
+                )
+                plotly_figs["regression_model"] = fig_reg
+        except Exception as e:
+            print(f"[VISUAL_WARN] Interactive regression chart error: {e}")
 
     return plotly_figs

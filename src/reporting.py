@@ -12,7 +12,7 @@ def generate_report(validation, anomalies, figures, summary, insights=None, outp
     # Add metadata
     footer = {
         "generated_on": datetime.now().strftime("%d %B %Y, %I:%M %p"),
-        "branding": "DataPilot – AI Data Analyst & Recommendation Engine (40% Milestone)"
+        "branding": "DataPilot - AI Data Analyst & Recommendation Engine"
     }
 
     # Render HTML
@@ -25,8 +25,15 @@ def generate_report(validation, anomalies, figures, summary, insights=None, outp
         footer=footer
     )
 
-    # Ensure output folder exists
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    # Ensure output folder exists and never writes directly to project root
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    out_dir = os.path.dirname(output_path)
+    if not out_dir or out_dir.strip() in [".", "", "./", ".\\"] or os.path.abspath(out_dir) == project_root:
+        file_name = os.path.basename(output_path) or "report.html"
+        output_path = os.path.join(project_root, "outputs", file_name)
+        out_dir = os.path.dirname(output_path)
+
+    os.makedirs(out_dir, exist_ok=True)
 
     # Save HTML
     with open(output_path, "w", encoding="utf-8") as f:
