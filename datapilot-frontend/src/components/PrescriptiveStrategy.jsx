@@ -14,33 +14,33 @@ export default function PrescriptiveStrategy({ recommendationsData, onApplyActio
   const topCategory = charts.category_breakdown?.[0];
   const anomalyCount = analytics?.anomalies_count ?? 14;
 
-  // Generate dataset-grounded recommendations if backend returned few
+  // Generate dataset-grounded recommendations in plain business terms
   const dynamicFallbacks = [
     topSku ? {
       priority: topSku.share_pct > 35 ? "High" : "Medium",
-      category: "Portfolio Risk",
-      title: `Evaluate Revenue Concentration in '${topSku.name}' (${topSku.share_pct}% Share)`,
-      observation: `Top catalog entity '${topSku.name}' accounts for ${topSku.share_pct}% of total measured revenue (${topSku.revenue_formatted}).`,
-      action: "Implement targeted cross-selling initiatives and diversify catalog lines to mitigate single-product revenue dependency.",
-      impact: "Reduces structural portfolio vulnerability and stabilizes cash flow.",
+      category: "Sales Concentration",
+      title: `High Sales Reliance on '${topSku.name}' (${topSku.share_pct}% of Total Sales)`,
+      observation: `Your #1 best-selling product '${topSku.name}' makes up ${topSku.share_pct}% of total measured revenue (${topSku.revenue_formatted}).`,
+      action: "Promote related products alongside this item and expand your catalog to reduce business risk from relying on a single item.",
+      impact: "Stabilizes cash flow and reduces reliance on one product.",
       impactType: "neutral"
     } : null,
     topCategory ? {
       priority: "Medium",
-      category: "Category Strategy",
-      title: `Capitalize on Market Leadership in '${topCategory.name}' Segment`,
-      observation: `The '${topCategory.name}' sector generates ${topCategory.pct}% of active ledger volume with strong velocity.`,
-      action: "Scale successful acquisition and retention campaigns from this segment across lagging secondary categories.",
-      impact: "+15% Projected Secondary Segment Growth",
+      category: "Category Growth",
+      title: `Expand on Strong Demand in the '${topCategory.name}' Category`,
+      observation: `The '${topCategory.name}' category generates ${topCategory.pct}% of your sales with consistent customer demand.`,
+      action: "Apply the marketing and bundling approaches that work here to help boost your secondary product categories.",
+      impact: "+15% Projected Growth in Secondary Categories",
       impactType: "positive"
     } : null,
     {
       priority: "Low",
-      category: "Data Hygiene & Monitoring",
-      title: "Maintain Continuous Schema & Outlier Health Tracking",
-      observation: `Dataset passed base quality checks across ${rowCount} records with ${anomalyCount} isolated outliers detected.`,
-      action: "Maintain automated nightly schema validation rules and set anomaly alerting triggers in config.yaml.",
-      impact: "Zero Operational Data Gaps",
+      category: "Data Health",
+      title: "Keep Product Data & Transactions Clean",
+      observation: `Your dataset passed core health checks across ${rowCount} records with ${anomalyCount} unusual transactions flagged for review.`,
+      action: "Review flagged transactions periodically to prevent billing errors and catch pricing mistakes early.",
+      impact: "Clean, Trustworthy Business Data",
       impactType: "positive"
     }
   ].filter(Boolean);
@@ -48,10 +48,10 @@ export default function PrescriptiveStrategy({ recommendationsData, onApplyActio
   const allRecs = (rawRecs.length > 0 ? rawRecs : dynamicFallbacks).map((r, i) => ({
     id: `REC-2024-${1000 + i}`,
     priority: r.priority || "Medium",
-    category: r.category || "Strategic Optimization",
+    category: r.category || "Profit Optimization",
     title: r.title || "Business Performance Recommendation",
-    observation: r.observation || "Detected anomaly in historical transaction logs.",
-    action: r.action || "Implement operational adjustment.",
+    observation: r.observation || "Detected unusual pattern in transaction history.",
+    action: r.action || "Implement recommended operational adjustment.",
     impact: r.impact || "+$120k Projected Impact",
     impactType: r.impactType || "positive"
   }));
@@ -83,46 +83,45 @@ export default function PrescriptiveStrategy({ recommendationsData, onApplyActio
           <div className="space-y-space-xs max-w-2xl">
             <div className="flex items-center gap-space-sm">
               <span className="px-space-sm py-0.5 rounded bg-error-container text-error font-label-caps text-label-caps uppercase flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span> Prescriptive Engine
+                <span className="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span> Smart Business Advisor
               </span>
-              <span className="text-on-surface-variant font-code-sm text-code-sm">v2.4 Kernel • In-Memory Solver</span>
+              <span className="text-on-surface-variant font-code-sm text-code-sm">Instant Insights</span>
               <span className="text-outline-variant font-code-sm text-code-sm">/</span>
               <span className="text-primary font-code-sm text-code-sm truncate max-w-xs">{activeDataset}</span>
             </div>
             <h1 className="font-headline-md text-headline-md text-on-surface tracking-tight">
-              Prescriptive Strategic Recommendations
+              Actionable Profit & Growth Recommendations
             </h1>
             <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-              Automated heuristic agent evaluating <span className="text-on-surface font-semibold">{activeDataset}</span> ({rowCount} records). Identified evidence-grounded operational adjustments and margin safeguards.
+              Automated recommendations based on <span className="text-on-surface font-semibold">{activeDataset}</span> ({rowCount} records). Here are straightforward ways to increase profit, reduce business risk, and optimize product margins.
             </p>
           </div>
 
           {/* Quick Metrics Ribbon */}
           <div className="grid grid-cols-3 gap-space-sm shrink-0">
             <div className="bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-sm border border-surface-container-high/30">
-              <span className="font-label-caps text-label-caps uppercase text-outline">Identified Recovery</span>
+              <span className="font-label-caps text-label-caps uppercase text-outline">Potential Extra Profit</span>
               <div className="font-metric-val text-metric-val text-primary mt-1">+${simulatedRecovery}M</div>
-              <span className="font-code-sm text-code-sm text-tertiary">Annualized EBITDA</span>
+              <span className="font-code-sm text-code-sm text-tertiary">Estimated Annual Gain</span>
             </div>
             <div className="bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-sm border border-surface-container-high/30">
-              <span className="font-label-caps text-label-caps uppercase text-outline">Lead Item Share</span>
+              <span className="font-label-caps text-label-caps uppercase text-outline">Top Product Share</span>
               <div className="font-metric-val text-metric-val text-tertiary mt-1">{concentrationPct}</div>
               <span className="font-code-sm text-code-sm text-on-surface-variant truncate max-w-[100px]">
-                {topSku?.name || 'Top SKU'} ({concentrationAmt})
+                {topSku?.name || 'Top Product'} ({concentrationAmt})
               </span>
             </div>
             <div className="bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-sm border border-surface-container-high/30">
-              <span className="font-label-caps text-label-caps uppercase text-outline">Anomaly Footprint</span>
+              <span className="font-label-caps text-label-caps uppercase text-outline">Unusual Transactions</span>
               <div className="font-metric-val text-metric-val text-on-surface mt-1">{anomalyCount}</div>
-              <span className="font-code-sm text-code-sm text-primary">Isolated Outliers</span>
+              <span className="font-code-sm text-code-sm text-primary">Flagged for Review</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 2. Priority Filters & Category Toolbar */}
+      {/* 2. Priority Filters */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md bg-surface-container-lowest p-space-sm rounded-xl shadow-sm border border-surface-container-high/30">
-        {/* Priority Filter Pills */}
         <div className="flex flex-wrap items-center gap-space-xs">
           {['All', 'High', 'Medium', 'Low'].map((p) => {
             const isSelected = selectedPriority === p;
@@ -153,7 +152,7 @@ export default function PrescriptiveStrategy({ recommendationsData, onApplyActio
         </div>
       </div>
 
-      {/* 3. Main Recommendations List */}
+      {/* 3. Main Recommendations List & Simulator */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
         {/* Recommendation Cards (8 cols) */}
         <div className="lg:col-span-8 space-y-space-md">
@@ -188,7 +187,7 @@ export default function PrescriptiveStrategy({ recommendationsData, onApplyActio
                 <div className="p-space-sm rounded-lg bg-surface-container-lowest border border-surface-container-high/30 space-y-1">
                   <div className="flex items-center gap-1 font-label-caps text-label-caps uppercase text-primary font-bold">
                     <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-                    <span>Recommended Prescriptive Action</span>
+                    <span>Recommended Action</span>
                   </div>
                   <p className="font-body-sm text-body-sm text-on-surface">{rec.action}</p>
                 </div>
@@ -203,7 +202,7 @@ export default function PrescriptiveStrategy({ recommendationsData, onApplyActio
                     className="px-space-md py-1 rounded bg-primary hover:bg-surface-tint text-on-primary font-body-sm text-body-sm font-semibold transition-colors shadow-sm"
                     type="button"
                   >
-                    Adopt Action
+                    Plan Action
                   </button>
                 </div>
               </div>
@@ -212,7 +211,7 @@ export default function PrescriptiveStrategy({ recommendationsData, onApplyActio
             <div className="bg-surface-container-low rounded-xl p-space-xl text-center space-y-space-xs border border-surface-container-high/30">
               <span className="material-symbols-outlined text-outline text-[32px]">task_alt</span>
               <p className="font-body-md text-body-md text-on-surface font-semibold">No recommendations match filter.</p>
-              <p className="font-body-sm text-body-sm text-on-surface-variant">Switch priority filter to view all strategic actions.</p>
+              <p className="font-body-sm text-body-sm text-on-surface-variant">Switch priority filter to view all suggestions.</p>
             </div>
           )}
         </div>
@@ -222,16 +221,16 @@ export default function PrescriptiveStrategy({ recommendationsData, onApplyActio
           <div className="bg-surface-container-low rounded-xl p-space-lg shadow-sm border border-surface-container-high/30 space-y-space-md">
             <div className="flex items-center gap-space-xs">
               <span className="material-symbols-outlined text-primary text-[20px]">tune</span>
-              <h3 className="font-headline-sm text-headline-sm text-on-surface">Policy Constraint Simulator</h3>
+              <h3 className="font-headline-sm text-headline-sm text-on-surface">Profit Improvement Simulator</h3>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant">
-              Model margin adjustments against the active DuckDB dataset in memory.
+              See how adjusting minimum margins or flagging loss-making products could improve your bottom line.
             </p>
 
             <div className="space-y-space-sm pt-space-xs">
               <div>
                 <div className="flex justify-between font-code-sm text-code-sm mb-1">
-                  <span className="text-on-surface">Target Margin Floor</span>
+                  <span className="text-on-surface">Minimum Target Margin</span>
                   <span className="text-primary font-bold">{discountFloor}%</span>
                 </div>
                 <input
@@ -252,18 +251,18 @@ export default function PrescriptiveStrategy({ recommendationsData, onApplyActio
                   className="accent-primary rounded"
                 />
                 <span className="font-body-sm text-body-sm text-on-surface">
-                  Flag Loss-Making Products for Restructure
+                  Flag products sold at a loss for review
                 </span>
               </label>
             </div>
 
             <div className="p-space-md rounded-lg bg-surface-container-lowest border border-primary/20 space-y-1">
-              <span className="font-label-caps text-label-caps uppercase text-primary font-bold">Simulated Annual Impact</span>
+              <span className="font-label-caps text-label-caps uppercase text-primary font-bold">Projected Annual Benefit</span>
               <div className="font-headline-md text-headline-md text-primary font-bold">
                 +${simulatedRecovery}M
               </div>
               <p className="font-body-sm text-body-sm text-on-surface-variant">
-                Projected EBITDA recovery across active volume.
+                Estimated additional profit you could recover each year.
               </p>
             </div>
           </div>

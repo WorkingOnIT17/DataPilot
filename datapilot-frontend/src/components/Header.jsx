@@ -64,7 +64,7 @@ export default function Header({ status, onRunDiagnostics, onExportBrief, isRunn
               troubleshoot
             </span>
             <span className="font-body-sm text-body-sm">
-              {isRunningDiagnostics ? 'Running...' : 'Run Diagnostics'}
+              {isRunningDiagnostics ? 'Running...' : 'Check Data Health'}
             </span>
           </button>
 
@@ -74,7 +74,7 @@ export default function Header({ status, onRunDiagnostics, onExportBrief, isRunn
             type="button"
           >
             <span className="material-symbols-outlined text-[16px]">ios_share</span>
-            <span className="font-body-sm text-body-sm font-semibold">Export Brief</span>
+            <span className="font-body-sm text-body-sm font-semibold">Export Report</span>
           </button>
 
           <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0 cursor-pointer hover:opacity-90">

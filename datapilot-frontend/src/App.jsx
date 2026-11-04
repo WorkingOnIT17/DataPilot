@@ -125,7 +125,7 @@ export default function App() {
       const now = new Date();
       setSyncTimestamp(now.toLocaleTimeString() + ' EST');
       setIsSyncing(false);
-      showNotification('Telemetry & DuckDB in-memory OLAP state synchronized');
+      showNotification('Dashboard refreshed with latest data');
     }, 500);
   };
 
@@ -135,7 +135,7 @@ export default function App() {
       await loadAllBackendData();
       setIsRunningDiagnostics(false);
       const anomCnt = analytics?.anomalies_count ?? 14;
-      showNotification(`Diagnostics complete: ${anomCnt} anomalies reconciled via transactional AST check`);
+      showNotification(`Health check complete: ${anomCnt} unusual transactions identified`);
     }, 800);
   };
 
@@ -146,7 +146,7 @@ export default function App() {
       const res = await api.runQuery(query);
       setQueryResult(res);
       setIsQueryRunning(false);
-      showNotification(`Agent execution completed in ${res.latency_ms}ms`);
+      showNotification(`Analysis ready in ${res.latency_ms}ms`);
     } catch (err) {
       setIsQueryRunning(false);
       showNotification(`Query failed: ${err.message}`);
@@ -171,15 +171,15 @@ export default function App() {
 
   const handleExportBrief = () => {
     window.open(api.getReportHtmlUrl(), '_blank');
-    showNotification('Executive HTML brief opened in a new tab');
+    showNotification('Executive HTML report opened in a new tab');
   };
 
   const handleInspectColumn = (col) => {
-    showNotification(`Column ${col.id}: ${col.type}, Mean=${col.mean}, Spread=${col.iqr}`);
+    showNotification(`${col.id}: Average = ${col.mean}, Typical Range = ${col.iqr}`);
   };
 
   const handleAdoptRecommendation = (rec) => {
-    showNotification(`Adopted action for ${rec.id}: "${rec.title}"`);
+    showNotification(`Added to action plan: "${rec.title}"`);
   };
 
   return (

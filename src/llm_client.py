@@ -30,6 +30,13 @@ class LLMClient:
         self.api_key = api_key or os.getenv("GEMINI_API_KEY") or os.getenv("OPENAI_API_KEY") or ""
         self.model = model or ("gemini-3.5-flash" if provider == "Google Gemini" else ("gpt-4o-mini" if provider == "OpenAI" else None))
         self.base_url = base_url
+        self._genai_client = None
+        if self.provider == "Google Gemini" and self.api_key:
+            try:
+                from google import genai
+                self._genai_client = genai.Client(api_key=self.api_key)
+            except Exception:
+                pass
 
     def is_configured(self) -> bool:
         """Check if an active LLM provider with API key or local endpoint is configured."""
@@ -101,10 +108,10 @@ RULES:
         Use the configured LLM to synthesize a natural, conversational response grounded in the real DuckDB result.
         Speaks like an insightful, perceptive senior data analyst presenting findings to an executive peer.
         """
-        if not self.is_configured() or result_df.empty:
+        if not self.is_configured():
             return None
 
-        data_preview = result_df.head(15).to_string(index=False)
+        data_preview = result_df.head(15).to_string(index=False) if not result_df.empty else "(No tabular data returned)"
         doc_section = f"\nRELEVANT BUSINESS DOCUMENTS & POLICIES:\n{document_context}\n" if document_context else ""
 
         prompt = f"""You are DataPilot, a senior Lead Data Analyst and strategic business advisor speaking directly with an executive colleague.
@@ -118,11 +125,11 @@ VERIFIED QUERY RESULTS (computed deterministically via DuckDB):
 {data_preview}
 {doc_section}
 INSTRUCTIONS FOR YOUR RESPONSE:
-1. Speak Personably as a Senior Data Analyst: Talk naturally and conversationally in the first person ("Looking at our numbers...", "Here is what stands out...", "Our data reveals that..."). Avoid dry robotic formulaic phrasing.
-2. Ground Every Number: You MUST cite the exact numbers from the verified query results above. Never invent, extrapolate, or alter any numbers.
-3. Provide Insight & Interpretation: Don't just list numbers—explain what they signify. Highlight key drivers, top contributors, contrasts, or margin pressure.
-4. Strategic Observation: Provide a short, practical business observation, recommendation, or next question an executive should consider.
-5. If relevant business documents or policies are attached above, naturally connect the quantitative findings with the documented strategy or policy guidelines.
+1. Speak Personably & Clearly: Talk naturally and conversationally in everyday business English ("Looking at your numbers...", "Here is what stands out...", "Your sales show that...").
+2. Plain-English Rule (CRITICAL): Do NOT use obscure data science or technical jargon. Never say "SKUs" (say "products" or "items"), "temporal trajectory" (say "sales trend over time"), "telemetry", "vector", "AST", or "heuristic". Keep explanations friendly and accessible to any vendor or business owner.
+3. Ground Every Number: You MUST cite the exact numbers from the verified query results above. Never invent, extrapolate, or alter any numbers.
+4. Provide Clear Business Takeaways: Don't just dump numbers—explain what they mean for the business in simple terms (e.g. which products are driving profit, where costs or discounts are high).
+5. Strategic Suggestion: Give one practical, actionable next step or suggestion.
 6. Format with clean, readable Markdown (bold key metrics, bullet points for comparisons, clear takeaways).
 """
 
@@ -221,30 +228,41 @@ INSTRUCTIONS:
     def _call_llm(self, prompt: str) -> Optional[str]:
         """Internal dispatcher to the appropriate LLM SDK with candidate model cascade."""
         if self.provider == "Google Gemini":
-            from google import genai
-            client = genai.Client(api_key=self.api_key)
-            candidates = [self.model or "gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-3.8-flash", "gemini-2.5-pro"]
-            unique_candidates = []
-            for c in candidates:
-                if c and c not in unique_candidates:
-                    unique_candidates.append(c)
+            if not self._genai_client:
+                from google import genai
+                self._genai_client = genai.Client(api_key=self.api_key)
 
-            last_err = None
-            for model_cand in unique_candidates:
+            # Enforce gemini-3.5-flash for ultra-low latency & reliability
+            target_model = self.model or "gemini-3.5-flash"
+            if any(legacy in target_model for legacy in ["2.5", "2.0", "1.5"]):
+                target_model = "gemini-3.5-flash"
+
+            from google.genai import types
+            gen_config = types.GenerateContentConfig(
+                thinking_config=types.ThinkingConfig(thinking_budget=0),
+                temperature=0.1
+            )
+
+            try:
+                response = self._genai_client.models.generate_content(
+                    model=target_model,
+                    contents=prompt,
+                    config=gen_config
+                )
+                if response and response.text:
+                    return response.text
+            except Exception as e:
+                print(f"[LLM_WARN] Gemini call with fast config failed: {e}. Retrying without thinking budget...")
                 try:
-                    response = client.models.generate_content(
-                        model=model_cand,
+                    response = self._genai_client.models.generate_content(
+                        model=target_model,
                         contents=prompt
                     )
                     if response and response.text:
                         return response.text
-                except Exception as e:
-                    last_err = e
-                    print(f"[LLM_WARN] Gemini model '{model_cand}' failed: {e}. Trying fallback model...")
-                    continue
-
-            if last_err:
-                raise last_err
+                except Exception as e2:
+                    print(f"[LLM_ERROR] Gemini request failed: {e2}")
+                    raise e2
 
         elif self.provider in ["OpenAI", "Ollama (Local)"]:
             from openai import OpenAI

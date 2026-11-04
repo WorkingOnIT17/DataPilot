@@ -46,37 +46,37 @@ export default function CorporateKnowledge({
           <div className="space-y-space-xs max-w-2xl">
             <div className="flex items-center gap-space-sm">
               <span className="px-space-sm py-0.5 rounded bg-surface-container-high text-primary font-label-caps text-label-caps uppercase tracking-wider">
-                Enterprise Intelligence Hub
+                Document Knowledge Hub
               </span>
               <span className="text-outline font-label-caps text-label-caps">•</span>
               <span className="text-tertiary font-code-sm text-code-sm flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span> Vector Index Synced
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span> Search Ready
               </span>
             </div>
             <h1 className="font-display-lg text-display-lg text-on-surface tracking-tight">
-              Corporate RAG & Executive Reporting
+              Company Documents & Executive Reports
             </h1>
             <p className="font-body-lg text-body-lg text-on-surface-variant">
-              Semantically grounding DuckDB analytic runs against enterprise policy documentation, governance agreements, and automated executive reporting artifacts.
+              Search your company policies, pricing guidelines, and business documents. When you ask questions, DataPilot combines these documents with your sales data to give complete business answers.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-space-sm bg-surface-container p-space-sm rounded-xl shrink-0 border border-surface-container-high/30">
             <div className="px-space-md py-space-sm rounded-lg bg-surface-container-low border border-surface-container-high/20">
-              <span className="font-label-caps text-label-caps text-outline block uppercase">Corpus Index</span>
-              <span className="font-metric-val text-metric-val text-on-surface">{docs.length} Docs</span>
+              <span className="font-label-caps text-label-caps text-outline block uppercase">Documents</span>
+              <span className="font-metric-val text-metric-val text-on-surface">{docs.length} Files</span>
             </div>
             <div className="px-space-md py-space-sm rounded-lg bg-surface-container-low border border-surface-container-high/20">
-              <span className="font-label-caps text-label-caps text-outline block uppercase">Embeddings</span>
-              <span className="font-metric-val text-metric-val text-primary">{totalChunks} Chunks</span>
+              <span className="font-label-caps text-label-caps text-outline block uppercase">Searchable Sections</span>
+              <span className="font-metric-val text-metric-val text-primary">{totalChunks} Sections</span>
             </div>
             <div className="px-space-md py-space-sm rounded-lg bg-surface-container-low border border-surface-container-high/20">
-              <span className="font-label-caps text-label-caps text-outline block uppercase">Recall Protocol</span>
-              <span className="font-code-sm text-code-sm text-tertiary">Cosine TF-IDF</span>
+              <span className="font-label-caps text-label-caps text-outline block uppercase">Search Method</span>
+              <span className="font-code-sm text-code-sm text-tertiary">Smart Search</span>
             </div>
             <div className="px-space-md py-space-sm rounded-lg bg-surface-container-low border border-surface-container-high/20">
-              <span className="font-label-caps text-label-caps text-outline block uppercase">Vector Backend</span>
-              <span className="font-code-sm text-code-sm text-on-surface">In-Memory DuckDB</span>
+              <span className="font-label-caps text-label-caps text-outline block uppercase">Status</span>
+              <span className="font-code-sm text-code-sm text-on-surface">Ready & Verified</span>
             </div>
           </div>
         </div>
@@ -87,12 +87,12 @@ export default function CorporateKnowledge({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-space-sm">
             <span className="material-symbols-outlined text-[20px] text-primary">source_environment</span>
-            <h2 className="font-headline-sm text-headline-sm text-on-surface">Indexed Corporate Knowledge Corpus</h2>
+            <h2 className="font-headline-sm text-headline-sm text-on-surface">Uploaded Company Documents</h2>
           </div>
           <div className="flex items-center gap-space-sm text-on-surface-variant font-code-sm text-code-sm">
-            <span>Model: Cosine Similarity Matcher</span>
+            <span>Fast Semantic Search</span>
             <span className="text-outline">/</span>
-            <span className="text-primary font-medium">{totalChunks} Total Chunks</span>
+            <span className="text-primary font-medium">{totalChunks} Searchable Sections</span>
           </div>
         </div>
 
@@ -100,160 +100,92 @@ export default function CorporateKnowledge({
           {docs.map((doc, idx) => (
             <div
               key={idx}
-              className="bg-surface-container-low hover:bg-surface-container p-space-md rounded-xl transition-all shadow-sm flex flex-col justify-between group border border-surface-container-high/30"
+              className="bg-surface-container-low p-space-md rounded-xl shadow-sm border border-surface-container-high/30 hover:border-primary/40 transition-all flex flex-col justify-between gap-space-sm"
             >
-              <div className="space-y-space-sm">
-                <div className="flex items-start justify-between">
-                  <div className="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
-                    <span className="material-symbols-outlined text-[20px]">
-                      {doc.type === 'PDF' ? 'picture_as_pdf' : doc.type === 'DOCX' ? 'description' : 'article'}
-                    </span>
-                  </div>
-                  <span className="px-space-sm py-0.5 rounded bg-surface-container-high text-primary font-label-caps text-label-caps flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[12px]">verified</span> Verified
+              <div className="space-y-space-xs">
+                <div className="flex items-center justify-between">
+                  <span className="px-space-xs py-0.5 rounded bg-surface-container text-primary font-code-sm text-code-sm uppercase">
+                    {doc.type || 'TXT'}
                   </span>
+                  <span className="material-symbols-outlined text-primary text-[18px]">verified</span>
                 </div>
-                <div>
-                  <h3 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors truncate">
-                    {doc.name}
-                  </h3>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-2">
-                    Governance rules, discount thresholds, and corporate strategy guidelines.
-                  </p>
-                </div>
+                <h3 className="font-headline-sm text-headline-sm text-on-surface truncate" title={doc.name}>
+                  {doc.name}
+                </h3>
               </div>
-
-              <div className="pt-space-md mt-space-md space-y-space-xs border-t border-surface-container-high/20">
-                <div className="flex items-center justify-between font-code-sm text-code-sm text-outline">
-                  <span>{doc.chunks || 3} chunks indexed</span>
-                  <span className="text-on-surface-variant">{doc.type}</span>
-                </div>
-                <div className="w-full bg-surface-container-high h-1 rounded-full overflow-hidden">
-                  <div className="bg-primary h-full rounded-full" style={{ width: '100%' }}></div>
-                </div>
+              <div className="flex items-center justify-between font-code-sm text-code-sm text-outline pt-space-xs border-t border-surface-container-high/30">
+                <span>{doc.chunks || 2} Sections</span>
+                <span className="text-primary font-medium">Ready</span>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 3. Semantic Search & Passage Retrieval */}
-      <section className="bg-surface-container-low p-space-lg rounded-xl shadow-md border border-surface-container-high/30 space-y-space-md">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-space-xs">
-            <span className="material-symbols-outlined text-primary text-[20px]">search_insights</span>
-            <h2 className="font-headline-sm text-headline-sm text-on-surface">Semantic Passage Search</h2>
+      {/* 3. Search and Upload Section */}
+      <section className="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+        {/* Document Search (8 cols) */}
+        <div className="lg:col-span-8 bg-surface-container-low p-space-lg rounded-xl shadow-sm border border-surface-container-high/30 space-y-space-md">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-space-xs">
+              <span className="material-symbols-outlined text-primary text-[20px]">search</span>
+              <h3 className="font-headline-sm text-headline-sm text-on-surface">Search Document Knowledge</h3>
+            </div>
+            <span className="font-code-sm text-code-sm text-outline">Relevant Policy & Strategy Citations</span>
           </div>
-          <span className="font-code-sm text-code-sm text-outline">Real-Time Cosine Matcher</span>
-        </div>
 
-        <form onSubmit={handleSearchSubmit} className="flex items-center gap-space-sm bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-high/40">
-          <span className="material-symbols-outlined text-primary text-[20px] ml-2">search</span>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search governance policies, discount floors, or compliance rules..."
-            className="w-full bg-transparent text-on-surface font-body-md text-body-md focus:outline-none placeholder:text-outline"
-          />
-          <button
-            type="submit"
-            disabled={isSearching}
-            className="px-space-md py-1.5 rounded-lg bg-primary text-on-primary font-body-sm text-body-sm font-semibold hover:bg-surface-tint transition-colors shadow-sm disabled:opacity-50"
-          >
-            {isSearching ? 'Searching...' : 'Search Corpus'}
-          </button>
-        </form>
+          <form onSubmit={handleSearchSubmit} className="flex items-center gap-space-xs">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search company policies (e.g., discount limit, pricing rules, refund terms)..."
+              className="w-full bg-surface-container text-on-surface font-body-md text-body-md p-2 rounded-lg border border-surface-container-high focus:outline-none focus:border-primary"
+            />
+            <button
+              type="submit"
+              disabled={isSearching}
+              className="px-space-lg py-2 rounded-lg bg-primary hover:bg-surface-tint text-on-primary font-body-sm text-body-sm font-semibold transition-colors shadow-sm shrink-0"
+            >
+              {isSearching ? 'Searching...' : 'Search'}
+            </button>
+          </form>
 
-        {/* Retrieved Passages */}
-        <div className="space-y-space-sm">
-          {searchResults && searchResults.length > 0 ? (
-            searchResults.map((item, i) => (
-              <div
-                key={i}
-                className="p-space-md rounded-lg bg-surface-container-lowest border border-surface-container-high/30 space-y-1.5"
-              >
-                <div className="flex items-center justify-between font-code-sm text-code-sm">
-                  <span className="text-primary font-medium flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[14px]">description</span>
-                    {item.source}
-                  </span>
-                  <span className="px-space-xs py-0.5 rounded bg-surface-container text-tertiary font-semibold">
-                    Relevance: {item.relevance_pct || 95}%
-                  </span>
+          {/* Search Results Preview */}
+          <div className="space-y-space-sm pt-space-xs">
+            {searchResults && searchResults.length > 0 ? (
+              searchResults.map((res, i) => (
+                <div key={i} className="p-space-md rounded-lg bg-surface-container space-y-1 border border-surface-container-high/40">
+                  <div className="flex items-center justify-between font-code-sm text-code-sm">
+                    <span className="text-primary font-semibold">{res.source}</span>
+                    <span className="text-outline">{res.relevance_pct || 90}% match</span>
+                  </div>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                    "{res.content}"
+                  </p>
                 </div>
-                <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                  "{item.content}"
+              ))
+            ) : (
+              <div className="p-space-md rounded-lg bg-surface-container/50 text-center space-y-1">
+                <p className="font-body-sm text-body-sm text-outline">
+                  Try searching for <span className="text-primary">"discount policy"</span> or <span className="text-primary">"enterprise strategy"</span> to view matched excerpts.
                 </p>
               </div>
-            ))
-          ) : (
-            <div className="p-space-md rounded-lg bg-surface-container-lowest text-center text-outline font-body-sm text-body-sm">
-              Type a search query above to inspect matching passages from indexed corporate documents.
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* 4. Executive Export Center */}
-      <section className="bg-surface-container-low p-space-lg rounded-xl shadow-md border border-surface-container-high/30 space-y-space-md">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-space-xs">
-            <span className="material-symbols-outlined text-primary text-[20px]">download</span>
-            <h2 className="font-headline-sm text-headline-sm text-on-surface">Executive Export & Reporting Center</h2>
+            )}
           </div>
-          <span className="font-code-sm text-code-sm text-outline">Board-Ready Artifacts</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-space-md">
-          {/* Export 1: Cleaned CSV */}
-          <div className="p-space-md rounded-xl bg-surface-container flex flex-col justify-between gap-space-sm border border-surface-container-high/30">
-            <div className="space-y-1">
-              <span className="material-symbols-outlined text-primary text-[24px]">csv</span>
-              <h3 className="font-headline-sm text-headline-sm text-on-surface">Cleaned Dataset (CSV)</h3>
-              <p className="font-body-sm text-body-sm text-on-surface-variant">
-                Normalized tabular dataset with duplicates removed, missing values imputed, and dates standardized.
-              </p>
+        {/* Upload & Reports Box (4 cols) */}
+        <div className="lg:col-span-4 space-y-space-md">
+          {/* Upload Document Box */}
+          <div className="bg-surface-container-low p-space-lg rounded-xl shadow-sm border border-surface-container-high/30 space-y-space-sm">
+            <div className="flex items-center gap-space-xs">
+              <span className="material-symbols-outlined text-primary text-[20px]">upload_file</span>
+              <h3 className="font-headline-sm text-headline-sm text-on-surface">Add Document</h3>
             </div>
-            <a
-              href={cleanedCsvUrl}
-              download
-              className="mt-space-sm flex items-center justify-center gap-space-xs py-2 px-space-md rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-primary font-body-sm text-body-sm font-semibold transition-colors border border-surface-container-highest/40"
-            >
-              <span className="material-symbols-outlined text-[16px]">file_download</span>
-              <span>Download Cleaned CSV</span>
-            </a>
-          </div>
-
-          {/* Export 2: Executive HTML Report */}
-          <div className="p-space-md rounded-xl bg-surface-container flex flex-col justify-between gap-space-sm border border-surface-container-high/30">
-            <div className="space-y-1">
-              <span className="material-symbols-outlined text-primary text-[24px]">html</span>
-              <h3 className="font-headline-sm text-headline-sm text-on-surface">Executive HTML Report</h3>
-              <p className="font-body-sm text-body-sm text-on-surface-variant">
-                Standalone interactive report rendered with Jinja2, complete with KPI cards, charts, and recommendations.
-              </p>
-            </div>
-            <a
-              href={reportHtmlUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-space-sm flex items-center justify-center gap-space-xs py-2 px-space-md rounded-lg bg-primary-container hover:bg-primary text-on-primary-container hover:text-on-primary font-body-sm text-body-sm font-semibold transition-colors shadow-sm"
-            >
-              <span className="material-symbols-outlined text-[16px]">open_in_new</span>
-              <span>Open Executive Report (HTML)</span>
-            </a>
-          </div>
-
-          {/* Export 3: Document Ingestion */}
-          <div className="p-space-md rounded-xl bg-surface-container flex flex-col justify-between gap-space-sm border border-surface-container-high/30">
-            <div className="space-y-1">
-              <span className="material-symbols-outlined text-tertiary text-[24px]">upload_file</span>
-              <h3 className="font-headline-sm text-headline-sm text-on-surface">Add Strategy Document</h3>
-              <p className="font-body-sm text-body-sm text-on-surface-variant">
-                Upload business guidelines or pricing policies (.pdf, .docx, .txt, .md) to vectorize into DuckDB memory.
-              </p>
-            </div>
+            <p className="font-body-sm text-body-sm text-on-surface-variant">
+              Upload PDF, Word, or text files to add business rules or background memos.
+            </p>
             <input
               ref={fileInputRef}
               type="file"
@@ -263,16 +195,52 @@ export default function CorporateKnowledge({
             />
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="mt-space-sm flex items-center justify-center gap-space-xs py-2 px-space-md rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-body-sm text-body-sm font-semibold transition-colors border border-surface-container-highest/40"
+              className="w-full py-2.5 px-space-md border border-dashed border-primary/50 hover:bg-primary/10 rounded-lg text-primary font-body-sm text-body-sm font-semibold flex items-center justify-center gap-space-xs transition-colors"
               type="button"
             >
-              <span className="material-symbols-outlined text-[16px]">add</span>
-              <span>Upload Document</span>
+              <span className="material-symbols-outlined text-[18px]">add</span>
+              <span>Select Document File</span>
             </button>
+          </div>
+
+          {/* Export Executive Reports Box */}
+          <div className="bg-surface-container-low p-space-lg rounded-xl shadow-sm border border-surface-container-high/30 space-y-space-sm">
+            <div className="flex items-center gap-space-xs">
+              <span className="material-symbols-outlined text-tertiary text-[20px]">download</span>
+              <h3 className="font-headline-sm text-headline-sm text-on-surface">Reports & Downloads</h3>
+            </div>
+            <p className="font-body-sm text-body-sm text-on-surface-variant">
+              Download clean data or open the executive summary HTML report.
+            </p>
+            <div className="space-y-space-xs pt-space-xs">
+              <a
+                href={cleanedCsvUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="w-full py-2 px-space-md bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg font-body-sm text-body-sm flex items-center justify-between transition-colors border border-surface-container-high/40"
+              >
+                <div className="flex items-center gap-space-xs">
+                  <span className="material-symbols-outlined text-[16px] text-primary">table_view</span>
+                  <span>Cleaned Data (CSV)</span>
+                </div>
+                <span className="material-symbols-outlined text-[14px] text-outline">open_in_new</span>
+              </a>
+              <a
+                href={reportHtmlUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="w-full py-2 px-space-md bg-primary hover:bg-surface-tint text-on-primary rounded-lg font-body-sm text-body-sm font-semibold flex items-center justify-between transition-colors shadow-sm"
+              >
+                <div className="flex items-center gap-space-xs">
+                  <span className="material-symbols-outlined text-[16px]">description</span>
+                  <span>Executive HTML Report</span>
+                </div>
+                <span className="material-symbols-outlined text-[14px]">open_in_new</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
     </div>
   );
 }
-

@@ -42,10 +42,10 @@ export default function Sidebar({
   };
 
   const navItems = [
-    { id: 'executive-analytics', label: 'Executive Analytics', icon: 'monitoring' },
-    { id: 'ai-analyst-multi-agent', label: 'AI Analyst (Multi-Agent)', icon: 'hub' },
-    { id: 'prescriptive-strategy', label: 'Prescriptive Strategy', icon: 'psychology' },
-    { id: 'corporate-knowledge-rag', label: 'Corporate Knowledge RAG', icon: 'menu_book' },
+    { id: 'executive-analytics', label: 'Sales & Performance Dashboard', icon: 'monitoring' },
+    { id: 'ai-analyst-multi-agent', label: 'AI Data Analyst', icon: 'chat' },
+    { id: 'prescriptive-strategy', label: 'Smart Recommendations', icon: 'lightbulb' },
+    { id: 'corporate-knowledge-rag', label: 'Company Documents & Guides', icon: 'menu_book' },
   ];
 
   return (
@@ -83,7 +83,7 @@ export default function Sidebar({
         {/* 2. Dataset Ingestion */}
         <div className="bg-surface-container-low p-space-md rounded-xl space-y-space-sm border border-surface-container-high/30">
           <div className="flex items-center justify-between">
-            <span className="font-label-caps text-label-caps uppercase text-outline">Dataset Ingestion</span>
+            <span className="font-label-caps text-label-caps uppercase text-outline">Dataset & Files</span>
             <span className="material-symbols-outlined text-[14px] text-outline">sync_alt</span>
           </div>
 
@@ -97,7 +97,7 @@ export default function Sidebar({
               }`}
               type="button"
             >
-              Benchmark
+              Sample Data
             </button>
             <button
               onClick={() => setIngestionMode('upload')}
@@ -108,7 +108,7 @@ export default function Sidebar({
               }`}
               type="button"
             >
-              Upload File
+              Upload Your File
             </button>
           </div>
 
@@ -154,22 +154,22 @@ export default function Sidebar({
               onChange={(e) => setSmartHeader(e.target.checked)}
               className="accent-primary rounded cursor-pointer"
             />
-            <span className="font-body-sm text-body-sm text-on-surface-variant">Smart Header Detection</span>
+            <span className="font-body-sm text-body-sm text-on-surface-variant">Auto-Clean Table Headers</span>
           </label>
 
           <div className="px-space-sm py-1 rounded bg-surface-container text-primary font-code-sm text-code-sm flex items-center justify-between">
-            <span>{rowCount} rows</span>
-            <span className="text-tertiary">In-Memory DuckDB</span>
+            <span>{rowCount} rows loaded</span>
+            <span className="text-tertiary">Ready</span>
           </div>
         </div>
 
-        {/* 3. Inference Engine */}
+        {/* 3. AI Assistant Status */}
         <div className="bg-surface-container-low p-space-md rounded-xl space-y-space-xs border border-surface-container-high/30">
           <div className="flex items-center justify-between">
-            <span className="font-label-caps text-label-caps uppercase text-outline">Inference Engine</span>
+            <span className="font-label-caps text-label-caps uppercase text-outline">AI Assistant</span>
             <span className="font-code-sm text-code-sm text-primary flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
-              {status?.llm_connected ? 'Live AI Mode' : 'Fast Deterministic'}
+              {status?.llm_connected ? 'AI Connected' : 'Calculations Ready'}
             </span>
           </div>
           <div className="flex items-center justify-between gap-space-sm">
@@ -183,15 +183,15 @@ export default function Sidebar({
               className="px-space-sm py-0.5 rounded bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-code-sm text-code-sm transition-colors border border-surface-container-highest/30"
               type="button"
             >
-              {isPinging ? '...' : 'Ping'}
+              {isPinging ? '...' : 'Check'}
             </button>
           </div>
         </div>
 
-        {/* 4. Corporate Document RAG */}
+        {/* 4. Company Documents */}
         <div className="bg-surface-container-low p-space-md rounded-xl space-y-space-sm border border-surface-container-high/30">
           <div className="flex items-center justify-between">
-            <span className="font-label-caps text-label-caps uppercase text-outline">Corporate Document RAG</span>
+            <span className="font-label-caps text-label-caps uppercase text-outline">Company Documents</span>
             <span className="material-symbols-outlined text-[14px] text-outline">auto_stories</span>
           </div>
 
@@ -209,21 +209,21 @@ export default function Sidebar({
           >
             <span className="material-symbols-outlined text-primary text-[24px]">upload_file</span>
             <p className="font-body-sm text-body-sm text-on-surface-variant">
-              Drop Strategy Memos, Pricing PDFs (.pdf, .docx, .md)
+              Upload Pricing Guides, Policies, or Strategy Memos (.pdf, .docx, .txt)
             </p>
           </div>
 
           <div className="px-space-sm py-1 rounded bg-surface-container text-tertiary font-code-sm text-code-sm flex items-center gap-space-xs">
             <span className="material-symbols-outlined text-[14px]">verified</span>
-            <span>{chunkCount} chunks indexed from {docCount} docs</span>
+            <span>{chunkCount} searchable parts from {docCount} docs</span>
           </div>
         </div>
       </div>
 
-      {/* 5. DuckDB RAM Telemetry */}
+      {/* 5. System Health */}
       <div className="bg-surface-container-low p-space-md rounded-xl space-y-space-sm shrink-0 border border-surface-container-high/30">
         <div className="flex items-center justify-between font-code-sm text-code-sm">
-          <span className="text-outline">DuckDB RAM</span>
+          <span className="text-outline">Engine Memory</span>
           <span className="text-primary font-medium">{status?.duckdb_ram || '1.2GB / 8GB'}</span>
         </div>
         <div className="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
@@ -235,10 +235,10 @@ export default function Sidebar({
         <div className="flex items-center justify-between pt-space-xs">
           <div className="flex items-center gap-space-xs font-code-sm text-code-sm text-on-surface-variant">
             <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
-            <span>Latency: {status?.latency_ms || 42}ms</span>
+            <span>Speed: {status?.latency_ms || 42}ms</span>
           </div>
-          <span className="font-label-caps text-label-caps text-outline uppercase">
-            {status?.tls_enc || 'TLS 1.3 ENC'}
+          <span className="font-label-caps text-label-caps text-primary uppercase">
+            Live & Secure
           </span>
         </div>
       </div>

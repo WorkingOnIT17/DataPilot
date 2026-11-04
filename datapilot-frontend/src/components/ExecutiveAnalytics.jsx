@@ -12,7 +12,7 @@ export default function ExecutiveAnalytics({
 }) {
   const [period, setPeriod] = useState('ALL');
   const [tier, setTier] = useState('ALL');
-  const [activeChartPill, setActiveChartPill] = useState('Temporal Trends');
+  const [activeChartPill, setActiveChartPill] = useState('Sales Over Time');
   const [brushRange, setBrushRange] = useState('ALL');
   const [isProfilerOpen, setIsProfilerOpen] = useState(true);
   const [hoveredPoint, setHoveredPoint] = useState(null);
@@ -44,7 +44,7 @@ export default function ExecutiveAnalytics({
   const rowCount = status?.rows ? Number(status.rows).toLocaleString() : (kpis.total_records ? Number(kpis.total_records).toLocaleString() : '142,850');
   const activeDatasetName = status?.active_dataset || 'Active Dataset';
 
-  // SVG Scaling calculations for Temporal Trends
+  // SVG Scaling calculations for Trends Over Time
   const maxRev = temporalTrends.length > 0 ? Math.max(...temporalTrends.map((t) => t.revenue || 0), 1000) : 6000000;
   const svgWidth = 760;
   const svgHeight = 240;
@@ -70,34 +70,34 @@ export default function ExecutiveAnalytics({
 
   return (
     <div className="flex flex-col w-full gap-space-lg">
-      {/* TOP BAR: TELEMETRY & VIEW CONTROLS */}
+      {/* TOP BAR: DASHBOARD OVERVIEW & REFRESH */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md bg-surface-container-low p-space-md rounded-xl shadow-sm border border-surface-container-high/30">
         <div className="flex items-center gap-space-md">
           <div className="p-space-xs rounded bg-surface-container-high text-primary">
-            <span className="material-symbols-outlined text-[22px]">query_stats</span>
+            <span className="material-symbols-outlined text-[22px]">dashboard</span>
           </div>
           <div>
             <div className="flex items-center gap-space-xs">
               <span className="font-headline-sm text-headline-sm text-on-surface">
-                Executive Telemetry & Vector Flow
+                Business Performance Overview
               </span>
               <span className="px-space-xs py-0.5 rounded bg-surface-container text-tertiary font-label-caps text-label-caps uppercase">
                 {activeDatasetName}
               </span>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant">
-              Deterministic calculations computed directly via DuckDB in-memory engine. Zero hallucination.
+              Key business metrics calculated directly from your uploaded data. 100% accurate.
             </p>
           </div>
         </div>
         <div className="flex items-center gap-space-xs self-start lg:self-auto flex-wrap">
           <div className="flex items-center gap-1 bg-surface-container px-space-sm py-1 rounded font-code-sm text-code-sm text-on-surface-variant">
             <span className="material-symbols-outlined text-[14px] text-primary">schedule</span>
-            <span>As of {syncTimestamp}</span>
+            <span>Updated {syncTimestamp}</span>
           </div>
           <div className="flex items-center gap-1 bg-surface-container px-space-sm py-1 rounded font-code-sm text-code-sm text-primary">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
-            <span>DuckDB Active</span>
+            <span>Live Data Ready</span>
           </div>
           <button
             onClick={onForceSync}
@@ -106,7 +106,7 @@ export default function ExecutiveAnalytics({
             type="button"
           >
             <span className={`material-symbols-outlined text-[16px] ${isSyncing ? 'animate-spin' : ''}`}>refresh</span>
-            <span>{isSyncing ? 'Syncing...' : 'Force Sync'}</span>
+            <span>{isSyncing ? 'Refreshing...' : 'Refresh Data'}</span>
           </button>
         </div>
       </div>
@@ -117,7 +117,7 @@ export default function ExecutiveAnalytics({
         <div className="flex flex-col justify-between bg-surface-container-low p-space-md rounded-xl shadow-sm relative overflow-hidden group border border-surface-container-high/30 hover:border-primary/40 transition-colors">
           <div className="flex items-start justify-between">
             <div className="space-y-0.5">
-              <span className="font-label-caps text-label-caps uppercase text-outline">Total Revenue</span>
+              <span className="font-label-caps text-label-caps uppercase text-outline">Total Sales Revenue</span>
               <div className="font-metric-val text-metric-val text-on-surface tracking-tight">{totalRev}</div>
             </div>
             <span className="px-space-xs py-0.5 rounded bg-surface-container-high text-primary font-code-sm text-code-sm flex items-center gap-0.5">
@@ -126,7 +126,7 @@ export default function ExecutiveAnalytics({
           </div>
           <div className="my-space-sm space-y-1">
             <div className="flex justify-between font-code-sm text-code-sm">
-              <span className="text-on-surface-variant">Total Records</span>
+              <span className="text-on-surface-variant">Total Transactions</span>
               <span className="text-on-surface font-semibold">{rowCount}</span>
             </div>
             <div className="w-full h-1 bg-surface-container rounded-full overflow-hidden">
@@ -134,25 +134,25 @@ export default function ExecutiveAnalytics({
             </div>
           </div>
           <div className="flex items-center justify-between text-on-surface-variant font-code-sm text-code-sm pt-space-xs bg-surface-container-lowest/40 -mx-space-md -mb-space-md px-space-md py-space-xs">
-            <span className="text-outline">Engine</span>
-            <span className="text-primary font-medium">DuckDB OLAP</span>
+            <span className="text-outline">Total Profit</span>
+            <span className="text-primary font-medium">{totalProfit}</span>
           </div>
         </div>
 
-        {/* Card 2: Average Transaction Value */}
+        {/* Card 2: Average Sale / Order Value */}
         <div className="flex flex-col justify-between bg-surface-container-low p-space-md rounded-xl shadow-sm relative overflow-hidden group border border-surface-container-high/30 hover:border-primary/40 transition-colors">
           <div className="flex items-start justify-between">
             <div className="space-y-0.5">
-              <span className="font-label-caps text-label-caps uppercase text-outline">Avg Order Value</span>
+              <span className="font-label-caps text-label-caps uppercase text-outline">Avg Sale per Order</span>
               <div className="font-metric-val text-metric-val text-on-surface tracking-tight">{aov}</div>
             </div>
             <span className="px-space-xs py-0.5 rounded bg-surface-container-high text-primary font-code-sm text-code-sm flex items-center gap-0.5">
-              Per Record
+              Per Order
             </span>
           </div>
           <div className="my-space-sm space-y-1">
             <div className="flex justify-between font-code-sm text-code-sm">
-              <span className="text-on-surface-variant">Active Dataset</span>
+              <span className="text-on-surface-variant">Active File</span>
               <span className="text-on-surface font-semibold truncate max-w-[120px]">{activeDatasetName}</span>
             </div>
             <div className="w-full h-1 bg-surface-container rounded-full overflow-hidden">
@@ -160,8 +160,8 @@ export default function ExecutiveAnalytics({
             </div>
           </div>
           <div className="flex items-center justify-between text-on-surface-variant font-code-sm text-code-sm pt-space-xs bg-surface-container-lowest/40 -mx-space-md -mb-space-md px-space-md py-space-xs">
-            <span className="text-outline">Total Profit</span>
-            <span className="text-tertiary font-medium">{totalProfit}</span>
+            <span className="text-outline">Calculation</span>
+            <span className="text-tertiary font-medium">Exact Average</span>
           </div>
         </div>
 
@@ -169,33 +169,33 @@ export default function ExecutiveAnalytics({
         <div className="flex flex-col justify-between bg-surface-container-low p-space-md rounded-xl shadow-sm relative overflow-hidden group border border-surface-container-high/30 hover:border-primary/40 transition-colors">
           <div className="flex items-start justify-between">
             <div className="space-y-0.5">
-              <span className="font-label-caps text-label-caps uppercase text-outline">Gross Margin</span>
+              <span className="font-label-caps text-label-caps uppercase text-outline">Profit Margin</span>
               <div className="font-metric-val text-metric-val text-on-surface tracking-tight">{profitMargin}</div>
             </div>
             <span className="px-space-xs py-0.5 rounded bg-surface-container-high text-primary font-code-sm text-code-sm flex items-center gap-0.5">
-              Ratio
+              Net Ratio
             </span>
           </div>
           <div className="my-space-sm p-space-xs rounded bg-surface-container space-y-0.5 border border-surface-container-high/50">
             <div className="flex items-center gap-1 font-label-caps text-label-caps uppercase text-primary">
               <span className="material-symbols-outlined text-[13px]">analytics</span>
-              <span>Profitability Status</span>
+              <span>Margin Health</span>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-1">
-              {kpis.profit_margin_pct != null ? (kpis.profit_margin_pct > 20 ? 'Healthy margin distribution' : 'Watch margin slippage') : 'Calculated across active rows'}
+              {kpis.profit_margin_pct != null ? (kpis.profit_margin_pct > 20 ? 'Healthy profit margin (>20%)' : 'Caution: Narrow margins (<20%)') : 'Calculated across active orders'}
             </p>
           </div>
           <div className="flex items-center justify-between text-on-surface-variant font-code-sm text-code-sm pt-space-xs bg-surface-container-lowest/40 -mx-space-md -mb-space-md px-space-md py-space-xs">
-            <span className="text-outline">Health Grade</span>
+            <span className="text-outline">Benchmark</span>
             <span className="text-primary">{quality.grade}</span>
           </div>
         </div>
 
-        {/* Card 4: Top Category Distribution */}
+        {/* Card 4: Top Category & Product */}
         <div className="flex flex-col justify-between bg-surface-container-low p-space-md rounded-xl shadow-sm relative overflow-hidden group border border-surface-container-high/30 hover:border-primary/40 transition-colors">
           <div className="flex items-start justify-between">
             <div className="space-y-0.5">
-              <span className="font-label-caps text-label-caps uppercase text-outline">Lead Segment Share</span>
+              <span className="font-label-caps text-label-caps uppercase text-outline">Top Category Share</span>
               <div className="font-metric-val text-metric-val text-on-surface tracking-tight">
                 {categoryBreakdown[0] ? `${categoryBreakdown[0].pct}%` : '38.5%'}
               </div>
@@ -206,7 +206,7 @@ export default function ExecutiveAnalytics({
           </div>
           <div className="my-space-sm space-y-1">
             <div className="flex justify-between font-code-sm text-code-sm">
-              <span className="text-on-surface-variant">Top SKU</span>
+              <span className="text-on-surface-variant">Top Product</span>
               <span className="text-primary truncate max-w-[120px]">{topSkus[0]?.name || 'Catalog Item'}</span>
             </div>
             <div className="w-full h-1 bg-surface-container rounded-full overflow-hidden">
@@ -214,8 +214,8 @@ export default function ExecutiveAnalytics({
             </div>
           </div>
           <div className="flex items-center justify-between text-on-surface-variant font-code-sm text-code-sm pt-space-xs bg-surface-container-lowest/40 -mx-space-md -mb-space-md px-space-md py-space-xs">
-            <span className="text-outline">SKU Count</span>
-            <span className="text-primary font-medium">{kpis.unique_products || topSkus.length || 0} unique</span>
+            <span className="text-outline">Catalog Size</span>
+            <span className="text-primary font-medium">{kpis.unique_products || topSkus.length || 0} unique items</span>
           </div>
         </div>
 
@@ -223,7 +223,7 @@ export default function ExecutiveAnalytics({
         <div className="flex flex-col justify-between bg-surface-container-low p-space-md rounded-xl shadow-sm relative overflow-hidden group border border-surface-container-high/30 hover:border-primary/40 transition-colors">
           <div className="flex items-start justify-between">
             <div className="space-y-0.5">
-              <span className="font-label-caps text-label-caps uppercase text-outline">Data Quality Score</span>
+              <span className="font-label-caps text-label-caps uppercase text-outline">Data Cleanliness</span>
               <div className="flex items-baseline gap-space-xs">
                 <span className="font-metric-val text-metric-val text-primary tracking-tight">{quality.score}%</span>
                 <span className="font-code-sm text-code-sm text-on-surface font-semibold">{quality.grade}</span>
@@ -235,36 +235,36 @@ export default function ExecutiveAnalytics({
           </div>
           <div className="my-space-sm space-y-1">
             <div className="flex items-center justify-between font-code-sm text-code-sm">
-              <span className="text-on-surface-variant">{rowCount} clean rows</span>
-              <span className="text-primary">Cleaned</span>
+              <span className="text-on-surface-variant">{rowCount} rows verified</span>
+              <span className="text-primary">Clean</span>
             </div>
             <div className="flex items-center justify-between font-code-sm text-code-sm">
-              <span className="text-on-surface-variant">{anomalyCount} anomalies flagged</span>
-              <span className="text-tertiary">{validationIssuesCount} rules checked</span>
+              <span className="text-on-surface-variant">{anomalyCount} unusual entries</span>
+              <span className="text-tertiary">{validationIssuesCount} rules verified</span>
             </div>
           </div>
           <div className="flex items-center justify-between text-on-surface-variant font-code-sm text-code-sm pt-space-xs bg-surface-container-lowest/40 -mx-space-md -mb-space-md px-space-md py-space-xs">
-            <span className="text-outline">Status</span>
-            <span className="text-primary">Verified In-RAM</span>
+            <span className="text-outline">Health Check</span>
+            <span className="text-primary">Passed</span>
           </div>
         </div>
       </div>
 
-      {/* 2. INTERACTIVE CHART WORKSPACE */}
+      {/* 2. INTERACTIVE CHARTS & VISUALS */}
       <div className="flex flex-col gap-space-md bg-surface-container-low p-space-md rounded-xl shadow-sm border border-surface-container-high/30">
         <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-space-md pb-space-md bg-surface-container-lowest/30 -mx-space-md -mt-space-md p-space-md rounded-t-xl border-b border-surface-container-high/30">
           <div className="flex items-center gap-space-sm flex-wrap">
-            <span className="material-symbols-outlined text-primary text-[20px]">view_timeline</span>
-            <span className="font-headline-sm text-headline-sm text-on-surface">Interactive Business Intelligence</span>
+            <span className="material-symbols-outlined text-primary text-[20px]">bar_chart</span>
+            <span className="font-headline-sm text-headline-sm text-on-surface">Interactive Business Charts</span>
           </div>
 
           <div className="flex items-center bg-surface-container-lowest p-1 rounded-lg overflow-x-auto border border-surface-container-high/30">
             {[
-              'Temporal Trends',
-              'Ranked SKUs',
-              'Category Breakdown',
-              'Correlation Matrix',
-              'Anomaly Boxplots',
+              'Sales Over Time',
+              'Top Products',
+              'Sales by Category',
+              'Key Relationships',
+              'Unusual Numbers',
             ].map((pill) => {
               const isSelected = activeChartPill === pill;
               return (
@@ -294,45 +294,45 @@ export default function ExecutiveAnalytics({
               <div>
                 <div className="flex items-center gap-space-xs">
                   <span className="font-headline-sm text-headline-sm text-on-surface">
-                    {activeChartPill === 'Temporal Trends' && 'Dual-Axis Temporal Trajectory'}
-                    {activeChartPill === 'Ranked SKUs' && 'Top Performing Items & SKUs'}
-                    {activeChartPill === 'Category Breakdown' && 'Categorical Distribution Shares'}
-                    {activeChartPill === 'Correlation Matrix' && 'Numeric Feature Correlation Matrix'}
-                    {activeChartPill === 'Anomaly Boxplots' && 'Outlier & Anomaly Distribution'}
+                    {activeChartPill === 'Sales Over Time' && 'Sales & Profit Over Time'}
+                    {activeChartPill === 'Top Products' && 'Best-Selling Products & Items'}
+                    {activeChartPill === 'Sales by Category' && 'Sales by Product Category'}
+                    {activeChartPill === 'Key Relationships' && 'How Key Numbers Connect'}
+                    {activeChartPill === 'Unusual Numbers' && 'Unusual Values & Spikes Flagged'}
                   </span>
                   <span className="px-space-xs py-0.5 rounded bg-surface-container-high text-primary font-code-sm text-code-sm">
                     {activeDatasetName}
                   </span>
                 </div>
                 <p className="font-body-sm text-body-sm text-on-surface-variant">
-                  {activeChartPill === 'Temporal Trends' && 'Aggregated revenue juxtaposed against gross margin trajectory with automated anomaly vector markers.'}
-                  {activeChartPill === 'Ranked SKUs' && 'Leading catalog items ranked by cumulative financial contribution and margin strength.'}
-                  {activeChartPill === 'Category Breakdown' && 'Proportional distribution across key dimensional segments.'}
-                  {activeChartPill === 'Correlation Matrix' && 'Pairwise Pearson correlation coefficients identifying interconnected financial drivers.'}
-                  {activeChartPill === 'Anomaly Boxplots' && 'Statistical outlier flags (Z > 3.0) across column distributions.'}
+                  {activeChartPill === 'Sales Over Time' && 'Track your monthly revenue alongside profit margins. Highlighted markers indicate unexpected spikes or drops.'}
+                  {activeChartPill === 'Top Products' && 'Your highest-earning items ranked by total revenue, profit margin, and share of overall sales.'}
+                  {activeChartPill === 'Sales by Category' && 'How your total revenue is split across different product lines and categories.'}
+                  {activeChartPill === 'Key Relationships' && 'See which business factors influence each other (such as how discounts impact margins or order volumes).'}
+                  {activeChartPill === 'Unusual Numbers' && 'Transactions that stand out significantly from your normal business patterns and deserve a second look.'}
                 </p>
               </div>
 
-              {activeChartPill === 'Temporal Trends' && (
+              {activeChartPill === 'Sales Over Time' && (
                 <div className="flex items-center gap-space-md flex-wrap">
                   <div className="flex items-center gap-1.5 font-code-sm text-code-sm">
                     <span className="w-3 h-1.5 rounded-full bg-primary inline-block"></span>
-                    <span className="text-on-surface-variant">Revenue ($)</span>
+                    <span className="text-on-surface-variant">Sales Revenue ($)</span>
                   </div>
                   <div className="flex items-center gap-1.5 font-code-sm text-code-sm">
                     <span className="w-3 h-0.5 bg-tertiary inline-block"></span>
-                    <span className="text-on-surface-variant">Margin (%)</span>
+                    <span className="text-on-surface-variant">Profit Margin (%)</span>
                   </div>
                   <div className="flex items-center gap-1.5 font-code-sm text-code-sm">
                     <span className="w-2 h-2 rounded-full bg-error inline-block animate-pulse"></span>
-                    <span className="text-error font-medium">Anomaly Point</span>
+                    <span className="text-error font-medium">Unusual Spike / Drop</span>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* TAB 1: TEMPORAL TRENDS (DYNAMIC DUAL-AXIS SVG) */}
-            {activeChartPill === 'Temporal Trends' && (
+            {/* TAB 1: SALES OVER TIME (SVG BARS + LINE) */}
+            {activeChartPill === 'Sales Over Time' && (
               <div className="w-full relative h-72 flex items-end">
                 <svg className="w-full h-full" fill="none" preserveAspectRatio="none" viewBox={`0 0 ${svgWidth} ${svgHeight}`}>
                   {/* Grid Lines */}
@@ -368,7 +368,7 @@ export default function ExecutiveAnalytics({
                     />
                   ))}
 
-                  {/* Margin Trajectory Area & Line */}
+                  {/* Margin Line & Area */}
                   {areaPath && <path d={areaPath} fill="#a1d2ff" fillOpacity="0.06" />}
                   {polylineStr && (
                     <polyline
@@ -381,7 +381,7 @@ export default function ExecutiveAnalytics({
                     />
                   )}
 
-                  {/* Data Points & Anomaly Markers */}
+                  {/* Data Points & Outlier Markers */}
                   {points.map((p, i) => (
                     <g key={i}>
                       <circle cx={p.x} cy={p.lineY} r="4" fill="#a1d2ff" stroke="#0E1117" strokeWidth="1.5" />
@@ -404,20 +404,20 @@ export default function ExecutiveAnalytics({
               </div>
             )}
 
-            {/* TAB 2: RANKED SKUS */}
-            {activeChartPill === 'Ranked SKUs' && (
+            {/* TAB 2: TOP PRODUCTS */}
+            {activeChartPill === 'Top Products' && (
               <div className="space-y-space-md py-space-sm">
                 {topSkus.length > 0 ? (
                   topSkus.map((sku, i) => (
                     <div key={i} className="space-y-1">
                       <div className="flex justify-between font-code-sm text-code-sm">
                         <span className="text-on-surface font-semibold truncate max-w-sm">
-                          {i + 1}. {sku.name}
+                          #{i + 1}. {sku.name}
                         </span>
                         <div className="flex items-center gap-space-md">
                           <span className="text-primary font-bold">{sku.revenue_formatted}</span>
-                          <span className="text-tertiary">{sku.margin_pct}% GM</span>
-                          <span className="text-outline">{sku.share_pct}% share</span>
+                          <span className="text-tertiary">{sku.margin_pct}% Profit</span>
+                          <span className="text-outline">{sku.share_pct}% of sales</span>
                         </div>
                       </div>
                       <div className="w-full h-3 bg-surface-container-low rounded-full overflow-hidden flex">
@@ -429,13 +429,13 @@ export default function ExecutiveAnalytics({
                     </div>
                   ))
                 ) : (
-                  <p className="text-outline font-body-sm text-body-sm py-8 text-center">No catalog items inferred.</p>
+                  <p className="text-outline font-body-sm text-body-sm py-8 text-center">No specific product names identified in this file.</p>
                 )}
               </div>
             )}
 
-            {/* TAB 3: CATEGORY BREAKDOWN */}
-            {activeChartPill === 'Category Breakdown' && (
+            {/* TAB 3: SALES BY CATEGORY */}
+            {activeChartPill === 'Sales by Category' && (
               <div className="space-y-space-md py-space-sm">
                 {categoryBreakdown.length > 0 ? (
                   categoryBreakdown.map((cat, i) => (
@@ -444,7 +444,7 @@ export default function ExecutiveAnalytics({
                         <span className="text-on-surface font-semibold">{cat.name}</span>
                         <div className="flex items-center gap-space-sm">
                           <span className="text-primary font-bold">{formatMoney(cat.value)}</span>
-                          <span className="text-tertiary">({cat.pct}%)</span>
+                          <span className="text-tertiary">({cat.pct}% of total)</span>
                         </div>
                       </div>
                       <div className="w-full h-3 bg-surface-container-low rounded-full overflow-hidden flex">
@@ -456,13 +456,13 @@ export default function ExecutiveAnalytics({
                     </div>
                   ))
                 ) : (
-                  <p className="text-outline font-body-sm text-body-sm py-8 text-center">No category dimensions identified.</p>
+                  <p className="text-outline font-body-sm text-body-sm py-8 text-center">No product category column found in this file.</p>
                 )}
               </div>
             )}
 
-            {/* TAB 4: CORRELATION MATRIX */}
-            {activeChartPill === 'Correlation Matrix' && (
+            {/* TAB 4: KEY RELATIONSHIPS */}
+            {activeChartPill === 'Key Relationships' && (
               <div className="space-y-space-sm py-space-sm">
                 {correlations.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-space-sm">
@@ -473,7 +473,7 @@ export default function ExecutiveAnalytics({
                             {c.col1} ↔ {c.col2}
                           </div>
                           <span className="font-label-caps text-label-caps text-outline uppercase">
-                            {c.corr > 0 ? 'Positive Correlation' : 'Inverted Relationship'}
+                            {c.corr > 0.3 ? 'Increase Together' : c.corr < -0.3 ? 'Move in Opposite Directions' : 'Little to No Connection'}
                           </span>
                         </div>
                         <span className={`px-2 py-0.5 rounded font-code-sm text-code-sm font-bold ${
@@ -485,13 +485,13 @@ export default function ExecutiveAnalytics({
                     ))}
                   </div>
                 ) : (
-                  <p className="text-outline font-body-sm text-body-sm py-8 text-center">Requires at least two numeric features.</p>
+                  <p className="text-outline font-body-sm text-body-sm py-8 text-center">Requires at least two numerical columns (like sales and discount) to compare.</p>
                 )}
               </div>
             )}
 
-            {/* TAB 5: ANOMALY BOXPLOTS */}
-            {activeChartPill === 'Anomaly Boxplots' && (
+            {/* TAB 5: UNUSUAL NUMBERS / OUTLIERS */}
+            {activeChartPill === 'Unusual Numbers' && (
               <div className="space-y-space-sm py-space-sm">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
                   {profilerCols.slice(0, 6).map((col, i) => (
@@ -499,12 +499,12 @@ export default function ExecutiveAnalytics({
                       <div className="flex items-center justify-between">
                         <span className="font-code-sm text-code-sm text-on-surface font-semibold truncate max-w-[140px]">{col.id}</span>
                         <span className={`px-1.5 py-0.5 rounded text-[11px] font-code-sm ${col.outlierClass}`}>
-                          {col.outlier}
+                          {col.outlier === 'Normal' ? 'Normal Range' : col.outlier}
                         </span>
                       </div>
                       <div className="flex justify-between font-code-sm text-code-sm text-outline">
-                        <span>Mean: {col.mean}</span>
-                        <span>Spread: {col.iqr}</span>
+                        <span>Avg: {col.mean}</span>
+                        <span>Typical: {col.iqr}</span>
                       </div>
                     </div>
                   ))}
@@ -515,8 +515,8 @@ export default function ExecutiveAnalytics({
             {/* Bottom Status Ribbon */}
             <div className="flex items-center justify-between gap-space-md pt-space-xs bg-surface-container-low p-space-sm rounded-lg border border-surface-container-high/20">
               <div className="flex items-center gap-space-xs font-code-sm text-code-sm text-on-surface-variant">
-                <span className="material-symbols-outlined text-[16px] text-primary">data_thresholding</span>
-                <span>Active Dataset Scope: <span className="text-on-surface font-semibold">{rowCount} records loaded</span></span>
+                <span className="material-symbols-outlined text-[16px] text-primary">analytics</span>
+                <span>Active Data Scope: <span className="text-on-surface font-semibold">{rowCount} records loaded</span></span>
               </div>
               <div className="flex items-center gap-space-xs">
                 {['1M', '3M', '6M', 'YTD', 'ALL'].map((range) => {
@@ -542,14 +542,14 @@ export default function ExecutiveAnalytics({
 
           {/* Secondary Panels (4 cols) */}
           <div className="lg:col-span-4 flex flex-col gap-space-md">
-            {/* Top SKUs Margin Mix Panel */}
+            {/* Top Products & Margin Mix Panel */}
             <div className="bg-surface-container p-space-md rounded-xl flex flex-col justify-between gap-space-sm shadow-sm border border-surface-container-high/30">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-space-xs">
                   <span className="material-symbols-outlined text-[18px] text-primary">format_list_numbered</span>
-                  <span className="font-headline-sm text-headline-sm text-on-surface">Top SKUs Margin Mix</span>
+                  <span className="font-headline-sm text-headline-sm text-on-surface">Top Products by Profit Margin</span>
                 </div>
-                <span className="font-code-sm text-code-sm text-outline">Ranked Mix</span>
+                <span className="font-code-sm text-code-sm text-outline">Ranking</span>
               </div>
 
               <div className="space-y-space-sm pt-space-xs">
@@ -559,7 +559,7 @@ export default function ExecutiveAnalytics({
                       <div className="flex justify-between font-code-sm text-code-sm">
                         <span className="text-on-surface font-medium truncate max-w-[160px]">{sku.name}</span>
                         <span className="text-primary">
-                          {sku.revenue_formatted} • <span className="text-tertiary">{sku.margin_pct}% GM</span>
+                          {sku.revenue_formatted} • <span className="text-tertiary">{sku.margin_pct}% Profit</span>
                         </span>
                       </div>
                       <div className="w-full h-2 bg-surface-container-low rounded-full overflow-hidden flex">
@@ -581,9 +581,9 @@ export default function ExecutiveAnalytics({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-space-xs">
                   <span className="material-symbols-outlined text-[18px] text-tertiary">pie_chart</span>
-                  <span className="font-headline-sm text-headline-sm text-on-surface">Category Shares</span>
+                  <span className="font-headline-sm text-headline-sm text-on-surface">Category Sales Share</span>
                 </div>
-                <span className="font-code-sm text-code-sm text-outline">Distribution</span>
+                <span className="font-code-sm text-code-sm text-outline">Breakdown</span>
               </div>
 
               <div className="space-y-space-sm pt-space-xs">
@@ -603,7 +603,7 @@ export default function ExecutiveAnalytics({
                     </div>
                   ))
                 ) : (
-                  <p className="text-outline font-body-sm text-body-sm py-4 text-center">No categories found.</p>
+                  <p className="text-outline font-body-sm text-body-sm py-4 text-center">No categories found in file.</p>
                 )}
               </div>
             </div>
@@ -611,7 +611,7 @@ export default function ExecutiveAnalytics({
         </div>
       </div>
 
-      {/* 3. PROFILER & SCHEMA INSPECTION TABLE */}
+      {/* 3. COLUMN BREAKDOWN & DATA HEALTH INSPECTION */}
       <div className="bg-surface-container-low rounded-xl shadow-sm border border-surface-container-high/30 overflow-hidden">
         <div
           onClick={() => setIsProfilerOpen(!isProfilerOpen)}
@@ -620,10 +620,10 @@ export default function ExecutiveAnalytics({
           <div className="flex items-center gap-space-sm">
             <span className="material-symbols-outlined text-primary text-[20px]">table_chart</span>
             <span className="font-headline-sm text-headline-sm text-on-surface">
-              DuckDB Schema Profiler & Field Level Telemetry
+              Data Summary & Column Health Check
             </span>
             <span className="px-space-xs py-0.5 rounded bg-surface-container text-outline font-code-sm text-code-sm">
-              {profilerCols.length} Columns
+              {profilerCols.length} Columns Analyzed
             </span>
           </div>
           <span className="material-symbols-outlined text-outline">
@@ -636,14 +636,14 @@ export default function ExecutiveAnalytics({
             <table className="w-full text-left font-code-sm text-code-sm">
               <thead className="bg-surface-container text-outline uppercase font-label-caps text-label-caps border-b border-surface-container-high/50">
                 <tr>
-                  <th className="py-2.5 px-space-md">Column Identifier</th>
-                  <th className="py-2.5 px-space-md">Physical Type</th>
-                  <th className="py-2.5 px-space-md">Missing Values</th>
-                  <th className="py-2.5 px-space-md">Distinct Values</th>
-                  <th className="py-2.5 px-space-md">Mean / Center</th>
-                  <th className="py-2.5 px-space-md">Spread (IQR)</th>
-                  <th className="py-2.5 px-space-md">Outlier Status</th>
-                  <th className="py-2.5 px-space-md text-right">Actions</th>
+                  <th className="py-2.5 px-space-md">Column Name</th>
+                  <th className="py-2.5 px-space-md">Data Type</th>
+                  <th className="py-2.5 px-space-md">Missing Cells</th>
+                  <th className="py-2.5 px-space-md">Unique Values</th>
+                  <th className="py-2.5 px-space-md">Average</th>
+                  <th className="py-2.5 px-space-md">Typical Range</th>
+                  <th className="py-2.5 px-space-md">Unusual Values</th>
+                  <th className="py-2.5 px-space-md text-right">Details</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-surface-container-high/30">
@@ -662,7 +662,7 @@ export default function ExecutiveAnalytics({
                     <td className="py-2.5 px-space-md text-on-surface-variant">{col.iqr}</td>
                     <td className="py-2.5 px-space-md">
                       <span className={`px-2 py-0.5 rounded text-[11px] font-semibold ${col.outlierClass}`}>
-                        {col.outlier}
+                        {col.outlier === 'Normal' ? 'Normal Range' : col.outlier}
                       </span>
                     </td>
                     <td className="py-2.5 px-space-md text-right">

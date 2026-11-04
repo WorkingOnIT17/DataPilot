@@ -39,7 +39,9 @@ class HybridQueryEngine:
         data_keywords = [
             "select ", "sum", "average", "avg", "total sales", "total revenue", "highest profit",
             "lowest profit", "top 5", "top 10", "count", "how many", "breakdown by", "per region",
-            "per category", "sales in", "profit in", "quantity", "discount"
+            "per category", "sales in", "profit in", "quantity", "discount",
+            "show", "sample", "preview", "first", "rows", "records", "data", "dataset",
+            "list", "display", "fetch", "get", "table", "transactions"
         ]
 
         # Keywords strongly indicating document/policy/strategy text
@@ -127,11 +129,31 @@ class HybridQueryEngine:
 
         # --- 2. Data-Only Response ---
         if intent == "data_only" or (intent == "hybrid" and not doc_results):
+            base_answer = data_result["answer"] if data_result else "No analytical result generated."
+            base_data = data_result["data"] if data_result else pd.DataFrame()
+            exec_sql = data_result.get("executed_sql") if data_result else None
+
+            # If LLM is configured AND the query engine used rule-based SQL (not already LLM-synthesized),
+            # upgrade the answer with LLM synthesis for a richer, more conversational response.
+            if (
+                self.llm_client
+                and self.llm_client.is_configured()
+                and data_result
+                and data_result.get("intent") not in ("llm_sql", "conversational", "direct_sql_error")
+            ):
+                llm_synth = self.llm_client.synthesize_answer(
+                    query=query,
+                    executed_sql=exec_sql or "",
+                    result_df=base_data
+                )
+                if llm_synth:
+                    base_answer = llm_synth
+
             return {
                 "intent": "data_only",
-                "answer": data_result["answer"] if data_result else "No analytical result generated.",
-                "data": data_result["data"] if data_result else pd.DataFrame(),
-                "executed_sql": data_result.get("executed_sql") if data_result else None,
+                "answer": base_answer,
+                "data": base_data,
+                "executed_sql": exec_sql,
                 "citations": []
             }
 

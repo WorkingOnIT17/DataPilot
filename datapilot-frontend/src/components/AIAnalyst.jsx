@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { marked } from 'marked';
 
 export default function AIAnalyst({ onRunQuery, isQueryRunning, queryResult, lastQuery, status, analytics }) {
   const dynamicSuggestions = analytics?.charts?.suggested_queries || [
-    'What are the top performing products by revenue?',
-    'Show total revenue distribution across all categories',
-    'Are there any anomalous or outlier records?',
-    'What is the overall average order value and margin?'
+    'What are my top 5 selling products by revenue?',
+    'Show total sales breakdown across all product categories',
+    'Are there any unusually high or low transactions?',
+    'What is our overall average order value and profit margin?'
   ];
 
   const [prompt, setPrompt] = useState(dynamicSuggestions[0] || 'What are the top 5 products by revenue?');
@@ -42,15 +43,23 @@ export default function AIAnalyst({ onRunQuery, isQueryRunning, queryResult, las
 
   const executedSql = queryResult?.executed_sql || (
     lastQuery
-      ? '-- Executing deterministic query...'
-      : `-- DuckDB In-Memory SQL Vectorized\n-- Select a suggested question below or enter a natural language prompt to generate & execute SQL on ${activeDataset}\nSELECT * FROM dataset LIMIT 10;`
+      ? '-- Running data query...'
+      : `-- Exact SQL Query Run on ${activeDataset}\nSELECT * FROM dataset LIMIT 10;`
   );
 
   const answer = queryResult?.answer || (
     lastQuery
-      ? 'Analyzing dataset with LangGraph multi-agent orchestrator...'
-      : `DataPilot Multi-Agent Analyst is connected to ${activeDataset} (${rowCount} rows in memory).\n\nEnter an analytical query or click one of the suggested prompts below to execute deterministic DuckDB queries with strict zero-hallucination verification.`
+      ? 'Analyzing your data and preparing a clear answer...'
+      : `👋 Welcome! I am your AI Data Analyst, connected directly to ${activeDataset} (${rowCount} rows).\n\nAsk me any question about your sales, best-selling products, profits, or customer trends in plain English. Every number in my answer is verified directly against your uploaded data.`
   );
+
+  const renderedAnswerHtml = useMemo(() => {
+    try {
+      return marked.parse(answer || '');
+    } catch (e) {
+      return answer || '';
+    }
+  }, [answer]);
 
   const citations = queryResult?.citations || [];
   const tableData = queryResult?.data || [];
@@ -64,26 +73,26 @@ export default function AIAnalyst({ onRunQuery, isQueryRunning, queryResult, las
         <div className="flex flex-wrap items-center justify-between gap-space-sm">
           <div className="flex items-center gap-space-sm">
             <span className="flex h-2.5 w-2.5 rounded-full bg-primary animate-ping"></span>
-            <span className="font-headline-sm text-headline-sm text-on-surface">Multi-Agent Analyst Sandbox</span>
+            <span className="font-headline-sm text-headline-sm text-on-surface">AI Data Analyst</span>
             <span className="px-space-sm py-0.5 rounded-full bg-surface-container-high text-primary font-code-sm text-code-sm truncate max-w-xs">
               {activeDataset} ({rowCount} rows)
             </span>
           </div>
           <div className="flex items-center gap-space-xs px-space-md py-0.5 rounded-full bg-surface-container-high text-primary font-label-caps text-label-caps uppercase">
             <span className="material-symbols-outlined text-[14px]">bolt</span>
-            Deterministic SQL Engine Active
+            100% Calculated • Zero Guesswork
           </div>
         </div>
 
         {/* Prompt Input Box */}
         <form onSubmit={handleSubmit} className="relative bg-surface-container-lowest rounded-xl shadow-xl p-space-md flex flex-col gap-space-sm border border-surface-container-high/40">
           <div className="flex items-center gap-space-md">
-            <span className="material-symbols-outlined text-primary text-[24px]">terminal</span>
+            <span className="material-symbols-outlined text-primary text-[24px]">chat</span>
             <input
               type="text"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              placeholder="Ask an analytical question about sales, products, margins, or anomalies..."
+              placeholder="Ask any question about your sales, top products, profits, or trends in plain English..."
               className="w-full bg-transparent text-on-surface font-body-lg text-body-lg focus:outline-none placeholder:text-outline"
             />
             <div className="flex items-center gap-space-xs shrink-0">
@@ -103,14 +112,14 @@ export default function AIAnalyst({ onRunQuery, isQueryRunning, queryResult, las
                 <span className={`material-symbols-outlined text-[16px] ${isQueryRunning ? 'animate-spin' : ''}`}>
                   {isQueryRunning ? 'refresh' : 'send'}
                 </span>
-                <span>{isQueryRunning ? 'Executing...' : 'Run Query'}</span>
+                <span>{isQueryRunning ? 'Analyzing...' : 'Ask Analyst'}</span>
               </button>
             </div>
           </div>
 
-          {/* Dynamic Suggested Queries from Dataset */}
+          {/* Suggested Questions */}
           <div className="flex flex-wrap items-center gap-space-xs pt-space-xs border-t border-surface-container-high/30">
-            <span className="font-label-caps text-label-caps uppercase text-outline mr-1">Suggestions:</span>
+            <span className="font-label-caps text-label-caps uppercase text-outline mr-1">Try Asking:</span>
             {dynamicSuggestions.map((suggestion, idx) => (
               <button
                 key={idx}
@@ -125,15 +134,15 @@ export default function AIAnalyst({ onRunQuery, isQueryRunning, queryResult, las
         </form>
       </section>
 
-      {/* 2. Multi-Agent Reasoning Trace */}
+      {/* 2. How Your Answer Was Prepared (Friendly Pipeline Trace) */}
       <section className="flex flex-col gap-space-xs">
         <div className="flex items-center justify-between">
           <span className="font-label-caps text-label-caps uppercase text-outline">
-            LangGraph Multi-Agent StateGraph Execution Trace
+            How Your Answer Was Prepared
           </span>
           <span className="font-code-sm text-code-sm text-primary flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
-            Intent: {intent} • Verification: 100% Passed
+            Directly Verified Against Your Uploaded Data
           </span>
         </div>
 
@@ -142,18 +151,18 @@ export default function AIAnalyst({ onRunQuery, isQueryRunning, queryResult, las
           <div className="flex flex-col bg-surface-container-lowest p-space-md rounded-xl shadow-sm gap-space-xs border border-surface-container-high/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-primary text-[16px]">verified</span>
+                <span className="material-symbols-outlined text-primary text-[16px]">psychology</span>
                 <span className="font-label-caps text-label-caps uppercase text-outline">Step 01</span>
               </div>
               <span className="px-space-xs py-0.5 rounded bg-surface-container text-primary font-code-sm text-code-sm">18ms</span>
             </div>
-            <p className="font-body-md text-body-md text-on-surface font-semibold">Intent Classification</p>
+            <p className="font-body-md text-body-md text-on-surface font-semibold">Understood Question</p>
             <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-              Routed query type to {intent}.
+              Identified what metrics you are asking to see.
             </p>
             <div className="mt-space-xs flex items-center gap-1 text-primary font-code-sm text-code-sm">
-              <span className="material-symbols-outlined text-[14px]">alt_route</span>
-              <span>Classified: {intent}</span>
+              <span className="material-symbols-outlined text-[14px]">check</span>
+              <span>Question Analyzed</span>
             </div>
           </div>
 
@@ -161,18 +170,18 @@ export default function AIAnalyst({ onRunQuery, isQueryRunning, queryResult, las
           <div className="flex flex-col bg-surface-container-lowest p-space-md rounded-xl shadow-sm gap-space-xs border border-surface-container-high/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-primary text-[16px]">verified</span>
+                <span className="material-symbols-outlined text-primary text-[16px]">database</span>
                 <span className="font-label-caps text-label-caps uppercase text-outline">Step 02</span>
               </div>
               <span className="px-space-xs py-0.5 rounded bg-surface-container text-primary font-code-sm text-code-sm">45ms</span>
             </div>
-            <p className="font-body-md text-body-md text-on-surface font-semibold">SQL Translation</p>
+            <p className="font-body-md text-body-md text-on-surface font-semibold">Queried Data</p>
             <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-              Deterministic AST construction mapping user prompt to schema columns.
+              Calculated exact numbers directly from your file.
             </p>
             <div className="mt-space-xs flex items-center gap-1 text-primary font-code-sm text-code-sm">
-              <span className="material-symbols-outlined text-[14px]">code</span>
-              <span>DuckDB SQL Synthesized</span>
+              <span className="material-symbols-outlined text-[14px]">query_stats</span>
+              <span>Fast Database Query</span>
             </div>
           </div>
 
@@ -180,18 +189,18 @@ export default function AIAnalyst({ onRunQuery, isQueryRunning, queryResult, las
           <div className="flex flex-col bg-surface-container-lowest p-space-md rounded-xl shadow-sm gap-space-xs border border-surface-container-high/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-primary text-[16px]">verified</span>
+                <span className="material-symbols-outlined text-primary text-[16px]">verified_user</span>
                 <span className="font-label-caps text-label-caps uppercase text-outline">Step 03</span>
               </div>
               <span className="px-space-xs py-0.5 rounded bg-surface-container text-primary font-code-sm text-code-sm">22ms</span>
             </div>
-            <p className="font-body-md text-body-md text-on-surface font-semibold">Schema Guardrail</p>
+            <p className="font-body-md text-body-md text-on-surface font-semibold">Accuracy Check</p>
             <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-              Validated read-only execution, zero math hallucinations, syntax verified.
+              Checked for calculation errors and verified real data.
             </p>
             <div className="mt-space-xs flex items-center gap-1 text-primary font-code-sm text-code-sm">
-              <span className="material-symbols-outlined text-[14px]">gshield</span>
-              <span>Zero-Drop AST</span>
+              <span className="material-symbols-outlined text-[14px]">shield</span>
+              <span>Zero Guesswork</span>
             </div>
           </div>
 
@@ -199,18 +208,18 @@ export default function AIAnalyst({ onRunQuery, isQueryRunning, queryResult, las
           <div className="flex flex-col bg-surface-container-lowest p-space-md rounded-xl shadow-sm gap-space-xs border border-surface-container-high/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-tertiary text-[16px]">verified</span>
+                <span className="material-symbols-outlined text-tertiary text-[16px]">description</span>
                 <span className="font-label-caps text-label-caps uppercase text-outline">Step 04</span>
               </div>
               <span className="px-space-xs py-0.5 rounded bg-surface-container text-tertiary font-code-sm text-code-sm">35ms</span>
             </div>
-            <p className="font-body-md text-body-md text-on-surface font-semibold">Policy RAG Match</p>
+            <p className="font-body-md text-body-md text-on-surface font-semibold">Policy Review</p>
             <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-              Cross-referenced corporate strategy memos and pricing governance.
+              Checked against company guides and pricing rules.
             </p>
             <div className="mt-space-xs flex items-center gap-1 text-tertiary font-code-sm text-code-sm">
-              <span className="material-symbols-outlined text-[14px]">description</span>
-              <span>{citations.length} Chunks Grounded</span>
+              <span className="material-symbols-outlined text-[14px]">library_books</span>
+              <span>{citations.length} Document Excerpts</span>
             </div>
           </div>
 
@@ -223,13 +232,13 @@ export default function AIAnalyst({ onRunQuery, isQueryRunning, queryResult, las
               </div>
               <span className="px-space-xs py-0.5 rounded bg-surface-container-high text-primary font-code-sm text-code-sm">{latency}ms</span>
             </div>
-            <p className="font-body-md text-body-md text-on-surface font-semibold">Hybrid Synthesis</p>
+            <p className="font-body-md text-body-md text-on-surface font-semibold">Plain-English Summary</p>
             <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-              Synthesized deterministic numbers with zero mathematical hallucination.
+              Synthesized verified numbers into a clear executive explanation.
             </p>
             <div className="mt-space-xs flex items-center gap-1 text-primary font-code-sm text-code-sm">
               <span className="material-symbols-outlined text-[14px]">done_all</span>
-              <span>Zero-Hallucination</span>
+              <span>Ready for Review</span>
             </div>
           </div>
         </div>
@@ -245,66 +254,67 @@ export default function AIAnalyst({ onRunQuery, isQueryRunning, queryResult, las
                   <span className="material-symbols-outlined text-[20px]">smart_toy</span>
                 </div>
                 <div>
-                  <p className="font-headline-sm text-headline-sm text-on-surface">DataPilot Synthesis Agent</p>
+                  <p className="font-headline-sm text-headline-sm text-on-surface">DataPilot Analyst Briefing</p>
                   <p className="font-code-sm text-code-sm text-outline">
-                    Deterministic Answer • Latency: {latency}ms • {activeDataset}
+                    Response Time: {latency}ms • Dataset: {activeDataset}
                   </p>
                 </div>
               </div>
               <span className="px-space-md py-0.5 rounded-full bg-surface-container-highest text-primary font-code-sm text-code-sm flex items-center gap-1">
-                <span className="material-symbols-outlined text-[14px]">security</span> Audit-Locked
+                <span className="material-symbols-outlined text-[14px]">verified</span> 100% Calculated
               </span>
             </div>
 
-            {/* Answer Text */}
+            {/* Answer Text Formatted with Markdown */}
             <div className="bg-surface-container-lowest p-space-lg rounded-xl space-y-space-md border border-surface-container-high/30">
-              <div className="font-body-lg text-body-lg text-on-surface leading-relaxed whitespace-pre-line">
-                {answer}
-              </div>
+              <div
+                className="markdown-body font-body-lg text-body-lg text-on-surface leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: renderedAnswerHtml }}
+              />
             </div>
 
-            {/* Telemetry Numbers */}
+            {/* Summary Numbers */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-space-sm">
               <div className="bg-surface-container p-space-md rounded-lg flex flex-col border border-surface-container-high/30">
-                <span className="font-label-caps text-label-caps uppercase text-outline">Result Records</span>
+                <span className="font-label-caps text-label-caps uppercase text-outline">Rows Found</span>
                 <span className="font-display-lg text-display-lg text-on-surface mt-1">{tableData.length}</span>
                 <span className="font-body-sm text-body-sm text-primary flex items-center gap-0.5">
-                  <span className="material-symbols-outlined text-[12px]">verified</span> DuckDB In-Memory
+                  <span className="material-symbols-outlined text-[12px]">check</span> In Results Table
                 </span>
               </div>
               <div className="bg-surface-container p-space-md rounded-lg flex flex-col border border-surface-container-high/30">
-                <span className="font-label-caps text-label-caps uppercase text-outline">Execution Latency</span>
+                <span className="font-label-caps text-label-caps uppercase text-outline">Response Time</span>
                 <span className="font-display-lg text-display-lg text-on-surface mt-1">{latency}ms</span>
                 <span className="font-body-sm text-body-sm text-primary flex items-center gap-0.5">
                   <span className="material-symbols-outlined text-[12px]">speed</span> Sub-Second
                 </span>
               </div>
               <div className="bg-surface-container p-space-md rounded-lg flex flex-col border border-surface-container-high/30">
-                <span className="font-label-caps text-label-caps uppercase text-outline">Execution Engine</span>
-                <span className="font-display-lg text-display-lg text-on-surface mt-1">OLAP</span>
+                <span className="font-label-caps text-label-caps uppercase text-outline">Data Source</span>
+                <span className="font-display-lg text-display-lg text-on-surface mt-1">Live</span>
                 <span className="font-body-sm text-body-sm text-tertiary flex items-center gap-0.5">
-                  <span className="material-symbols-outlined text-[12px]">dataset</span> DuckDB v0.10
+                  <span className="material-symbols-outlined text-[12px]">dataset</span> Your Active File
                 </span>
               </div>
               <div className="bg-surface-container p-space-md rounded-lg flex flex-col border border-surface-container-high/30">
-                <span className="font-label-caps text-label-caps uppercase text-outline">Math Integrity</span>
+                <span className="font-label-caps text-label-caps uppercase text-outline">Calculation Accuracy</span>
                 <span className="font-display-lg text-display-lg text-primary mt-1">100%</span>
                 <span className="font-body-sm text-body-sm text-primary flex items-center gap-0.5">
-                  <span className="material-symbols-outlined text-[12px]">shield_check</span> Zero-Hallucination
+                  <span className="material-symbols-outlined text-[12px]">verified</span> Zero Guesswork
                 </span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Sidebar Panel: Executed SQL & Grounded Citations (4 cols) */}
+        {/* Sidebar Panel: Query Run & Document References (4 cols) */}
         <div className="lg:col-span-4 flex flex-col gap-space-lg">
-          {/* Executed SQL Box */}
+          {/* Executed Query Box */}
           <div className="bg-surface-container-low rounded-xl p-space-lg shadow-md flex flex-col gap-space-sm border border-surface-container-high/30">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-space-xs">
                 <span className="material-symbols-outlined text-primary text-[18px]">terminal</span>
-                <span className="font-headline-sm text-headline-sm text-on-surface">Executed DuckDB SQL</span>
+                <span className="font-headline-sm text-headline-sm text-on-surface">Exact Query Run (SQL)</span>
               </div>
               <button
                 type="button"
@@ -327,9 +337,9 @@ export default function AIAnalyst({ onRunQuery, isQueryRunning, queryResult, las
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-space-xs">
                 <span className="material-symbols-outlined text-tertiary text-[18px]">menu_book</span>
-                <span className="font-headline-sm text-headline-sm text-on-surface">Governance Citations</span>
+                <span className="font-headline-sm text-headline-sm text-on-surface">Referenced Documents</span>
               </div>
-              <span className="font-code-sm text-code-sm text-outline">{citations.length} Verified</span>
+              <span className="font-code-sm text-code-sm text-outline">{citations.length} Referenced</span>
             </div>
 
             <div className="space-y-space-sm">
@@ -347,7 +357,7 @@ export default function AIAnalyst({ onRunQuery, isQueryRunning, queryResult, las
                 ))
               ) : (
                 <p className="text-outline font-body-sm text-body-sm py-2">
-                  No policy citations triggered. Pure quantitative DuckDB analytics executed.
+                  No company policy documents were needed for this question. The answer was calculated entirely from your data table.
                 </p>
               )}
             </div>
@@ -355,18 +365,18 @@ export default function AIAnalyst({ onRunQuery, isQueryRunning, queryResult, las
         </div>
       </section>
 
-      {/* 4. Tabular Results Datagrid */}
+      {/* 4. Tabular Results Table */}
       {tableData && tableData.length > 0 && (
         <section className="bg-surface-container-low rounded-xl p-space-lg shadow-md flex flex-col gap-space-md border border-surface-container-high/30">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-space-xs">
               <span className="material-symbols-outlined text-primary text-[20px]">table_rows</span>
               <span className="font-headline-sm text-headline-sm text-on-surface">
-                DuckDB Tabular Result Grid ({tableData.length} records)
+                Detailed Result Rows ({tableData.length} records)
               </span>
             </div>
             <span className="px-space-sm py-0.5 rounded bg-surface-container text-primary font-code-sm text-code-sm">
-              Vectorized Memory Result
+              From Your Dataset
             </span>
           </div>
 

@@ -81,7 +81,7 @@ class DataPilotState:
         if gemini_key:
             provider = "Google Gemini"
             api_key = gemini_key
-            model = "gemini-2.5-flash"
+            model = "gemini-3.5-flash"
         elif openai_key:
             provider = "OpenAI"
             api_key = openai_key
