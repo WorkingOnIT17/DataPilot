@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "fdir": "^6.5.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -20,4 +21,3 @@
     "vite": "^6.0.7"
   }
 }
-

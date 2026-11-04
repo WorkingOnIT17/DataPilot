@@ -29,6 +29,7 @@ export default function Sidebar({
     const file = e.target.files?.[0];
     if (file) {
       onUploadDataset(file);
+      e.target.value = '';
     }
   };
 
@@ -36,6 +37,7 @@ export default function Sidebar({
     const file = e.target.files?.[0];
     if (file) {
       onUploadDocument(file);
+      e.target.value = '';
     }
   };
 
@@ -49,29 +51,33 @@ export default function Sidebar({
   return (
     <aside className="fixed left-0 top-16 bottom-0 w-80 z-40 bg-surface-container-lowest overflow-y-auto border-r border-surface-container-high/40 shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between p-space-md gap-space-md">
       <div className="space-y-space-md">
-        {/* 1. Inference Engine */}
-        <div className="bg-surface-container-low p-space-md rounded-xl space-y-space-xs border border-surface-container-high/30">
-          <div className="flex items-center justify-between">
-            <span className="font-label-caps text-label-caps uppercase text-outline">Inference Engine</span>
-            <span className="font-code-sm text-code-sm text-primary flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
-              {status?.llm_connected ? 'Live AI Mode' : 'Fast Deterministic'}
-            </span>
-          </div>
-          <div className="flex items-center justify-between gap-space-sm">
-            <div className="flex items-center gap-space-xs truncate">
-              <span className="material-symbols-outlined text-primary text-[18px]">neurology</span>
-              <span className="font-body-md text-body-md text-on-surface truncate">{llmProvider}</span>
-            </div>
-            <button
-              onClick={onPingLLM}
-              disabled={isPinging}
-              className="px-space-sm py-0.5 rounded bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-code-sm text-code-sm transition-colors border border-surface-container-highest/30"
-              type="button"
-            >
-              {isPinging ? '...' : 'Ping'}
-            </button>
-          </div>
+        {/* 1. Navigation Workspaces (Prominently at the Top) */}
+        <div className="bg-surface-container-low p-space-sm rounded-xl border border-surface-container-high/40 shadow-sm">
+          <span className="font-label-caps text-label-caps uppercase text-outline px-space-xs block mb-space-xs">
+            Workspaces
+          </span>
+          <nav className="space-y-1">
+            {navItems.map((navItem) => {
+              const isActive = activeWorkspace === navItem.id;
+              return (
+                <button
+                  key={navItem.id}
+                  onClick={() => onSelectWorkspace(navItem.id)}
+                  className={`w-full flex items-center gap-space-sm px-space-md py-2 rounded-lg transition-all text-left ${
+                    isActive
+                      ? 'bg-primary-container text-on-primary-container font-semibold shadow-sm border border-primary/20'
+                      : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
+                  }`}
+                  type="button"
+                >
+                  <span className={`material-symbols-outlined text-[20px] ${isActive ? 'text-primary' : 'text-outline'}`}>
+                    {navItem.icon}
+                  </span>
+                  <span className="font-body-md text-body-md truncate">{navItem.label}</span>
+                </button>
+              );
+            })}
+          </nav>
         </div>
 
         {/* 2. Dataset Ingestion */}
@@ -157,7 +163,32 @@ export default function Sidebar({
           </div>
         </div>
 
-        {/* 3. Corporate Document RAG */}
+        {/* 3. Inference Engine */}
+        <div className="bg-surface-container-low p-space-md rounded-xl space-y-space-xs border border-surface-container-high/30">
+          <div className="flex items-center justify-between">
+            <span className="font-label-caps text-label-caps uppercase text-outline">Inference Engine</span>
+            <span className="font-code-sm text-code-sm text-primary flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
+              {status?.llm_connected ? 'Live AI Mode' : 'Fast Deterministic'}
+            </span>
+          </div>
+          <div className="flex items-center justify-between gap-space-sm">
+            <div className="flex items-center gap-space-xs truncate">
+              <span className="material-symbols-outlined text-primary text-[18px]">neurology</span>
+              <span className="font-body-md text-body-md text-on-surface truncate">{llmProvider}</span>
+            </div>
+            <button
+              onClick={onPingLLM}
+              disabled={isPinging}
+              className="px-space-sm py-0.5 rounded bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-code-sm text-code-sm transition-colors border border-surface-container-highest/30"
+              type="button"
+            >
+              {isPinging ? '...' : 'Ping'}
+            </button>
+          </div>
+        </div>
+
+        {/* 4. Corporate Document RAG */}
         <div className="bg-surface-container-low p-space-md rounded-xl space-y-space-sm border border-surface-container-high/30">
           <div className="flex items-center justify-between">
             <span className="font-label-caps text-label-caps uppercase text-outline">Corporate Document RAG</span>
@@ -187,33 +218,6 @@ export default function Sidebar({
             <span>{chunkCount} chunks indexed from {docCount} docs</span>
           </div>
         </div>
-
-        {/* 4. Navigation Workspaces */}
-        <div>
-          <span className="font-label-caps text-label-caps uppercase text-outline px-space-xs block mb-space-xs">
-            Navigation Workspaces
-          </span>
-          <nav className="space-y-1">
-            {navItems.map((navItem) => {
-              const isActive = activeWorkspace === navItem.id;
-              return (
-                <button
-                  key={navItem.id}
-                  onClick={() => onSelectWorkspace(navItem.id)}
-                  className={`w-full flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors text-left ${
-                    isActive
-                      ? 'bg-primary-container text-on-primary-container font-semibold shadow-sm'
-                      : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
-                  }`}
-                  type="button"
-                >
-                  <span className="material-symbols-outlined text-[20px]">{navItem.icon}</span>
-                  <span className="font-body-md text-body-md">{navItem.label}</span>
-                </button>
-              );
-            })}
-          </nav>
-        </div>
       </div>
 
       {/* 5. DuckDB RAM Telemetry */}
@@ -241,4 +245,3 @@ export default function Sidebar({
     </aside>
   );
 }
-

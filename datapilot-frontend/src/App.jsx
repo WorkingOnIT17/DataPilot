@@ -239,6 +239,8 @@ export default function App() {
               isQueryRunning={isQueryRunning}
               queryResult={queryResult}
               lastQuery={lastQuery}
+              status={status}
+              analytics={analytics}
             />
           )}
 
@@ -246,6 +248,8 @@ export default function App() {
             <PrescriptiveStrategy
               recommendationsData={recommendationsData}
               onApplyAction={handleAdoptRecommendation}
+              status={status}
+              analytics={analytics}
             />
           )}
 

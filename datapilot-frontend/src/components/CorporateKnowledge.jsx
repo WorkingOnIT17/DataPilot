@@ -33,6 +33,7 @@ export default function CorporateKnowledge({
     const file = e.target.files?.[0];
     if (file) {
       onUploadDocument(file);
+      e.target.value = '';
     }
   };
 

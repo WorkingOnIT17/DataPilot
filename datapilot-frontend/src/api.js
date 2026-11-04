@@ -1,19 +1,38 @@
 // DataPilot Backend API Client
-const API_BASE = 'http://localhost:8001/api';
+// In development, Vite proxies '/api' to 'http://127.0.0.1:8001/api'.
+// In direct/standalone mode, it falls back to 'http://localhost:8001/api'.
+const API_BASE = import.meta.env.VITE_API_BASE || '/api';
+
+async function handleResponse(res, fallbackMessage) {
+  if (!res.ok) {
+    let detailMsg = fallbackMessage;
+    try {
+      const data = await res.json();
+      if (data && data.detail) {
+        detailMsg = typeof data.detail === 'string' ? data.detail : JSON.stringify(data.detail);
+      }
+    } catch (_) {
+      try {
+        const text = await res.text();
+        if (text) detailMsg = text;
+      } catch (_) {}
+    }
+    throw new Error(detailMsg);
+  }
+  return res.json();
+}
 
 export const api = {
   // Status & Telemetry
   async getStatus() {
     const res = await fetch(`${API_BASE}/status`);
-    if (!res.ok) throw new Error('Failed to fetch status');
-    return res.json();
+    return handleResponse(res, 'Failed to fetch status');
   },
 
   // Datasets
   async getDatasets() {
     const res = await fetch(`${API_BASE}/datasets`);
-    if (!res.ok) throw new Error('Failed to fetch datasets');
-    return res.json();
+    return handleResponse(res, 'Failed to fetch datasets');
   },
 
   async selectDataset(filename, autoCleanHeader = true) {
@@ -22,34 +41,30 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ filename, auto_clean_header: autoCleanHeader }),
     });
-    if (!res.ok) throw new Error('Failed to select dataset');
-    return res.json();
+    return handleResponse(res, 'Failed to select dataset');
   },
 
   async uploadDataset(file, autoCleanHeader = true) {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('auto_clean_header', autoCleanHeader);
+    formData.append('auto_clean_header', String(autoCleanHeader));
     const res = await fetch(`${API_BASE}/datasets/upload`, {
       method: 'POST',
       body: formData,
     });
-    if (!res.ok) throw new Error('Failed to upload dataset');
-    return res.json();
+    return handleResponse(res, 'Failed to upload dataset');
   },
 
   // Analytics & Profiler
   async getAnalytics() {
     const res = await fetch(`${API_BASE}/analytics`);
-    if (!res.ok) throw new Error('Failed to fetch analytics');
-    return res.json();
+    return handleResponse(res, 'Failed to fetch analytics');
   },
 
   // Prescriptive Recommendations
   async getRecommendations() {
     const res = await fetch(`${API_BASE}/recommendations`);
-    if (!res.ok) throw new Error('Failed to fetch recommendations');
-    return res.json();
+    return handleResponse(res, 'Failed to fetch recommendations');
   },
 
   // AI Analyst Query Flow
@@ -59,15 +74,13 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query }),
     });
-    if (!res.ok) throw new Error('Failed to run query');
-    return res.json();
+    return handleResponse(res, 'Failed to run query');
   },
 
   // Documents & RAG
   async getDocuments() {
     const res = await fetch(`${API_BASE}/documents`);
-    if (!res.ok) throw new Error('Failed to fetch documents');
-    return res.json();
+    return handleResponse(res, 'Failed to fetch documents');
   },
 
   async searchDocuments(query, topK = 4) {
@@ -76,8 +89,7 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, top_k: topK }),
     });
-    if (!res.ok) throw new Error('Failed to search documents');
-    return res.json();
+    return handleResponse(res, 'Failed to search documents');
   },
 
   async uploadDocument(file) {
@@ -87,8 +99,7 @@ export const api = {
       method: 'POST',
       body: formData,
     });
-    if (!res.ok) throw new Error('Failed to upload document');
-    return res.json();
+    return handleResponse(res, 'Failed to upload document');
   },
 
   // Ping LLM
@@ -96,12 +107,10 @@ export const api = {
     const res = await fetch(`${API_BASE}/llm/ping`, {
       method: 'POST',
     });
-    if (!res.ok) throw new Error('Failed to ping LLM');
-    return res.json();
+    return handleResponse(res, 'Failed to ping LLM');
   },
 
   // Export URLs
   getCleanedCsvUrl: () => `${API_BASE}/export/csv`,
   getReportHtmlUrl: () => `${API_BASE}/export/report-html`,
 };
-
