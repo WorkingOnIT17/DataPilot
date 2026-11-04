@@ -49,12 +49,13 @@ class DataPilotState:
         self.kpis: Dict[str, Any] = {}
         self.quality_score: Dict[str, Any] = {"score": 94, "grade": "Grade A", "deductions": []}
         self.validation_issues: Dict[str, Any] = {}
-        self.anomalies_found: List[Dict[str, Any]] = []
+        self.anomalies_found: Dict[str, List[Any]] = {}
         self.business_recommendations: List[Dict[str, Any]] = []
         self.profiler_columns: List[Dict[str, Any]] = []
         self.rag_engine: Optional[BusinessDocumentRAG] = None
         self.llm_client: Optional[LLMClient] = None
         self.interactive_figs: Dict[str, Any] = {}
+        self.visual_charts: Dict[str, Any] = {}
         self.tmp_dir: str = tempfile.mkdtemp()
         self.cleaned_csv_path: Optional[str] = None
         self.html_report_path: Optional[str] = None
@@ -137,6 +138,7 @@ class DataPilotState:
 
         # 6. Profiler Columns Construction
         self._build_profiler_columns()
+        self.visual_charts = analytics.compute_visual_charts(self.df_clean, self.roles)
 
         # 7. Generate & cache report
         self._generate_reports(config)
@@ -238,20 +240,23 @@ class DataPilotState:
         if self.kpis.get("profit_margin_pct") is not None:
             summary["Profit Margin"] = f"{self.kpis['profit_margin_pct']:.1f}%"
 
-        tmp_fig_dir = os.path.join(self.tmp_dir, "figures")
-        static_figs = visualize.generate_visuals(self.df_clean, tmp_fig_dir)
-        insights = predictive.run_predictive_models(self.df_clean, num_clusters=3)
+        try:
+            tmp_fig_dir = os.path.join(self.tmp_dir, "figures")
+            static_figs = visualize.generate_visuals(self.df_clean, tmp_fig_dir)
+            insights = predictive.run_predictive_models(self.df_clean, num_clusters=3)
 
-        self.html_report_path = os.path.join(self.tmp_dir, "report.html")
-        reporting.generate_report(
-            validation=self.validation_issues,
-            anomalies=self.anomalies_found,
-            figures=static_figs,
-            summary=summary,
-            insights=insights,
-            output_path=self.html_report_path,
-            recommendations=self.business_recommendations
-        )
+            self.html_report_path = os.path.join(self.tmp_dir, "report.html")
+            reporting.generate_report(
+                validation=self.validation_issues,
+                anomalies=self.anomalies_found,
+                figures=static_figs,
+                summary=summary,
+                insights=insights,
+                output_path=self.html_report_path,
+                recommendations=self.business_recommendations
+            )
+        except Exception as e:
+            print(f"[WARN] Background report generation failed: {e}")
 
 state = DataPilotState()
 state.initialize()
@@ -333,16 +338,20 @@ def select_dataset(payload: SelectDatasetPayload):
 @app.post("/api/datasets/upload")
 async def upload_dataset(file: UploadFile = File(...), auto_clean_header: bool = Form(True)):
     """Upload custom CSV or Excel file."""
-    contents = await file.read()
-    buf = io.BytesIO(contents)
-    buf.name = file.filename
-    state.load_dataset(buf, file.filename, auto_clean=auto_clean_header)
-    return {
-        "success": True,
-        "message": f"Successfully ingested {file.filename}",
-        "rows": state.df_clean.shape[0],
-        "cols": state.df_clean.shape[1]
-    }
+    try:
+        contents = await file.read()
+        buf = io.BytesIO(contents)
+        buf.name = file.filename
+        state.load_dataset(buf, file.filename, auto_clean=auto_clean_header)
+        return {
+            "success": True,
+            "message": f"Successfully ingested {file.filename}",
+            "rows": state.df_clean.shape[0] if state.df_clean is not None else 0,
+            "cols": state.df_clean.shape[1] if state.df_clean is not None else 0
+        }
+    except Exception as e:
+        print(f"[UPLOAD_ERROR] Failed to ingest {file.filename}: {e}")
+        raise HTTPException(status_code=400, detail=f"Failed to process {file.filename}: {str(e)}")
 
 
 @app.get("/api/analytics")
@@ -359,6 +368,7 @@ def get_analytics():
         "roles": state.roles,
         "quality_score": state.quality_score,
         "profiler_columns": state.profiler_columns,
+        "charts": state.visual_charts,
         "anomalies_count": sum(len(v) for v in state.anomalies_found.values()) if isinstance(state.anomalies_found, dict) else len(state.anomalies_found),
         "validation_issues_count": sum(len(v) for v in state.validation_issues.values()),
         "head_rows": head_rows
@@ -531,4 +541,5 @@ def ping_llm():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.getenv("PORT", 8001))
+    uvicorn.run(app, host="0.0.0.0", port=port)
