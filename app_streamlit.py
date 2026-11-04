@@ -132,7 +132,7 @@ sample_file_path = None
 if input_choice == "Upload File (CSV / Excel)":
     uploaded_file = st.sidebar.file_uploader("Upload CSV or Excel file", type=["csv", "xlsx", "xls"])
 else:
-    sample_files = [f for f in os.listdir("sample_data") if f.endswith((".csv", ".xlsx", ".xls")) and not f.startswith("create")]
+    sample_files = sorted([f for f in os.listdir("sample_data") if f.endswith((".csv", ".xlsx", ".xls")) and not f.startswith("create") and not f.startswith("~") and not f.startswith(".")])
     if sample_files:
         chosen_sample = st.sidebar.selectbox("Choose Sample Dataset", sample_files, index=0)
         sample_file_path = os.path.join("sample_data", chosen_sample)
