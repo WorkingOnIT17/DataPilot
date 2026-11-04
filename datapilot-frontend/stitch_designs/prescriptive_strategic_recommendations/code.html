@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary": "#003351", "on-tertiary-container": "#00486f", "secondary-container": "#3131c0", "error": "#ffb4ab", "on-error-container": "#ffdad6", "on-secondary-fixed-variant": "#2f2ebe", "surface-bright": "#353942", "on-error": "#690005", "on-tertiary-fixed-variant": "#004b73", "surface-tint": "#7bd0ff", "tertiary": "#a1d2ff", "on-primary": "#00354a", "secondary-fixed": "#e1e0ff", "surface-dim": "#0f131c", "on-secondary": "#1000a9", "on-surface-variant": "#bdc8d1", "secondary": "#c0c1ff", "primary-container": "#38bdf8", "surface-container-lowest": "#0a0e16", "background": "#0f131c", "inverse-on-surface": "#2c3039", "on-primary-container": "#004965", "on-background": "#dfe2ee", "surface-container-low": "#181c24", "on-primary-fixed": "#001e2c", "surface-container-high": "#262a33", "surface-variant": "#31353e", "tertiary-fixed": "#cce5ff", "on-tertiary-fixed": "#001d31", "error-container": "#93000a", "surface-container": "#1c2028", "surface": "#0f131c", "primary-fixed-dim": "#7bd0ff", "on-primary-fixed-variant": "#004c69", "inverse-primary": "#00668a", "tertiary-fixed-dim": "#93ccff", "on-secondary-container": "#b0b2ff", "on-surface": "#dfe2ee", "outline": "#87929a", "primary": "#8ed5ff", "surface-container-highest": "#31353e", "secondary-fixed-dim": "#c0c1ff", "outline-variant": "#3e484f", "on-secondary-fixed": "#07006c", "primary-fixed": "#c4e7ff", "tertiary-container": "#5cb9ff", "inverse-surface": "#dfe2ee" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-2xl": "2rem", "margin": "1.5rem", "margin-mobile": "0.75rem", "gutter-compact": "0.5rem", "space-xs": "0.25rem", "space-sm": "0.5rem", "space-xl": "1.5rem", "space-md": "0.75rem", "gutter": "1rem", "space-lg": "1rem" }, "fontFamily": { "code-md": [ "JetBrains Mono" ], "body-sm": [ "Geist" ], "body-md": [ "Geist" ], "body-lg": [ "Geist" ], "code-sm": [ "JetBrains Mono" ], "display-lg-mobile": [ "Geist" ], "metric-val": [ "JetBrains Mono" ], "headline-sm": [ "Geist" ], "display-lg": [ "Geist" ], "headline-md": [ "Geist" ], "label-caps": [ "JetBrains Mono" ] }, "fontSize": { "code-md": [ "13px", { "lineHeight": "20px", "fontWeight": "400" } ], "body-sm": [ "12px", { "lineHeight": "18px", "fontWeight": "400" } ], "body-md": [ "13px", { "lineHeight": "20px", "fontWeight": "400" } ], "body-lg": [ "15px", { "lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "400" } ], "code-sm": [ "11px", { "lineHeight": "16px", "fontWeight": "500" } ], "display-lg-mobile": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "metric-val": [ "18px", { "lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "headline-sm": [ "16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "display-lg": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "headline-md": [ "20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "label-caps": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "600" } ] } } } };</script></head><body class="bg-surface text-on-surface font-body-md text-body-md"><header class="fixed top-0 left-0 right-0 h-16 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-margin flex items-center justify-between gap-space-lg"><div class="flex items-center gap-space-md shrink-0"><img alt="DataPilot Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WrR8gHVBY7Yks7-ihKKSbQLwbpxVleLtKWNNF_4RLJF45JbXuurro1dyzjCaXZZJXwnCwjZ2P9O7tVi0-DY48jUnHYYF-93QWVXdjROeZ9nr2UmGpPkarvwP2eF_kJdnJV0eZVXlygLQDAQYGskaqJHDIYLEtA-dJUEwnfsuC1bdua0iJKnpyhb8D3zsa_HztApl23oJZHsRvwvG_aeemWy-uQMPGChtalDKetEfhaag"/><span class="font-headline-md text-headline-md text-on-surface tracking-tight">DataPilot</span><span class="px-space-sm py-0.5 rounded-full bg-surface-container-high text-primary font-label-caps text-label-caps uppercase">v2.0 • Enterprise</span></div><div class="hidden xl:flex items-center gap-space-sm bg-surface-container-low px-space-md py-space-xs rounded-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><span class="material-symbols-outlined text-[16px] text-primary">database</span><span class="font-code-sm text-code-sm text-on-surface-variant">Datasets</span><span class="text-outline-variant font-code-sm text-code-sm">/</span><span class="font-code-sm text-code-sm text-on-surface">Enterprise_SaaS_Revenue.csv</span><span class="px-space-sm py-0.5 rounded bg-surface-container-high text-primary font-code-sm text-code-sm">142,850 rows • 24 cols • DuckDB v0.10.2</span></div><div class="flex items-center gap-space-md shrink-0"><div class="hidden md:flex items-center gap-space-sm bg-surface-container-low px-space-md py-space-xs rounded-full shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span><span class="font-code-sm text-code-sm text-primary">94% Grade A • Ready</span></div><div class="hidden lg:flex items-center gap-space-xs bg-surface-container px-space-sm py-space-xs rounded-lg"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="font-code-sm text-code-sm text-on-surface-variant">Gemini 1.5 Pro</span><span class="text-primary font-code-sm text-code-sm">Connected</span></div><button class="hidden sm:flex items-center gap-space-xs px-space-md py-space-xs rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface hover:text-on-surface transition-colors shadow-[0_1px_8px_rgba(0,0,0,0.04)]" type="button"><span class="material-symbols-outlined text-[16px] text-primary">troubleshoot</span><span class="font-body-sm text-body-sm">Run Diagnostics</span></button><button class="flex items-center gap-space-xs px-space-md py-space-xs rounded-lg bg-primary-container hover:bg-primary text-on-primary-container hover:text-on-primary transition-colors shadow-[0_1px_8px_rgba(0,0,0,0.04)]" type="button"><span class="material-symbols-outlined text-[16px]">ios_share</span><span class="font-body-sm text-body-sm font-semibold">Export Brief</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-80 z-40 bg-surface-container-lowest overflow-y-auto shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between p-space-md gap-space-md"><div class="space-y-space-md"><div class="bg-surface-container-low p-space-md rounded-xl space-y-space-xs"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps uppercase text-outline">Inference Engine</span><span class="font-code-sm text-code-sm text-primary flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span>Fast Mode</span></div><div class="flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">neurology</span><span class="font-body-md text-body-md text-on-surface">Google Gemini 1.5 Pro</span></div><button class="px-space-sm py-0.5 rounded bg-surface-container-high hover:bg-surface-container-highest text-on-surface hover:text-on-surface font-code-sm text-code-sm transition-colors" type="button">Ping</button></div></div><div class="bg-surface-container-low p-space-md rounded-xl space-y-space-sm"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps uppercase text-outline">Dataset Ingestion</span><span class="material-symbols-outlined text-[14px] text-outline">sync_alt</span></div><div class="grid grid-cols-2 gap-space-xs p-0.5 bg-surface-container rounded-lg"><button class="px-space-xs py-1 rounded bg-surface-container-high text-primary font-body-sm text-body-sm text-center" type="button">Benchmark</button><button class="px-space-xs py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-body-sm text-body-sm text-center transition-colors" type="button">Upload File</button></div><label class="flex items-center gap-space-sm cursor-pointer"><input checked="" class="accent-primary rounded" type="checkbox"/><span class="font-body-sm text-body-sm text-on-surface-variant">Smart Header Detection</span></label><div class="px-space-sm py-1 rounded bg-surface-container text-primary font-code-sm text-code-sm flex items-center justify-between"><span>142.8k rows • 4.8MB</span><span class="text-tertiary">In-Memory DuckDB</span></div></div><div class="bg-surface-container-low p-space-md rounded-xl space-y-space-sm"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps uppercase text-outline">Corporate Document RAG</span><span class="material-symbols-outlined text-[14px] text-outline">auto_stories</span></div><div class="p-space-md rounded-lg bg-surface-container text-center space-y-space-xs hover:bg-surface-container-high transition-colors cursor-pointer"><span class="material-symbols-outlined text-primary text-[24px]">upload_file</span><p class="font-body-sm text-body-sm text-on-surface-variant">Drop Strategy Memos, Pricing PDFs (.pdf, .docx, .md)</p></div><div class="px-space-sm py-1 rounded bg-surface-container text-tertiary font-code-sm text-code-sm flex items-center gap-space-xs"><span class="material-symbols-outlined text-[14px]">verified</span><span>11 chunks indexed from 4 docs</span></div></div><div><span class="font-label-caps text-label-caps uppercase text-outline px-space-xs block mb-space-xs">Navigation Workspaces</span><nav class="space-y-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="executive-analytics" href="#"><span class="material-symbols-outlined text-[20px]">monitoring</span><span class="font-body-md text-body-md">Executive Analytics</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ai-analyst-multi-agent" href="#"><span class="material-symbols-outlined text-[20px]">hub</span><span class="font-body-md text-body-md">AI Analyst (Multi-Agent)</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary-container font-semibold" data-path="prescriptive-strategy" href="#"><span class="material-symbols-outlined text-[20px]">psychology</span><span class="font-body-md text-body-md">Prescriptive Strategy</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="corporate-knowledge-rag" href="#"><span class="material-symbols-outlined text-[20px]">menu_book</span><span class="font-body-md text-body-md">Corporate Knowledge RAG</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="export-and-reporting" href="#"><span class="material-symbols-outlined text-[20px]">lab_profile</span><span class="font-body-md text-body-md">Export &amp; Reporting</span></a></nav></div></div><div class="bg-surface-container-low p-space-md rounded-xl space-y-space-sm shrink-0"><div class="flex items-center justify-between font-code-sm text-code-sm"><span class="text-outline">DuckDB RAM</span><span class="text-primary font-medium">1.2GB / 8GB</span></div><div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary rounded-full" style="width: 15%"></div></div><div class="flex items-center justify-between pt-space-xs"><div class="flex items-center gap-space-xs font-code-sm text-code-sm text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span>Latency: 42ms</span></div><span class="font-label-caps text-label-caps text-outline uppercase">TLS 1.3 ENC</span></div></div></aside><div class="pl-80"><main class="w-full pt-16 bg-surface min-h-screen px-margin py-margin"><div class="flex flex-col w-full gap-space-xl">
+<!-- Top Strategy Telemetry Header Banner -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-low p-space-xl shadow-md">
+<div class="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+<div class="absolute right-1/3 -bottom-24 w-60 h-60 rounded-full bg-secondary-container/20 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg">
+<div class="space-y-space-xs max-w-2xl">
+<div class="flex items-center gap-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-error-container text-error font-label-caps text-label-caps uppercase flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span> Prescriptive Engine
+          </span>
+<span class="text-on-surface-variant font-code-sm text-code-sm">v2.4 Kernel • In-Memory Solver</span>
+<span class="text-outline-variant font-code-sm text-code-sm">/</span>
+<span class="text-primary font-code-sm text-code-sm">DuckDB Query v0.10.2</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface tracking-tight">Prescriptive Strategic Recommendations</h1>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Automated heuristic agent analyzing 142,850 transactions. Identified <span class="text-on-surface font-semibold">3 critical EBITDA leaks</span> and high-yield operational adjustments totaling <span class="text-primary font-semibold">+$2.14M annualized margin recovery</span>.
+        </p>
+</div>
+<!-- Quick Metrics Ribbon -->
+<div class="grid grid-cols-3 gap-space-sm shrink-0">
+<div class="bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-sm">
+<span class="font-label-caps text-label-caps uppercase text-outline">Identified Recovery</span>
+<div class="font-metric-val text-metric-val text-primary mt-1">+$2.14M</div>
+<span class="font-code-sm text-code-sm text-tertiary">Annualized EBITDA</span>
+</div>
+<div class="bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-sm">
+<span class="font-label-caps text-label-caps uppercase text-outline">Concentration At-Risk</span>
+<div class="font-metric-val text-metric-val text-error mt-1">$20.2M</div>
+<span class="font-code-sm text-code-sm text-on-surface-variant">Top 3 ARR accounts</span>
+</div>
+<div class="bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-sm">
+<span class="font-label-caps text-label-caps uppercase text-outline">Discount Slippage</span>
+<div class="font-metric-val text-metric-val text-on-surface mt-1">-4.2%</div>
+<span class="font-code-sm text-code-sm text-error">Unchecked stacking</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Priority Filters & Category Toolbar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md bg-surface-container-lowest p-space-sm rounded-xl shadow-sm">
+<!-- Segmented Priority Pills -->
+<div class="flex flex-wrap items-center gap-space-xs" id="priority-filter-group">
+<button class="priority-pill active px-space-md py-1.5 rounded-lg bg-surface-container-high text-primary font-body-sm text-body-sm font-semibold transition-colors flex items-center gap-space-xs shadow-sm" type="button">
+<span>All</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container text-on-surface font-code-sm text-code-sm">7</span>
+</button>
+<button class="priority-pill px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-body-sm text-body-sm transition-colors flex items-center gap-space-xs" type="button">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span>High Priority</span>
+<span class="px-1.5 py-0.2 rounded-full bg-error-container text-on-error-container font-code-sm text-code-sm font-semibold">3</span>
+</button>
+<button class="priority-pill px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-body-sm text-body-sm transition-colors flex items-center gap-space-xs" type="button">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>Medium Priority</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container text-on-surface-variant font-code-sm text-code-sm">3</span>
+</button>
+<button class="priority-pill px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-body-sm text-body-sm transition-colors flex items-center gap-space-xs" type="button">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span>Low Priority</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container text-on-surface-variant font-code-sm text-code-sm">1</span>
+</button>
+</div>
+<!-- Category Filter Pills & Sort Dropdown -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="flex items-center gap-space-xs p-0.5 bg-surface-container rounded-lg">
+<button class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-body-sm text-body-sm shadow-sm" type="button">Pricing Strategy</button>
+<button class="px-space-sm py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-body-sm text-body-sm transition-colors" type="button">Product Mix</button>
+<button class="px-space-sm py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-body-sm text-body-sm transition-colors" type="button">Risk Mitigation</button>
+<button class="px-space-sm py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-body-sm text-body-sm transition-colors" type="button">Discount Compliance</button>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container px-space-md py-1.5 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-outline text-[16px]">swap_vert</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Sort:</span>
+<select class="bg-transparent font-code-sm text-code-sm text-primary focus:outline-none cursor-pointer">
+<option class="bg-surface-container-high text-on-surface">Highest Financial Impact ($)</option>
+<option class="bg-surface-container-high text-on-surface">Statistical Confidence (%)</option>
+<option class="bg-surface-container-high text-on-surface">Implementation Speed</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Main Grid: Prescriptive Cards (Left 7 cols) & Live Interactive Margin Simulator (Right 5 cols) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-xl items-start">
+<!-- Prescriptive Recommendation Stack (8 Columns on XL) -->
+<div class="xl:col-span-8 space-y-space-lg">
+<!-- Card 1: Loss-Making SKU (High Priority - Crimson) -->
+<article class="bg-surface-container-low rounded-xl p-space-lg shadow-md transition-all hover:bg-surface-container/60 space-y-space-md">
+<!-- Card Header -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-error-container text-error font-label-caps text-label-caps uppercase flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[12px]">warning</span> HIGH PRIORITY • PRICING STRATEGY
+            </span>
+<span class="font-code-sm text-code-sm text-tertiary">REC-2024-8841</span>
+</div>
+<div class="flex items-center gap-space-xs font-code-sm text-code-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[14px]">bolt</span> DuckDB Vector Scan: 142k rows (18ms)
+          </div>
+</div>
+<div class="space-y-space-xs">
+<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight">
+            Eliminate or Reprice Loss-Making SKU: Ultrabook X1 Bundle
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            Product generated <span class="text-error font-code-md text-code-md font-semibold">-$14,200 net loss</span> across 128 orders despite representing <span class="text-on-surface font-semibold">8.4% of total order volume</span>. Average gross margin was <span class="text-error font-code-md text-code-md font-semibold">-4.2%</span> due to legacy promotional discount stacking and non-indexed shipping surcharges.
+          </p>
+</div>
+<!-- Evidence Visual Sub-Panel (SVG Mini Waterline Bar) -->
+<div class="bg-surface-container p-space-md rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="space-y-1">
+<span class="font-label-caps text-label-caps uppercase text-outline">SKU Unit Unit Economics Breakdown</span>
+<div class="flex items-center gap-space-md text-on-surface font-code-sm text-code-sm">
+<div>Base Price: <span class="text-on-surface">$1,450</span></div>
+<div class="text-outline">/</div>
+<div>COGS: <span class="text-outline-variant">$1,120</span></div>
+<div class="text-outline">/</div>
+<div>Stacked Promo: <span class="text-error">-$391 (-27%)</span></div>
+<div class="text-outline">/</div>
+<div>Net Margin: <span class="text-error font-semibold">-$61</span></div>
+</div>
+</div>
+<!-- Mini SVG Waterfall / Trend -->
+<div class="flex items-center gap-space-xs shrink-0 bg-surface-container-low px-space-sm py-1 rounded">
+<svg class="w-32 h-7" fill="none" viewbox="0 0 120 28">
+<path d="M4 8 L24 8 L36 18 L56 18 L76 22 L96 22 L116 26" stroke="#ffb4ab" stroke-linecap="round" stroke-width="2"></path>
+<circle cx="116" cy="26" fill="#ffb4ab" r="3"></circle>
+</svg>
+<span class="font-code-sm text-code-sm text-error font-medium">-4.2% Gross</span>
+</div>
+</div>
+<!-- Prescriptive Action Banner (Cyan/Indigo highlight box) -->
+<div class="bg-secondary-container/20 p-space-md rounded-lg flex items-start gap-space-md shadow-sm">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<div class="space-y-1">
+<span class="font-label-caps text-label-caps uppercase text-primary tracking-wider">Prescriptive Action Guidance</span>
+<p class="font-body-md text-body-md text-on-surface">
+              Restrict maximum cumulative discounting to <span class="text-primary font-semibold">12%</span> and unbundle premium peripherals ($149 dock + stylus). Alternatively, decommission SKU from catalog before Q3 vendor renewal cycle.
+            </p>
+</div>
+</div>
+<!-- Financial Impact Bar & Action Footer -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md pt-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-code-md text-code-md text-primary font-semibold">+$184,000 Annual EBITDA Recovery</span>
+<span class="text-outline font-body-sm text-body-sm">•</span>
+<span class="font-code-sm text-code-sm text-tertiary">99.1% Confidence (DuckDB)</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-primary font-body-sm text-body-sm transition-colors flex items-center gap-space-xs shadow-sm" onclick="triggerSimulation(184000, 'Ultrabook X1')" type="button">
+<span class="material-symbols-outlined text-[16px]">play_circle</span>
+<span>Simulate Margin</span>
+</button>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors flex items-center gap-space-xs shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">edit_note</span>
+<span>Draft CRO Memo</span>
+</button>
+<button class="p-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-outline hover:text-primary transition-colors shadow-sm" onclick="toggleSqlDrawer('sql-block-1')" title="View Supporting SQL" type="button">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</button>
+</div>
+</div>
+<!-- Collapsible Supporting SQL Drawer -->
+<div class="hidden pt-space-sm" id="sql-block-1">
+<div class="p-space-md rounded-lg bg-surface-container-lowest space-y-space-xs">
+<div class="flex items-center justify-between text-outline font-label-caps text-label-caps uppercase">
+<span>SQL Deterministic Assertion (DuckDB In-Memory)</span>
+<span>Execution Time: 12.4ms</span>
+</div>
+<pre class="font-code-sm text-code-sm text-on-surface-variant overflow-x-auto"><span class="text-primary">SELECT</span> sku_code, SUM(net_revenue - cogs_total - promo_stacked_sum) <span class="text-primary">AS</span> ebitda_delta,
+       COUNT(order_id) <span class="text-primary">AS</span> volume, AVG(gross_margin_pct) <span class="text-primary">AS</span> avg_margin
+<span class="text-primary">FROM</span> enterprise_orders
+<span class="text-primary">WHERE</span> sku_code = <span class="text-tertiary">'UB-X1-BUNDLE'</span> <span class="text-primary">AND</span> fiscal_year = 2024
+<span class="text-primary">GROUP BY</span> sku_code <span class="text-primary">HAVING</span> ebitda_delta &lt; 0;</pre>
+</div>
+</div>
+</article>
+<!-- Card 2: Revenue Concentration (High Priority - Amber/Orange Accent) -->
+<article class="bg-surface-container-low rounded-xl p-space-lg shadow-md transition-all hover:bg-surface-container/60 space-y-space-md">
+<!-- Card Header -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-surface-container-highest text-secondary font-label-caps text-label-caps uppercase flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[12px]">bubble_chart</span> HIGH PRIORITY • REVENUE CONCENTRATION
+            </span>
+<span class="font-code-sm text-code-sm text-tertiary">REC-2024-8842</span>
+</div>
+<div class="flex items-center gap-space-xs font-code-sm text-code-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[14px]">lan</span> Agent: Account Portfolio Graph
+          </div>
+</div>
+<div class="space-y-space-xs">
+<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight">
+            Top 3 Enterprise Accounts Represent 41.8% of Total ARR
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            Accounts <span class="text-on-surface font-semibold">Apex Financial</span> ($8.4M), <span class="text-on-surface font-semibold">Nova Logistics</span> ($6.6M), and <span class="text-on-surface font-semibold">Aura Health</span> ($5.2M) collectively account for <span class="text-secondary font-code-md text-code-md font-semibold">$20.2M ARR</span>. All three contracts feature co-terminus renewals clustered within <span class="text-error font-semibold">Q4 FY24</span>.
+          </p>
+</div>
+<!-- Inline Account Weight Visualization -->
+<div class="bg-surface-container p-space-md rounded-lg space-y-space-sm">
+<div class="flex items-center justify-between font-label-caps text-label-caps uppercase text-outline">
+<span>Portfolio ARR Distribution ($48.3M Total)</span>
+<span class="text-secondary font-code-sm text-code-sm">Herfindahl Index: 0.28 (Elevated Risk)</span>
+</div>
+<!-- Segmented Bar Meter -->
+<div class="h-3 w-full rounded-full bg-surface-container-high overflow-hidden flex">
+<div class="h-full bg-primary" style="width: 17.4%" title="Apex Financial: 17.4%"></div>
+<div class="h-full bg-tertiary" style="width: 13.6%" title="Nova Logistics: 13.6%"></div>
+<div class="h-full bg-secondary" style="width: 10.8%" title="Aura Health: 10.8%"></div>
+<div class="h-full bg-surface-bright" style="width: 58.2%" title="Remaining 144 Accounts: 58.2%"></div>
+</div>
+<div class="flex flex-wrap items-center justify-between text-on-surface-variant font-code-sm text-code-sm pt-1">
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary"></span>Apex ($8.4M)</div>
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-tertiary"></span>Nova ($6.6M)</div>
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-secondary"></span>Aura ($5.2M)</div>
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-surface-bright"></span>Remaining 144 Accts ($28.1M)</div>
+</div>
+</div>
+<!-- Prescriptive Action Banner -->
+<div class="bg-secondary-container/20 p-space-md rounded-lg flex items-start gap-space-md shadow-sm">
+<div class="w-8 h-8 rounded-lg bg-secondary text-on-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">handshake</span>
+</div>
+<div class="space-y-1">
+<span class="font-label-caps text-label-caps uppercase text-secondary tracking-wider">Prescriptive Action Guidance</span>
+<p class="font-body-md text-body-md text-on-surface">
+              Initiate proactive 36-month multi-year renewals and CEO executive sponsor roadshows <span class="text-secondary font-semibold">90 days ahead</span> of the Q4 renewal window. Offer a 6% long-term lock incentive to eliminate quarter-end leverage.
+            </p>
+</div>
+</div>
+<!-- Impact & Footer -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md pt-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="font-code-md text-code-md text-secondary font-semibold">Mitigates $8.5M At-Risk Churn</span>
+<span class="text-outline font-body-sm text-body-sm">•</span>
+<span class="font-code-sm text-code-sm text-on-surface-variant">Volatility Score -34%</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-secondary font-body-sm text-body-sm transition-colors flex items-center gap-space-xs shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">schedule_send</span>
+<span>Launch Account Sequence</span>
+</button>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors shadow-sm" type="button">
+<span>View RAG Dossiers</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 3: Discount Governance (Medium Priority - Cyan/Emerald) -->
+<article class="bg-surface-container-low rounded-xl p-space-lg shadow-md transition-all hover:bg-surface-container/60 space-y-space-md">
+<!-- Card Header -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-surface-container-highest text-primary font-label-caps text-label-caps uppercase flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[12px]">security</span> MEDIUM PRIORITY • DISCOUNT GOVERNANCE
+            </span>
+<span class="font-code-sm text-code-sm text-tertiary">REC-2024-8843</span>
+</div>
+<div class="flex items-center gap-space-xs font-code-sm text-code-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[14px]">policy</span> 42 Violations Logged
+          </div>
+</div>
+<div class="space-y-space-xs">
+<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight">
+            Enforce Automated Tiered Discount Approvals in CRM
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            Audit detected <span class="text-on-surface font-semibold">42 unapproved discounts exceeding 25%</span> applied by field reps in the past 60 days, bypassing standard VP approval matrices due to manual SFDC workflow loopholes.
+          </p>
+</div>
+<!-- Prescriptive Action Banner -->
+<div class="bg-surface-container p-space-md rounded-lg flex items-start gap-space-md shadow-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</div>
+<div class="space-y-1">
+<span class="font-label-caps text-label-caps uppercase text-primary tracking-wider">Prescriptive Action Guidance</span>
+<p class="font-body-md text-body-md text-on-surface">
+              Activate automated hard-stop validation rules in CRM restricting discounts &gt;15% without CFO signature token. Route mid-market requests to automated margin-floor calculator.
+            </p>
+</div>
+</div>
+<!-- Impact & Footer -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md pt-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-code-md text-code-md text-primary font-semibold">+$76,000 / Quarter Recovered Margin</span>
+<span class="text-outline font-body-sm text-body-sm">•</span>
+<span class="font-code-sm text-code-sm text-on-surface-variant">Zero Revenue Drop Expected</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-primary font-body-sm text-body-sm transition-colors flex items-center gap-space-xs shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">sync_lock</span>
+<span>Deploy CRM Guardrail</span>
+</button>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors shadow-sm" type="button">
+<span>View Rep Outliers</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+<!-- Live Interactive What-If Margin Simulator Drawer (4 Columns on XL) -->
+<div class="xl:col-span-4 space-y-space-lg sticky top-20">
+<!-- Interactive Sandbox Card -->
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-md space-y-space-lg relative overflow-hidden">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Live Margin Simulator</h3>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-primary font-code-sm text-code-sm">What-If v1.2</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Adjust corporate baseline discounting rules to simulate projected quarterly and annual EBITDA recovery in real-time.
+        </p>
+<!-- Slider 1: Max Promotional Discount Ceiling -->
+<div class="space-y-space-xs">
+<div class="flex justify-between items-center font-code-sm text-code-sm">
+<span class="text-on-surface">Max Allowed Discount Ceiling</span>
+<span class="text-primary font-semibold" id="discount-val-label">12%</span>
+</div>
+<input class="w-full h-1.5 bg-surface-container-high rounded-lg appearance-none cursor-pointer accent-primary" id="discount-slider" max="30" min="5" oninput="recalculateSimulation()" type="range" value="12"/>
+<div class="flex justify-between text-outline font-label-caps text-label-caps">
+<span>5% (Strict)</span>
+<span>15% (Standard)</span>
+<span>30% (Permissive)</span>
+</div>
+</div>
+<!-- Slider 2: Decommission Loss-Making SKU Units -->
+<div class="space-y-space-xs">
+<div class="flex justify-between items-center font-code-sm text-code-sm">
+<span class="text-on-surface">Target Negative-Margin SKUs</span>
+<span class="text-primary font-semibold" id="sku-val-label">4 SKUs</span>
+</div>
+<input class="w-full h-1.5 bg-surface-container-high rounded-lg appearance-none cursor-pointer accent-primary" id="sku-slider" max="10" min="0" oninput="recalculateSimulation()" type="range" value="4"/>
+<div class="flex justify-between text-outline font-label-caps text-label-caps">
+<span>0 (Keep All)</span>
+<span>5 (Moderate)</span>
+<span>10 (Aggressive)</span>
+</div>
+</div>
+<!-- Slider 3: Tier 1 Retention Lock Budget -->
+<div class="space-y-space-xs">
+<div class="flex justify-between items-center font-code-sm text-code-sm">
+<span class="text-on-surface">Multi-Year Lock Retention Concession</span>
+<span class="text-secondary font-semibold" id="lock-val-label">6.0%</span>
+</div>
+<input class="w-full h-1.5 bg-surface-container-high rounded-lg appearance-none cursor-pointer accent-secondary" id="lock-slider" max="12" min="0" oninput="recalculateSimulation()" step="0.5" type="range" value="6"/>
+<div class="flex justify-between text-outline font-label-caps text-label-caps">
+<span>0% (No concession)</span>
+<span>6% (Optimal)</span>
+<span>12% (Deep discount)</span>
+</div>
+</div>
+<!-- Live Projection Result Box -->
+<div class="bg-surface-container p-space-md rounded-xl space-y-space-sm shadow-inner">
+<div class="flex items-center justify-between text-outline font-label-caps text-label-caps uppercase">
+<span>Projected Annualized EBITDA Delta</span>
+<span class="text-primary font-code-sm text-code-sm">Confidence: 96.8%</span>
+</div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-display-lg text-display-lg text-primary tracking-tight font-metric-val" id="projected-ebitda-delta">+$482,500</span>
+<span class="font-code-sm text-code-sm text-tertiary">/ year</span>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full transition-all duration-300" id="projected-progress-bar" style="width: 68%"></div>
+</div>
+<div class="flex justify-between items-center font-code-sm text-code-sm text-on-surface-variant pt-1">
+<span>Quarterly Net Run-Rate:</span>
+<span class="text-on-surface font-semibold" id="quarterly-runrate">+$120,625</span>
+</div>
+</div>
+<!-- Action CTA -->
+<div class="space-y-space-xs">
+<button class="w-full py-2.5 rounded-lg bg-primary-container hover:bg-primary text-on-primary-container hover:text-on-primary font-body-sm text-body-sm font-semibold transition-colors flex items-center justify-center gap-space-xs shadow-md" type="button">
+<span class="material-symbols-outlined text-[18px]">publish</span>
+<span>Export Strategy to Board Deck</span>
+</button>
+<button class="w-full py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface font-code-sm text-code-sm text-center transition-colors" onclick="resetSimulator()" type="button">
+            Reset to Recommended Defaults
+          </button>
+</div>
+</div>
+<!-- Live Strategic Copilot Feed -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-md space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-outline flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Agentic Copilot Notes
+          </span>
+<span class="font-code-sm text-code-sm text-tertiary">Live</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container text-on-surface-variant font-body-sm text-body-sm leading-snug space-y-1">
+<div class="flex items-center gap-1 text-on-surface font-semibold text-code-sm">
+<span class="material-symbols-outlined text-[14px] text-primary">lightbulb</span> Strategic Tradeoff Warning
+          </div>
+<p>
+            Cutting discount ceiling below 8% reduces close rates by an estimated 14% based on historical win/loss telemetry from Mid-Market EMEA. Keep ceiling between 10%–12% for peak net yield.
+          </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function recalculateSimulation() {
+    const discount = parseFloat(document.getElementById('discount-slider').value);
+    const skus = parseInt(document.getElementById('sku-slider').value, 10);
+    const lock = parseFloat(document.getElementById('lock-slider').value);
+
+    document.getElementById('discount-val-label').innerText = discount + '%';
+    document.getElementById('sku-val-label').innerText = skus + ' SKUs';
+    document.getElementById('lock-val-label').innerText = lock.toFixed(1) + '%';
+
+    // Baseline calculation:
+    // Tightening discount recovers dollars: (30 - discount) * $18,000
+    // Decommissioning loss SKUs recovers dollars: skus * $46,000
+    // Concession cost: lock * $14,000 reduction in at-risk churn benefit
+    const discountSavings = (30 - discount) * 18500;
+    const skuSavings = skus * 46000;
+    const concessionCost = (lock - 4) * 11000;
+
+    let totalDelta = Math.round(discountSavings + skuSavings - concessionCost);
+    if (totalDelta < 20000) totalDelta = 20000;
+
+    const quarterly = Math.round(totalDelta / 4);
+
+    document.getElementById('projected-ebitda-delta').innerText = '+$' + totalDelta.toLocaleString();
+    document.getElementById('quarterly-runrate').innerText = '+$' + quarterly.toLocaleString();
+
+    // Progress bar scaled to max estimated recovery of $900k
+    const pct = Math.min(100, Math.max(10, Math.round((totalDelta / 800000) * 100)));
+    document.getElementById('projected-progress-bar').style.width = pct + '%';
+  }
+
+  function triggerSimulation(amount, label) {
+    document.getElementById('sku-slider').value = 6;
+    document.getElementById('discount-slider').value = 10;
+    recalculateSimulation();
+  }
+
+  function resetSimulator() {
+    document.getElementById('discount-slider').value = 12;
+    document.getElementById('sku-slider').value = 4;
+    document.getElementById('lock-slider').value = 6;
+    recalculateSimulation();
+  }
+
+  function toggleSqlDrawer(id) {
+    const drawer = document.getElementById(id);
+    if (drawer) {
+      drawer.classList.toggle('hidden');
+    }
+  }
+
+  // Priority filter tabs micro-interaction
+  document.querySelectorAll('#priority-filter-group .priority-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#priority-filter-group .priority-pill').forEach(b => {
+        b.classList.remove('bg-surface-container-high', 'text-primary', 'font-semibold', 'shadow-sm');
+        b.classList.add('text-on-surface-variant');
+      });
+      btn.classList.add('bg-surface-container-high', 'text-primary', 'font-semibold', 'shadow-sm');
+      btn.classList.remove('text-on-surface-variant');
+    });
+  });
+</script></main></div></body></html>
