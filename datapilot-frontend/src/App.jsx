@@ -195,24 +195,19 @@ export default function App() {
       {/* Top Header */}
       <Header
         status={status}
-        onRunDiagnostics={handleRunDiagnostics}
+        analytics={analytics}
+        smartHeader={smartHeader}
+        setSmartHeader={setSmartHeader}
         onExportBrief={handleExportBrief}
-        isRunningDiagnostics={isRunningDiagnostics}
       />
 
       {/* Left Sidebar */}
       <Sidebar
-        status={status}
         datasets={datasets}
         activeWorkspace={activeWorkspace}
         onSelectWorkspace={setActiveWorkspace}
         onSelectDataset={handleSelectDataset}
         onUploadDataset={handleUploadDataset}
-        onUploadDocument={handleUploadDocument}
-        onPingLLM={handlePingLLM}
-        isPinging={isPinging}
-        smartHeader={smartHeader}
-        setSmartHeader={setSmartHeader}
         ingestionMode={ingestionMode}
         setIngestionMode={setIngestionMode}
       />

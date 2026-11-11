@@ -84,7 +84,8 @@ At this **100% Milestone**, DataPilot provides two complete frontend experiences
 
 ```text
 DataPilot/
-├── start_app.ps1                 # One-click launcher for Backend API + React Frontend
+├── start_app.sh                  # One-click launcher for macOS / Linux (API + Frontend)
+├── start_app.ps1                 # One-click launcher for Windows PowerShell
 ├── api_server.py                 # FastAPI REST API Backend (port 8001)
 ├── app_streamlit.py              # Streamlit Web GUI Application (port 8501)
 ├── requirements.txt              # Core Python dependencies
@@ -216,7 +217,14 @@ OLLAMA_BASE_URL=http://localhost:11434/v1
 
 ### 🌐 1. Enterprise React Web Application (Recommended)
 
-#### Option A: One-Click Launcher (PowerShell)
+#### Option A: One-Click Launcher
+
+**macOS / Linux:**
+```bash
+./start_app.sh
+```
+
+**Windows (PowerShell):**
 ```powershell
 .\start_app.ps1
 ```

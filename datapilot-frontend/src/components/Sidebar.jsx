@@ -1,29 +1,23 @@
 import React, { useRef } from 'react';
 
 export default function Sidebar({
-  status,
   datasets,
   activeWorkspace,
   onSelectWorkspace,
   onSelectDataset,
   onUploadDataset,
-  onUploadDocument,
-  onPingLLM,
-  isPinging,
-  smartHeader,
-  setSmartHeader,
   ingestionMode,
   setIngestionMode
 }) {
   const fileInputRef = useRef(null);
-  const docInputRef = useRef(null);
-
   const availableDatasets = datasets?.available || [];
-  const activeDataset = status?.active_dataset || '';
-  const rowCount = status?.rows ? Number(status.rows).toLocaleString() : '142,850';
-  const chunkCount = status?.rag_chunk_count || 11;
-  const docCount = status?.rag_doc_count || 4;
-  const llmProvider = status?.llm_provider || 'Google Gemini 1.5 Pro';
+
+  const navItems = [
+    { id: 'executive-analytics', label: 'Sales & Performance Dashboard', icon: 'monitoring' },
+    { id: 'ai-analyst-multi-agent', label: 'AI Data Analyst', icon: 'chat' },
+    { id: 'prescriptive-strategy', label: 'Smart Recommendations', icon: 'lightbulb' },
+    { id: 'corporate-knowledge-rag', label: 'Company Documents & Guides', icon: 'menu_book' },
+  ];
 
   const handleDatasetFileChange = (e) => {
     const file = e.target.files?.[0];
@@ -33,25 +27,10 @@ export default function Sidebar({
     }
   };
 
-  const handleDocFileChange = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      onUploadDocument(file);
-      e.target.value = '';
-    }
-  };
-
-  const navItems = [
-    { id: 'executive-analytics', label: 'Sales & Performance Dashboard', icon: 'monitoring' },
-    { id: 'ai-analyst-multi-agent', label: 'AI Data Analyst', icon: 'chat' },
-    { id: 'prescriptive-strategy', label: 'Smart Recommendations', icon: 'lightbulb' },
-    { id: 'corporate-knowledge-rag', label: 'Company Documents & Guides', icon: 'menu_book' },
-  ];
-
   return (
     <aside className="fixed left-0 top-16 bottom-0 w-80 z-40 bg-surface-container-lowest overflow-y-auto border-r border-surface-container-high/40 shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between p-space-md gap-space-md">
       <div className="space-y-space-md">
-        {/* 1. Navigation Workspaces (Prominently at the Top) */}
+        {/* 1. Navigation Workspaces */}
         <div className="bg-surface-container-low p-space-sm rounded-xl border border-surface-container-high/40 shadow-sm">
           <span className="font-label-caps text-label-caps uppercase text-outline px-space-xs block mb-space-xs">
             Workspaces
@@ -63,25 +42,28 @@ export default function Sidebar({
                 <button
                   key={navItem.id}
                   onClick={() => onSelectWorkspace(navItem.id)}
-                  className={`w-full flex items-center gap-space-sm px-space-md py-2 rounded-lg transition-all text-left ${
+                  className={`w-full flex items-center justify-between p-space-sm rounded-lg transition-all text-left ${
                     isActive
-                      ? 'bg-primary-container text-on-primary-container font-semibold shadow-sm border border-primary/20'
-                      : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
+                      ? 'bg-primary-container text-on-primary-container font-semibold shadow-sm'
+                      : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
                   }`}
                   type="button"
                 >
-                  <span className={`material-symbols-outlined text-[20px] ${isActive ? 'text-primary' : 'text-outline'}`}>
-                    {navItem.icon}
-                  </span>
-                  <span className="font-body-md text-body-md truncate">{navItem.label}</span>
+                  <div className="flex items-center gap-space-sm truncate">
+                    <span className={`material-symbols-outlined text-[18px] ${isActive ? 'text-primary' : 'text-outline'}`}>
+                      {navItem.icon}
+                    </span>
+                    <span className="font-body-sm text-body-sm truncate">{navItem.label}</span>
+                  </div>
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>}
                 </button>
               );
             })}
           </nav>
         </div>
 
-        {/* 2. Dataset Ingestion */}
-        <div className="bg-surface-container-low p-space-md rounded-xl space-y-space-sm border border-surface-container-high/30">
+        {/* 2. Dataset Picker */}
+        <div className="bg-surface-container-low p-space-md rounded-xl space-y-space-sm border border-surface-container-high/40 shadow-sm">
           <div className="flex items-center justify-between">
             <span className="font-label-caps text-label-caps uppercase text-outline">Dataset & Files</span>
             <span className="material-symbols-outlined text-[14px] text-outline">sync_alt</span>
@@ -116,7 +98,6 @@ export default function Sidebar({
             <div className="space-y-1">
               <label className="text-outline font-label-caps text-label-caps uppercase">Choose Active Dataset</label>
               <select
-                value={activeDataset}
                 onChange={(e) => onSelectDataset(e.target.value)}
                 className="w-full bg-surface-container font-code-sm text-code-sm text-on-surface p-1.5 rounded border border-surface-container-high focus:outline-none cursor-pointer truncate"
               >
@@ -146,100 +127,6 @@ export default function Sidebar({
               </button>
             </div>
           )}
-
-          <label className="flex items-center gap-space-sm cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={smartHeader}
-              onChange={(e) => setSmartHeader(e.target.checked)}
-              className="accent-primary rounded cursor-pointer"
-            />
-            <span className="font-body-sm text-body-sm text-on-surface-variant">Auto-Clean Table Headers</span>
-          </label>
-
-          <div className="px-space-sm py-1 rounded bg-surface-container text-primary font-code-sm text-code-sm flex items-center justify-between">
-            <span>{rowCount} rows loaded</span>
-            <span className="text-tertiary">Ready</span>
-          </div>
-        </div>
-
-        {/* 3. AI Assistant Status */}
-        <div className="bg-surface-container-low p-space-md rounded-xl space-y-space-xs border border-surface-container-high/30">
-          <div className="flex items-center justify-between">
-            <span className="font-label-caps text-label-caps uppercase text-outline">AI Assistant</span>
-            <span className="font-code-sm text-code-sm text-primary flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
-              {status?.llm_connected ? 'AI Connected' : 'Calculations Ready'}
-            </span>
-          </div>
-          <div className="flex items-center justify-between gap-space-sm">
-            <div className="flex items-center gap-space-xs truncate">
-              <span className="material-symbols-outlined text-primary text-[18px]">neurology</span>
-              <span className="font-body-md text-body-md text-on-surface truncate">{llmProvider}</span>
-            </div>
-            <button
-              onClick={onPingLLM}
-              disabled={isPinging}
-              className="px-space-sm py-0.5 rounded bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-code-sm text-code-sm transition-colors border border-surface-container-highest/30"
-              type="button"
-            >
-              {isPinging ? '...' : 'Check'}
-            </button>
-          </div>
-        </div>
-
-        {/* 4. Company Documents */}
-        <div className="bg-surface-container-low p-space-md rounded-xl space-y-space-sm border border-surface-container-high/30">
-          <div className="flex items-center justify-between">
-            <span className="font-label-caps text-label-caps uppercase text-outline">Company Documents</span>
-            <span className="material-symbols-outlined text-[14px] text-outline">auto_stories</span>
-          </div>
-
-          <input
-            ref={docInputRef}
-            type="file"
-            accept=".pdf,.docx,.txt,.md"
-            onChange={handleDocFileChange}
-            className="hidden"
-          />
-
-          <div
-            onClick={() => docInputRef.current?.click()}
-            className="p-space-md rounded-lg bg-surface-container text-center space-y-space-xs hover:bg-surface-container-high transition-colors cursor-pointer border border-dashed border-outline-variant/40"
-          >
-            <span className="material-symbols-outlined text-primary text-[24px]">upload_file</span>
-            <p className="font-body-sm text-body-sm text-on-surface-variant">
-              Upload Pricing Guides, Policies, or Strategy Memos (.pdf, .docx, .txt)
-            </p>
-          </div>
-
-          <div className="px-space-sm py-1 rounded bg-surface-container text-tertiary font-code-sm text-code-sm flex items-center gap-space-xs">
-            <span className="material-symbols-outlined text-[14px]">verified</span>
-            <span>{chunkCount} searchable parts from {docCount} docs</span>
-          </div>
-        </div>
-      </div>
-
-      {/* 5. System Health */}
-      <div className="bg-surface-container-low p-space-md rounded-xl space-y-space-sm shrink-0 border border-surface-container-high/30">
-        <div className="flex items-center justify-between font-code-sm text-code-sm">
-          <span className="text-outline">Engine Memory</span>
-          <span className="text-primary font-medium">{status?.duckdb_ram || '1.2GB / 8GB'}</span>
-        </div>
-        <div className="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
-          <div
-            className="h-full bg-primary rounded-full transition-all duration-500"
-            style={{ width: `${status?.duckdb_ram_pct || 15}%` }}
-          ></div>
-        </div>
-        <div className="flex items-center justify-between pt-space-xs">
-          <div className="flex items-center gap-space-xs font-code-sm text-code-sm text-on-surface-variant">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
-            <span>Speed: {status?.latency_ms || 42}ms</span>
-          </div>
-          <span className="font-label-caps text-label-caps text-primary uppercase">
-            Live & Secure
-          </span>
         </div>
       </div>
     </aside>

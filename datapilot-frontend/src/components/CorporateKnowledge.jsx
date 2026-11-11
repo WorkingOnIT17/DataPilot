@@ -48,10 +48,6 @@ export default function CorporateKnowledge({
               <span className="px-space-sm py-0.5 rounded bg-surface-container-high text-primary font-label-caps text-label-caps uppercase tracking-wider">
                 Document Knowledge Hub
               </span>
-              <span className="text-outline font-label-caps text-label-caps">•</span>
-              <span className="text-tertiary font-code-sm text-code-sm flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span> Search Ready
-              </span>
             </div>
             <h1 className="font-display-lg text-display-lg text-on-surface tracking-tight">
               Company Documents & Executive Reports
@@ -69,14 +65,6 @@ export default function CorporateKnowledge({
             <div className="px-space-md py-space-sm rounded-lg bg-surface-container-low border border-surface-container-high/20">
               <span className="font-label-caps text-label-caps text-outline block uppercase">Searchable Sections</span>
               <span className="font-metric-val text-metric-val text-primary">{totalChunks} Sections</span>
-            </div>
-            <div className="px-space-md py-space-sm rounded-lg bg-surface-container-low border border-surface-container-high/20">
-              <span className="font-label-caps text-label-caps text-outline block uppercase">Search Method</span>
-              <span className="font-code-sm text-code-sm text-tertiary">Smart Search</span>
-            </div>
-            <div className="px-space-md py-space-sm rounded-lg bg-surface-container-low border border-surface-container-high/20">
-              <span className="font-label-caps text-label-caps text-outline block uppercase">Status</span>
-              <span className="font-code-sm text-code-sm text-on-surface">Ready & Verified</span>
             </div>
           </div>
         </div>

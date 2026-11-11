@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 export default function ExecutiveAnalytics({
   status,
@@ -10,8 +10,6 @@ export default function ExecutiveAnalytics({
   isSyncing,
   syncTimestamp,
 }) {
-  const [period, setPeriod] = useState('ALL');
-  const [tier, setTier] = useState('ALL');
   const [activeChartPill, setActiveChartPill] = useState('Sales Over Time');
   const [brushRange, setBrushRange] = useState('ALL');
   const [isProfilerOpen, setIsProfilerOpen] = useState(true);
@@ -44,16 +42,66 @@ export default function ExecutiveAnalytics({
   const rowCount = status?.rows ? Number(status.rows).toLocaleString() : (kpis.total_records ? Number(kpis.total_records).toLocaleString() : '142,850');
   const activeDatasetName = status?.active_dataset || 'Active Dataset';
 
-  // SVG Scaling calculations for Trends Over Time
-  const maxRev = temporalTrends.length > 0 ? Math.max(...temporalTrends.map((t) => t.revenue || 0), 1000) : 6000000;
+  // 1. Filter temporal trends according to brushRange (Active Data Scope)
+  const activeTrends = useMemo(() => {
+    if (!temporalTrends || temporalTrends.length === 0) return [];
+    if (brushRange === '1M') {
+      return temporalTrends.slice(-1);
+    }
+    if (brushRange === '3M') {
+      return temporalTrends.slice(-3);
+    }
+    if (brushRange === '6M') {
+      return temporalTrends.slice(-6);
+    }
+    if (brushRange === 'YTD') {
+      const latestPeriod = temporalTrends[temporalTrends.length - 1]?.period || '';
+      const latestYear = latestPeriod.includes('-') ? latestPeriod.split('-')[0] : '';
+      if (latestYear) {
+        const ytd = temporalTrends.filter((t) => t.period && t.period.startsWith(latestYear));
+        return ytd.length > 0 ? ytd : temporalTrends.slice(-12);
+      }
+      return temporalTrends.slice(-12);
+    }
+    return temporalTrends;
+  }, [temporalTrends, brushRange]);
+
+  // 2. Descriptive Active Data Scope label
+  const activeScopeLabel = useMemo(() => {
+    if (!activeTrends || activeTrends.length === 0) return 'All Periods';
+    const firstLbl = activeTrends[0]?.label || '';
+    const lastLbl = activeTrends[activeTrends.length - 1]?.label || '';
+
+    if (brushRange === '1M') {
+      return `Latest Month (${lastLbl})`;
+    }
+    if (brushRange === '3M') {
+      return `Last 3 Months (${firstLbl} – ${lastLbl})`;
+    }
+    if (brushRange === '6M') {
+      return `Last 6 Months (${firstLbl} – ${lastLbl})`;
+    }
+    if (brushRange === 'YTD') {
+      return `Year to Date (${firstLbl} – ${lastLbl})`;
+    }
+    if (firstLbl && lastLbl && firstLbl !== lastLbl) {
+      return `Full Timeline (${firstLbl} – ${lastLbl} • ${activeTrends.length} periods)`;
+    }
+    return 'All Available Periods';
+  }, [activeTrends, brushRange]);
+
+  // 3. SVG Scaling calculations for Trends Over Time
+  const maxRev = activeTrends.length > 0 ? Math.max(...activeTrends.map((t) => t.revenue || 0), 1000) : 6000000;
   const svgWidth = 760;
   const svgHeight = 240;
   const paddingLeft = 60;
   const paddingRight = 40;
   const chartWidth = svgWidth - paddingLeft - paddingRight;
 
-  const points = temporalTrends.map((t, idx) => {
-    const x = paddingLeft + (temporalTrends.length > 1 ? (idx / (temporalTrends.length - 1)) * chartWidth : chartWidth / 2);
+  const barWidth = activeTrends.length <= 1 ? 48 : (activeTrends.length <= 3 ? 38 : (activeTrends.length <= 6 ? 28 : 22));
+
+  const points = activeTrends.map((t, idx) => {
+    const x = paddingLeft + (activeTrends.length > 1 ? (idx / (activeTrends.length - 1)) * chartWidth : chartWidth / 2);
     const barHeight = Math.max(8, ((t.revenue || 0) / maxRev) * 160);
     const barY = 200 - barHeight;
     const marginNorm = Math.min(100, Math.max(0, t.margin_pct || 25));
@@ -62,7 +110,7 @@ export default function ExecutiveAnalytics({
   });
 
   const polylineStr = points.map((p) => `${p.x},${p.lineY}`).join(' ');
-  const areaPath = points.length > 0
+  const areaPath = points.length > 1
     ? `M${points[0].x},${points[0].lineY} ` +
       points.slice(1).map((p) => `L${p.x},${p.lineY}`).join(' ') +
       ` L${points[points.length - 1].x},200 L${points[0].x},200 Z`
@@ -86,27 +134,22 @@ export default function ExecutiveAnalytics({
               </span>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant">
-              Key business metrics calculated directly from your uploaded data. 100% accurate.
+              Key business metrics calculated directly from your uploaded data.
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-space-xs self-start lg:self-auto flex-wrap">
-          <div className="flex items-center gap-1 bg-surface-container px-space-sm py-1 rounded font-code-sm text-code-sm text-on-surface-variant">
-            <span className="material-symbols-outlined text-[14px] text-primary">schedule</span>
-            <span>Updated {syncTimestamp}</span>
-          </div>
-          <div className="flex items-center gap-1 bg-surface-container px-space-sm py-1 rounded font-code-sm text-code-sm text-primary">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
-            <span>Live Data Ready</span>
-          </div>
+        <div className="flex items-center self-start lg:self-auto">
           <button
             onClick={onForceSync}
             disabled={isSyncing}
-            className="flex items-center gap-space-xs px-space-md py-1 rounded bg-primary text-on-primary hover:bg-surface-tint font-body-sm text-body-sm font-semibold transition-colors shadow-sm"
+            className="flex items-center gap-1.5 text-on-surface-variant hover:text-on-surface font-code-sm text-code-sm transition-colors py-1 px-2.5 rounded-lg hover:bg-surface-container"
             type="button"
+            title="Click to refresh data"
           >
-            <span className={`material-symbols-outlined text-[16px] ${isSyncing ? 'animate-spin' : ''}`}>refresh</span>
-            <span>{isSyncing ? 'Refreshing...' : 'Refresh Data'}</span>
+            <span className={`material-symbols-outlined text-[15px] text-primary ${isSyncing ? 'animate-spin' : ''}`}>
+              refresh
+            </span>
+            <span>Updated {syncTimestamp}</span>
           </button>
         </div>
       </div>
@@ -121,13 +164,13 @@ export default function ExecutiveAnalytics({
               <div className="font-metric-val text-metric-val text-on-surface tracking-tight">{totalRev}</div>
             </div>
             <span className="px-space-xs py-0.5 rounded bg-surface-container-high text-primary font-code-sm text-code-sm flex items-center gap-0.5">
-              <span className="material-symbols-outlined text-[14px]">trending_up</span> Verified
+              <span className="material-symbols-outlined text-[14px]">trending_up</span> Revenue
             </span>
           </div>
           <div className="my-space-sm space-y-1">
             <div className="flex justify-between font-code-sm text-code-sm">
-              <span className="text-on-surface-variant">Total Transactions</span>
-              <span className="text-on-surface font-semibold">{rowCount}</span>
+              <span className="text-on-surface-variant">Transaction Volume</span>
+              <span className="text-primary font-medium">Active</span>
             </div>
             <div className="w-full h-1 bg-surface-container rounded-full overflow-hidden">
               <div className="bg-primary h-full rounded-full" style={{ width: '85%' }}></div>
@@ -233,19 +276,21 @@ export default function ExecutiveAnalytics({
               <span className="material-symbols-outlined text-[16px]">verified_user</span>
             </div>
           </div>
-          <div className="my-space-sm space-y-1">
-            <div className="flex items-center justify-between font-code-sm text-code-sm">
-              <span className="text-on-surface-variant">{rowCount} rows verified</span>
-              <span className="text-primary">Clean</span>
+          <div className="my-space-sm space-y-1 font-code-sm text-code-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-on-surface-variant">Unusual entries</span>
+              <span className={anomalyCount > 0 ? "text-amber-300 font-medium" : "text-primary font-medium"}>
+                {anomalyCount} flagged
+              </span>
             </div>
-            <div className="flex items-center justify-between font-code-sm text-code-sm">
-              <span className="text-on-surface-variant">{anomalyCount} unusual entries</span>
-              <span className="text-tertiary">{validationIssuesCount} rules verified</span>
+            <div className="flex items-center justify-between">
+              <span className="text-on-surface-variant">Validation rules</span>
+              <span className="text-on-surface font-medium">{validationIssuesCount} rules verified</span>
             </div>
           </div>
           <div className="flex items-center justify-between text-on-surface-variant font-code-sm text-code-sm pt-space-xs bg-surface-container-lowest/40 -mx-space-md -mb-space-md px-space-md py-space-xs">
-            <span className="text-outline">Health Check</span>
-            <span className="text-primary">Passed</span>
+            <span className="text-outline">Quality Score</span>
+            <span className="text-primary font-medium">{quality.score}%</span>
           </div>
         </div>
       </div>
@@ -355,9 +400,9 @@ export default function ExecutiveAnalytics({
                   {points.map((p, i) => (
                     <rect
                       key={i}
-                      x={p.x - 12}
+                      x={p.x - barWidth / 2}
                       y={p.barY}
-                      width="24"
+                      width={barWidth}
                       height={p.barHeight}
                       rx="3"
                       fill="#38bdf8"
@@ -516,7 +561,7 @@ export default function ExecutiveAnalytics({
             <div className="flex items-center justify-between gap-space-md pt-space-xs bg-surface-container-low p-space-sm rounded-lg border border-surface-container-high/20">
               <div className="flex items-center gap-space-xs font-code-sm text-code-sm text-on-surface-variant">
                 <span className="material-symbols-outlined text-[16px] text-primary">analytics</span>
-                <span>Active Data Scope: <span className="text-on-surface font-semibold">{rowCount} records loaded</span></span>
+                <span>Active Data Scope: <span className="text-on-surface font-semibold">{activeScopeLabel}</span></span>
               </div>
               <div className="flex items-center gap-space-xs">
                 {['1M', '3M', '6M', 'YTD', 'ALL'].map((range) => {

@@ -38,7 +38,7 @@ export default function PrescriptiveStrategy({ recommendationsData, onApplyActio
       priority: "Low",
       category: "Data Health",
       title: "Keep Product Data & Transactions Clean",
-      observation: `Your dataset passed core health checks across ${rowCount} records with ${anomalyCount} unusual transactions flagged for review.`,
+      observation: `Your dataset passed core health checks with ${anomalyCount} unusual transactions flagged for review.`,
       action: "Review flagged transactions periodically to prevent billing errors and catch pricing mistakes early.",
       impact: "Clean, Trustworthy Business Data",
       impactType: "positive"
@@ -93,7 +93,7 @@ export default function PrescriptiveStrategy({ recommendationsData, onApplyActio
               Actionable Profit & Growth Recommendations
             </h1>
             <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-              Automated recommendations based on <span className="text-on-surface font-semibold">{activeDataset}</span> ({rowCount} records). Here are straightforward ways to increase profit, reduce business risk, and optimize product margins.
+              Automated recommendations based on <span className="text-on-surface font-semibold">{activeDataset}</span>. Here are straightforward ways to increase profit, reduce business risk, and optimize product margins.
             </p>
           </div>
 
